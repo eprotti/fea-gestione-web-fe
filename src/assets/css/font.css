@@ -1,0 +1,196 @@
+@font-face {
+  font-family: "titilliumweb-r";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/titilliumweb-r.eot?id=u2tj4am");
+  src: url("../fonts/titilliumweb-r.eot?#iefix&id=u2tj4bd") format("embedded-opentype"), url("../fonts/titilliumweb-r.woff2?id=u2tj4bg") format("woff2"), url("../fonts/titilliumweb-r.woff?id=u2tj4bs") format("woff"), url("../fonts/titilliumweb-r.ttf?id=u2tj4cs") format("truetype")
+}
+
+@font-face {
+  font-family: "titilliumweb-sb";
+  font-weight: 500;
+  font-style: normal;
+  src: url("../fonts/titilliumweb-sb.eot?id=u2tj4dk");
+  src: url("../fonts/titilliumweb-sb.eot?#iefix&id=u2tj4e2") format("embedded-opentype"), url("../fonts/titilliumweb-sb.woff2?id=u2tj4f0") format("woff2"), url("../fonts/titilliumweb-sb.woff?id=u2tj4fq") format("woff"), url("../fonts/titilliumweb-sb.ttf?id=u2tj4g8") format("truetype")
+}
+
+@font-face {
+  font-family: "titilliumweb-i";
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/titilliumweb-i.eot?id=u2tj4gz");
+  src: url("../fonts/titilliumweb-i.eot?#iefix&id=u2tj4h8") format("embedded-opentype"), url("../fonts/titilliumweb-i.woff2?id=u2tj4hb") format("woff2"), url("../fonts/titilliumweb-i.woff?id=u2tj4ib") format("woff"), url("../fonts/titilliumweb-i.ttf?id=u2tj4j7") format("truetype")
+}
+
+.font-family-regular {
+  font-family: "titilliumweb-r"
+}
+
+h1 {
+  font-family: "titilliumweb-sb"
+}
+
+h2 {
+  font-family: "titilliumweb-sb"
+}
+
+h3 {
+  font-family: "titilliumweb-sb"
+}
+
+h4 {
+  font-family: "titilliumweb-sb"
+}
+
+h5 {
+  font-family: "titilliumweb-sb"
+}
+
+h6 {
+  font-family: "titilliumweb-sb"
+}
+
+.text-xs {
+  font-size: 0.6rem !important
+}
+
+.text-s {
+  font-size: 0.8rem !important
+}
+
+.text-sm {
+  font-size: 0.9rem !important
+}
+
+.text-m {
+  font-size: 1rem !important
+}
+
+.text-ml {
+  font-size: 1.16rem !important
+}
+
+.text-l {
+  font-size: 1.5rem !important
+}
+
+.text-xl {
+  font-size: 2rem !important
+}
+
+.text-x1l {
+  font-size: 3rem !important
+}
+
+.text-x2l {
+  font-size: 4rem !important
+}
+
+.text-x3l {
+  font-size: 5rem !important
+}
+
+.text-x4l {
+  font-size: 6rem !important
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 20px
+}
+
+h1 {
+  font-size: 1.6rem
+}
+
+h2 {
+  font-size: 1.4rem
+}
+
+h3 {
+  font-size: 1.3rem;
+  margin: 0 0 0.6rem;
+  padding: 0.2rem 0 0.2rem 1rem;
+  text-transform: uppercase;
+  position: relative
+}
+
+h3:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: #036
+}
+
+h3.raw-style {
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+  text-transform: none
+}
+
+h3.raw-style:after {
+  display: none
+}
+
+.text-normal {
+  text-transform: none
+}
+
+.text-clear {
+  font-size: 1.25rem;
+  line-height: 1.5
+}
+
+.text-error {
+  color: #e21a2c
+}
+
+.card-corner-alert .popover-corner.corner-text-info,
+.text-info {
+  color: #06C
+}
+
+.btn-alternative,
+.btn-alternative:focus,
+.btn-common,
+.btn-danger,
+.btn-danger:focus,
+.btn-default,
+.btn-default:focus,
+.btn-info,
+.btn-info:focus,
+.btn-minor,
+.btn-minor:focus,
+.button-style,
+.form-container #upload-list .ajax-file-upload-abort,
+.form-container #upload-list .ajax-file-upload-done,
+.form-container #upload-list .ajax-file-upload-green,
+.form-container #upload-list .ajax-file-upload-red,
+.form-container .ajax-file-upload,
+.form-container .upload-list .ajax-file-upload-abort,
+.form-container .upload-list .ajax-file-upload-done,
+.form-container .upload-list .ajax-file-upload-green,
+.form-container .upload-list .ajax-file-upload-red,
+.form-container .upload-list-2 .ajax-file-upload-abort,
+.form-container .upload-list-2 .ajax-file-upload-done,
+.form-container .upload-list-2 .ajax-file-upload-green,
+.form-container .upload-list-2 .ajax-file-upload-red,
+.submit-btn,
+.submit-btn:focus {
+  font: normal 1.3rem titilliumweb-sb !important;
+  background: #06C;
+  color: #fff;
+  padding: 0.2rem 0;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 auto;
+  border: solid 1px #06C;
+}
