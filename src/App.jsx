@@ -13,35 +13,30 @@ import NotifichePage from './pages/NotifichePage';
 
 const App = () => {
 
+  const containerApp = () => {
+    return <div className="container-app" >
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
+
+        <Route path="/notifiche" element={<NotifichePage />} />
+      </Routes>
+
+    </div>
+  }
+
   return (
     <Router>
       <Header />
 
       {/* Menu di navigazione laterale: rimuovere se attivo il componente HorizontalbarNavigation */}
       <SidebarNavigation>
-        <div className="container-app" >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-
-            <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
-
-            <Route path="/notifiche" element={<NotifichePage />} />
-          </Routes>
-
-        </div>
+        {containerApp()}
       </SidebarNavigation>
 
       {/* Menu di navigazione orizzontale */}
-      {/* <div className="container-app" >
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-
-          <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
-
-          <Route path="/notifiche" element={<NotifichePage />} />
-        </Routes>
-
-      </div> */}
+      {/* {containerApp()} */}
 
       {/* Contenitore per i toast */}
       <ToastContainer />

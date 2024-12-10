@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Badge, Collapse } from 'react-bootstrap';
-import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaCog, FaFileAlt, FaHome, FaUpload } from 'react-icons/fa';
+import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaCog, FaCogs, FaFileAlt, FaFolder, FaHome, FaUpload } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 const SidebarNavigation = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [openSubmenu, setOpenSubmenu] = useState(null); // Memorizza quale submenu è aperto
 
   const location = useLocation(); // Ottieni la posizione corrente della pagina
@@ -30,7 +30,7 @@ const SidebarNavigation = ({ children }) => {
   };
 
   return (
-    <div className={`d-flex ${collapsed ? 'sidebar-collapsed' : ''}`} style={{ backgroundColor: "#163d63" }}>
+    <div className={`d-flex ${collapsed ? 'sidebar-collapsed' : ''}`} style={{ backgroundColor: "#00264D" }}>
       {/* Sidebar */}
       <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header d-flex justify-content-between align-items-center">
@@ -66,7 +66,7 @@ const SidebarNavigation = ({ children }) => {
 
           <li>
             <a href="#" onClick={() => toggleSubmenu(2)} className="menu-item">
-              <FaCog size={26} className="menu-icon" />
+              <FaCogs size={26} className="menu-icon" />
               {!collapsed && <span className="menu-text">Gestione templates</span>}
               {!collapsed && <span style={{ float: "right" }}>{openSubmenu === 2 ? <FaChevronUp /> : <FaChevronDown />}</span>}
             </a>
@@ -82,7 +82,7 @@ const SidebarNavigation = ({ children }) => {
 
           <li>
             <a href="#" onClick={() => toggleSubmenu(3)} className="menu-item">
-              <FaFileAlt size={26} className="menu-icon" />
+              <FaFolder size={26} className="menu-icon" />
               {!collapsed && <span className="menu-text">Archivio</span>}
               {!collapsed && <span style={{ float: "right" }}>{openSubmenu === 3 ? <FaChevronUp /> : <FaChevronDown />}</span>}
             </a>
@@ -124,7 +124,7 @@ const SidebarNavigation = ({ children }) => {
         <hr />
 
         {/* Link Notifiche */}
-        <ul className="list-unstyled">
+        <ul className={`list-unstyled ${collapsed ? 'collapsed' : ''}`}>
           <li className="mt-auto"> {/* mt-auto per spingere questo elemento alla fine */}
             <a href="/notifiche" className="menu-item">
               <FaBell className="menu-icon" />

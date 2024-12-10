@@ -1,7 +1,7 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { FaAddressBook, FaChevronRight, FaCogs, FaFileAlt, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
+import { FaAddressBook, FaChevronRight, FaCogs, FaFileAlt, FaFolder, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import UltimiDocumentiCaricatiCard from "../components/UltimiDocumentiCaricatiCard";
 
@@ -42,7 +42,7 @@ const HomePage = () => {
         <Col xs={12} md={4}>
 
           <section id="archive" className="card archive-card">
-            <FaFileAlt size={45} color="#ffffff" style={{margin: "0"}} />
+            <FaFolder size={45} color="#ffffff" style={{margin: "0"}} />
             <h2>Archivio Documenti</h2>
             <p>Ricerca i documenti caricati per consultarli</p>
           </section>
@@ -60,12 +60,12 @@ const HomePage = () => {
         </Col>
       </Row>
       
-      <Row><Col><hr className="mt-4"/></Col></Row>
+      <Row><Col><hr className="mt-5"/></Col></Row>
 
       <Row>
         {/* Colonna principale per il contenuto */}
         <Col xs={12} md={8}>
-          <div id="tutorials" className="mt-2 document-item">
+          <div id="tutorials" className="mt-4 document-item">
             <h5><FaInfoCircle size={30} color="#06c" /> Cos'è Sigillo Gestione?</h5>
             <p className="tutorial-description">
               Scopri come funziona e come può aiutarti a gestire documenti, la rubrica, e molto altro in modo semplice e sicuro. 
@@ -77,7 +77,7 @@ const HomePage = () => {
         </Col>
         {/* Colonna laterale (opzionale, visibile su schermi più grandi) */}
         <Col xs={12} md={4}>
-          <div id="tutorials" className="mt-2 document-item">
+          <div id="tutorials" className="mt-4 document-item">
             <h5><FaQuestionCircle size={30} color="#06c" /> Hai bisogno di aiuto?</h5>
             <p className="tutorial-description">
               Consulta la guida completa su come utilizzare tutte le funzionalità di Sigillo Gestione. 
