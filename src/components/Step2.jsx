@@ -1,8 +1,8 @@
 import { ErrorMessage } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form as BootstrapForm, Button, Card, Col, Row, Table } from 'react-bootstrap';
 import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
-import { separatorDocumento } from '../utils/DocumentoUtil';
+import { separatorDocumento, truncateEmail } from '../utils/DocumentoUtil';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFirmatario } from '../slices/caricaDocumentoSlice';
 import { FaTrash } from 'react-icons/fa';
@@ -13,6 +13,27 @@ const Step2 = ({ touched, errors, setFieldValue }) => {
 
     /* Documento da caricare */
     const document = useSelector((state) => state.document);
+
+    // Stato per memorizzare la larghezza della finestra
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // Funzione per aggiornare la larghezza della finestra
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    const isWindowSmall = windowWidth < 768;
+
+    // Uso di useEffect per aggiungere e rimuovere il listener
+    useEffect(() => {
+        // Aggiungi il listener all'evento resize
+        window.addEventListener('resize', handleResize);
+
+        // Rimuovi il listener quando il componente viene smontato
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <>
@@ -67,7 +88,7 @@ const Step2 = ({ touched, errors, setFieldValue }) => {
                                         <td style={{ whiteSpace: "nowrap" }}>
                                             {firmatario.nomeCompleto}
                                         </td>
-                                        <td className=''>{firmatario.email}</td>
+                                        <td className=''>{isWindowSmall ? truncateEmail(firmatario.email) : firmatario.email}</td>
                                         <td className='text-center' style={{ whiteSpace: "nowrap" }}>
                                             <a rel="noopener noreferrer" style={{ marginRight: "10px", cursor: "pointer" }}>
                                                 <FaTrash size={20} />

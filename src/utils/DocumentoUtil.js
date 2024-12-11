@@ -26,6 +26,11 @@ export const truncateTitle = (title, maxLength = 40) => {
     return title.length > maxLength ? title.slice(0, maxLength) + '...' : title;
 };
 
+// Funzione per abbreviare il titolo se supera i 40 caratteri
+export const truncateEmail = (email, maxLength = 20) => {
+    return email.length > maxLength ? email.slice(0, maxLength) + '...' : email;
+};
+
 export const separatorDocumento = (stato) => {
     switch (stato) {
         case StatoDocumento.DA_COMPILARE:
