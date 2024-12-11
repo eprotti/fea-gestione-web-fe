@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../actions/NotificationActions';
 import { isExpiring, truncateTitle } from '../utils/DocumentoUtil';
-import { handleViewDetailDocument } from '../utils/NavigationUtil';
+import { handleViewDocument } from '../utils/NavigationUtil';
 
 const UltimiDocumentiCaricatiCard = () => {
 
@@ -58,7 +58,7 @@ const UltimiDocumentiCaricatiCard = () => {
                         <div>Data di caricamento: {documento.dataInserimento}</div>
                         <div>Stato: {documento.stato}</div>
                         <div style={{ display: "block", textAlign: "right" }}>
-                            <a onClick={() => handleViewDetailDocument(navigate, documento.codiceDocumento)} rel="noopener noreferrer" style={{ textAlign: "right", cursor: "pointer" }}>
+                            <a onClick={() => handleViewDocument(navigate, documento.codiceDocumento)} rel="noopener noreferrer" style={{ textAlign: "right", cursor: "pointer" }}>
                                 Vedi dettaglio <FaChevronRight size={20} />
                             </a>
                         </div>

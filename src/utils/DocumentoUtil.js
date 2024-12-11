@@ -41,7 +41,7 @@ export const separatorDocumento = (stato) => {
         case StatoDocumento.ANNULLATO:
             return 'border-cc-45';
         default:
-            return '';
+            return 'border-cc-00';
     }
 }
 

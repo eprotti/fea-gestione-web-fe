@@ -570,8 +570,13 @@ footer a:hover {
   opacity: 100;
 }
 
-.border-c-45 {
+.border-cc-45 {
   border-color: #6b686b;
+  opacity: 100;
+}
+
+.border-cc-00 {
+  border-color: #06c;
   opacity: 100;
 }
 
@@ -584,7 +589,7 @@ footer a:hover {
 .expiring-badge {
   position: absolute;
   top: -10px;
-  right: 0px;
+  right: 8px;
   background-color: #dd3333;
   color: white;
   padding: 5px;
@@ -897,33 +902,35 @@ tbody tr:hover {
   gap: 20px;
 }
 
-.card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  border-width: 1px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card:hover {
+.upload-card:hover,
+.archive-card:hover,
+.contacts-card:hover,
+.templates-card:hover {
   transform: scale(1.02);
 }
 
-.card h2 {
-  font-size: 24px;
+.upload-card h2,
+.archive-card h2,
+.contacts-card h2,
+.templates-card h2 {
+  font-size: 26px;
   margin-bottom: 15px;
   color: white;
 }
 
-.card svg {
+.upload-card svg,
+.archive-card svg,
+.contacts-card svg,
+.templates-card svg {
   margin-bottom: 15px;
 }
 
 .upload-card {
+  padding: 20px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(340deg, #06c, #00366d);
   color: white;
   min-height: 230px;
@@ -935,6 +942,12 @@ tbody tr:hover {
 }
 
 .archive-card {
+  padding: 20px;
+  border-width: 1px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(340deg, #28a745, #145222);
   color: white;
   min-height: 230px;
@@ -956,6 +969,12 @@ tbody tr:hover {
 }
 
 .contacts-card {
+  padding: 20px;
+  border-width: 1px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(340deg, #6f42c1, #34205a);
   color: white;
   min-height: 230px;
@@ -983,6 +1002,12 @@ tbody tr:hover {
 }
 
 .templates-card {
+  padding: 20px;
+  border-width: 1px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: linear-gradient(340deg, #ed7902, #bf5f00);
   color: white;
   min-height: 230px;
@@ -1029,6 +1054,8 @@ tbody tr:hover {
   font-weight: bold;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: -50px;
+  margin-right: -10px;
 }
 
 /* Impostazioni generali per il layout */
@@ -1188,4 +1215,106 @@ body {
     display: none;
   }
 
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: #dc3545;
+  display: block;
+  margin-top: 5px;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.input-group {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  display: block;
+}
+
+.radio-group {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+form label {
+  font-size: 18px;
+}
+
+.data-show .data-text,
+.data-show .data-value {
+  font-size: 18px;
+}
+
+.form-check {
+  margin-right: 20px;
+}
+
+.form-check input,
+.form-check label {
+  cursor: pointer;
+}
+
+.step-navigation-carica-documento {
+  margin-top: 15px;
+  /* border-bottom: 1px solid #00264D; */
+}
+
+.step-navigation-carica-documento ol {
+  margin:0;
+}
+
+.step-carica-documento {
+  border: 5px solid #cacaca;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 20px;
+  margin-right: 20px;
+  z-index: 1;
+  width: 300px;
+  text-align: center;
+  padding: 15px;
+  padding-left: 20px !important;
+}
+
+.step-carica-documento.first {
+  margin-left: 0;
+}
+
+.step-carica-documento.active {
+  border: 5px solid #06c;
+  color: #06c !important;
+  background-color: #fff;
+}
+
+.step-carica-documento.completed a {
+  color: white !important;
+}
+
+.step-carica-documento+.step-carica-documento::before {
+  content: none;
+}
+
+.step-carica-documento h5 {
+  white-space: nowrap;
+  margin: 0px;
+}
+
+.step-content-carica-documento {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.step-content-carica-documento h5 {
+  padding: 10px;
+  margin: 0;
 }

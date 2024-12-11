@@ -58,8 +58,8 @@ const SidebarNavigation = ({ children }) => {
             </a>
             <Collapse in={openSubmenu === 1}>
               <ul className="submenu">
-                <li><a href="#">Carica</a></li>
-                <li><a href="#">Bozze</a></li>
+                <li><a href="/gestione-documento/carica">Carica</a></li>
+                <li><a href="/gestione-documento/bozze">Bozze</a></li>
               </ul>
             </Collapse>
           </li>
@@ -127,7 +127,7 @@ const SidebarNavigation = ({ children }) => {
         <ul className={`list-unstyled ${collapsed ? 'collapsed' : ''}`}>
           <li className="mt-auto"> {/* mt-auto per spingere questo elemento alla fine */}
             <a href="/notifiche" className="menu-item">
-              <FaBell className="menu-icon" />
+              <FaBell size={26} className="menu-icon" />
 
               {(collapsed && unreadNotifications > 0) && (
                 <Badge size={8} pill bg="danger" className="ml-2 pulse-notify-animation" style={{ fontSize: '12px', verticalAlign: 'baseline', marginLeft: "-8px" }}>

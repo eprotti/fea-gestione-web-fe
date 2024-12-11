@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchDocuments } from '../actions/DocumentActions.js'; // Azione per caricare i documenti
 import { addNotification } from '../actions/NotificationActions.js';
-import { StatoDocumento } from '../enum/StatoDocumento';
+import { StatoDocumento } from '../enum/StatoDocumento.js';
 
 import DatiTecniciDocumentoCard from '../components/DatiTecniciDocumentoCard.jsx';
 import DettaglioDocumentoCard from '../components/DettaglioDocumentoCard.jsx';
 import ScaricaDocumentoCard from '../components/ScaricaDocumentoCard.jsx';
-import { handleCompileDocument, handleSignDocument } from '../utils/NavigationUtil.js';
+import FirmaDocumentoCard from '../components/FirmaDocumentoCard.jsx';
 
 const DettaglioDocumentoPage = () => {
 
@@ -50,36 +50,15 @@ const DettaglioDocumentoPage = () => {
 
   return (
     <Container className="main-container pt-5 pb-5">
-      <h3>Dettaglio documento</h3>
+      <h3 className='mb-0 pt-2'>Dettaglio documento</h3>
       <Row>
         {/* Colonna principale per il contenuto */}
         <Col xs={12} md={8}>
           <DettaglioDocumentoCard documento={documento} />
 
-          {documento.stato == StatoDocumento.DA_FIRMARE && <FirmaDocumentoCard documento={documento} />}
+          <FirmaDocumentoCard documento={documento} />
 
           <DatiTecniciDocumentoCard documento={documento} />
-
-          {(documento.stato == StatoDocumento.DA_COMPILARE || documento.stato == StatoDocumento.DA_FIRMARE) && (
-            <Card className="mb-4 custom-card">
-
-              <div className="card-body">
-
-                {documento.stato == StatoDocumento.DA_COMPILARE &&
-                  <Button onClick={() => handleCompileDocument(navigate, documento.codiceDocumento)} variant="primary" className="btn-firma">
-                    Compila documento <FaFileAlt className="ml-2" />
-                  </Button>}
-
-                {documento.stato == StatoDocumento.DA_FIRMARE &&
-                  <Button onClick={() => handleSignDocument(navigate, documento.codiceDocumento)} variant="primary" className="btn-firma">
-                    Firma documento <FaFileSignature className="ml-2" />
-                  </Button>}
-
-              </div>
-
-            </Card >)}
-
-
 
           <div className="text-end mt-3">
             <a onClick={() => navigate(-1)} rel="noopener noreferrer" style={{ cursor: "pointer", fontSize: "large" }} className="mt-3 text-primary">

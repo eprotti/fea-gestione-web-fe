@@ -1,22 +1,13 @@
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { FaAddressBook, FaChevronRight, FaCogs, FaFileAlt, FaFolder, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { FaAddressBook, FaChevronRight, FaCogs, FaFolder, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
 import UltimiDocumentiCaricatiCard from "../components/UltimiDocumentiCaricatiCard";
-
-// Registriamo i componenti necessari per il grafico
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-// Definizione degli stati dei documenti
-const documentStates = ["DA_FIRMARE", "FIRMATO", "PARZIALMENTE_FIRMATO", "ANNULLATO", "SCADUTO"];
+import { handleUploadDocument } from '../utils/NavigationUtil';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
 
-  const { documents, loading, error } = useSelector((state) => state.documents);
-
-  // Selezioniamo solo i primi 3 documenti
-  const recentDocuments = documents.slice(0, 3);
+  const navigate = useNavigate();
 
   return (
     <Container className="main-container pt-5 pb-5">
@@ -25,14 +16,14 @@ const HomePage = () => {
         {/* Colonna principale per il contenuto */}
         <Col xs={12} md={4}>
 
-          <section id="upload" className="card upload-card">
-            <FaUpload size={45} color="#ffffff" style={{margin: "0"}} />
+          <section id="upload" className="card upload-card" onClick={() => handleUploadDocument(navigate)}>
+            <FaUpload size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Gestione Documento</h2>
             <p>Carica un nuovo documento</p>
           </section>
 
           <section id="contacts" className="card contacts-card">
-            <FaAddressBook size={45} color="#ffffff" style={{margin: "0"}} />
+            <FaAddressBook size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Gestione Rubrica</h2>
             <p>Vai alla rubrica per gestire i contatti</p>
           </section>
@@ -42,13 +33,13 @@ const HomePage = () => {
         <Col xs={12} md={4}>
 
           <section id="archive" className="card archive-card">
-            <FaFolder size={45} color="#ffffff" style={{margin: "0"}} />
+            <FaFolder size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Archivio Documenti</h2>
             <p>Ricerca i documenti caricati per consultarli</p>
           </section>
 
           <section id="templates" className="card templates-card">
-            <FaCogs size={45} color="#ffffff" style={{margin: "0"}} />
+            <FaCogs size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Gestione Template</h2>
             <p>Vai alla gestione dei template</p>
           </section>
@@ -59,8 +50,8 @@ const HomePage = () => {
           <UltimiDocumentiCaricatiCard />
         </Col>
       </Row>
-      
-      <Row><Col><hr className="mt-5"/></Col></Row>
+
+      <Row><Col><hr className="mt-5" /></Col></Row>
 
       <Row>
         {/* Colonna principale per il contenuto */}
@@ -68,7 +59,7 @@ const HomePage = () => {
           <div id="tutorials" className="mt-4 document-item">
             <h5><FaInfoCircle size={30} color="#06c" /> Cos'è Sigillo Gestione?</h5>
             <p className="tutorial-description">
-              Scopri come funziona e come può aiutarti a gestire documenti, la rubrica, e molto altro in modo semplice e sicuro. 
+              Scopri come funziona e come può aiutarti a gestire documenti, la rubrica, e molto altro in modo semplice e sicuro.
             </p>
             <p className="tutorial-link">
               <a href="/tutorials" className="tutorial-link-text">Approfondisci <FaChevronRight /></a>
@@ -80,7 +71,7 @@ const HomePage = () => {
           <div id="tutorials" className="mt-4 document-item">
             <h5><FaQuestionCircle size={30} color="#06c" /> Hai bisogno di aiuto?</h5>
             <p className="tutorial-description">
-              Consulta la guida completa su come utilizzare tutte le funzionalità di Sigillo Gestione. 
+              Consulta la guida completa su come utilizzare tutte le funzionalità di Sigillo Gestione.
             </p>
             <p className="tutorial-link">
               <a href="/tutorials" className="tutorial-link-text">Approfondisci <FaChevronRight /></a>

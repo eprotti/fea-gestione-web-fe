@@ -10,6 +10,7 @@ import DocumentListener from './listeners/DocumentListener';
 import DettaglioDocumentoPage from './pages/DettaglioDocumentoPage';
 import HomePage from './pages/HomePage';
 import NotifichePage from './pages/NotifichePage';
+import CaricaDocumentoPage from './pages/CaricaDocumentoPage';
 
 const App = () => {
 
@@ -17,6 +18,8 @@ const App = () => {
     return <div className="container-app" >
       <Routes>
         <Route path="/" element={<HomePage />} />
+
+        <Route path="/gestione-documento/carica" element={<CaricaDocumentoPage />} />
 
         <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
 
