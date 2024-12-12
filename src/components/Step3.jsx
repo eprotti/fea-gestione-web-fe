@@ -1,12 +1,13 @@
-import { ErrorMessage, Field } from 'formik';
 import React, { useState } from 'react';
 import { Form as BootstrapForm, Button, Card, Col, Row } from 'react-bootstrap';
-import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
-import { separatorDocumento } from '../utils/DocumentoUtil';
-import { useDispatch, useSelector } from 'react-redux';
 import { FaCheck } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFirma } from '../slices/caricaDocumentoSlice';
+import { separatorDocumento } from '../utils/DocumentoUtil';
+import FirmatarioCard from './FirmatarioCard';
+import { ErrorMessage, Field } from 'formik';
 
-const Step3 = ({ touched, errors, setFieldValue }) => {
+const Step3 = ({ touched, errors, setFieldValue, isSubmitting }) => {
 
     const dispatch = useDispatch();
 
@@ -15,110 +16,155 @@ const Step3 = ({ touched, errors, setFieldValue }) => {
 
     // Stato per gestire quale pulsante è attivo
     const [positioning, setPositioning] = useState('automatico');
-    const [isMandatory, setMandatory] = useState('y');
 
     const handleButtonClick = (type) => {
         setPositioning(type);
     };
 
-    const handleSwitchChange = () => {
-        setMandatory(!isMandatory); // Cambia lo stato da automatico a manuale
-    };
-
     // Stato per gestire le righe
-    const [rows, setRows] = useState([
-        { id: 1, title: 'Titolo Firma 1', isRequired: true },
+    const [firme, setFirme] = useState([
+        { id: 1, titolo: 'Titolo Firma 1', obbligatoria: true },
     ]);
 
     // Funzione per clonare la riga
     const handleCloneRow = () => {
-        const newRow = {
-            id: rows.length + 1,  // Incrementa l'ID per garantire unicità
-            title: `Titolo Firma ${rows.length + 1}`,
-            isRequired: true,
+        const newFirma = {
+            id: firme.length + 1,  // Incrementa l'ID per garantire unicità
+            titolo: `Titolo Firma ${firme.length + 1}`,
+            obbligatoria: true,
         };
-        setRows([...rows, newRow]);  // Aggiungi la nuova riga all'array
+        setFirme([...firme, newFirma]);  // Aggiungi la nuova riga all'array
+        dispatch(addFirma(newFirma));
+        setFieldValue('firme', ([...document.firme, newFirma]));
     };
 
     return (
-        <>
-            <Card className="mb-4 custom-card">
-                <div className="card-body px-4 pb-4">
-                    <Card.Subtitle className="mb-2 text-muted py-1">
-                        <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Posizionamento firme grafiche</h5>
-                    </Card.Subtitle>
-                    <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <Row>
+            <Col xs={12} md={8}>
 
-                    <div className='d-flex'>
-                        {/* Pulsante Automatico */}
-                        <Button
-                            variant={positioning === 'automatico' ? 'primary' : 'secondary'}
-                            onClick={() => handleButtonClick('automatico')}
-                            style={{ marginRight: '10px' }}
-                        >
-                            Automatico {positioning === 'automatico' && <FaCheck style={{ marginLeft: "10px" }} />}
-                        </Button>
+                <Card className="mb-4 custom-card">
+                    <div className="card-body px-4 pb-4">
+                        <Card.Subtitle className="mb-2 text-muted py-1">
+                            <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Posizionamento firme grafiche</h5>
+                        </Card.Subtitle>
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
 
-                        {/* Pulsante Manuale */}
-                        <Button
-                            variant={positioning === 'manuale' ? 'primary' : 'secondary'}
-                            onClick={() => handleButtonClick('manuale')}
-                        >
-                            Manuale {positioning === 'manuale' && <FaCheck style={{ marginLeft: "10px" }} />}
-                        </Button>
+                        <div className='d-flex'>
+                            {/* Pulsante Automatico */}
+                            <Button
+                                variant={positioning === 'automatico' ? 'primary' : 'secondary'}
+                                onClick={() => handleButtonClick('automatico')}
+                                style={{ marginRight: '10px' }}
+                            >
+                                Automatico {positioning === 'automatico' && <FaCheck style={{ marginLeft: "10px" }} />}
+                            </Button>
+
+                            {/* Pulsante Manuale */}
+                            <Button
+                                variant={positioning === 'manuale' ? 'primary' : 'secondary'}
+                                onClick={() => handleButtonClick('manuale')}
+                            >
+                                Manuale {positioning === 'manuale' && <FaCheck style={{ marginLeft: "10px" }} />}
+                            </Button>
+                        </div>
+
+                        <Card.Text className="mt-3">
+                            Tipo di posizionamento selezionato: <strong style={{ textTransform: "uppercase" }}>{positioning}</strong>
+                        </Card.Text>
                     </div>
+                </Card>
+                <Card className="mb-4 custom-card">
+                    <div className="card-body px-4 pb-4">
+                        <Card.Subtitle className="mb-2 text-muted py-1">
+                            <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Lista firme</h5>
+                        </Card.Subtitle>
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
 
-                    <Card.Text className="mt-3">
-                        Tipo di posizionamento selezionato: <strong style={{ textTransform: "uppercase" }}>{positioning}</strong>
-                    </Card.Text>
-                </div>
-            </Card>
-            <Card className="mb-4 custom-card">
-                <div className="card-body px-4 pb-4">
-                    <Card.Subtitle className="mb-2 text-muted py-1">
-                        <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Lista firme</h5>
-                    </Card.Subtitle>
-                    <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        {/* Mappiamo le righe esistenti */}
+                        {firme.map((firma, index) => (
+                            <Row key={index} className="mb-3">
+                                <Col md={9}>
+                                    <BootstrapForm.Group className='mb-2'>
+                                        <BootstrapForm.Label><strong>Titolo</strong></BootstrapForm.Label>
+                                        <Field type="text" name={`firme[${index}].titolo`} className={`form-control input-group>${touched.titolo && errors.titolo ? 'is-invalid' : ''}`} placeholder="Inserisci il titolo" />
+                                        <ErrorMessage name={`firme[${index}].titolo`}>
+                                            {(msg) => (
+                                                <div className="invalid-feedback d-block">
+                                                    <BsExclamationCircle /> {msg}
+                                                </div>
+                                            )}
+                                        </ErrorMessage>
+                                    </BootstrapForm.Group>
+                                </Col>
 
-                    {/* Mappiamo le righe esistenti */}
-                    {rows.map((row, index) => (
-                        <Row key={row.id} className="mb-3">
-                            <Col md={10}>
-                                <BootstrapForm.Group controlId={`title_${row.id}`}>
-                                    <BootstrapForm.Label>{row.title}</BootstrapForm.Label>
-                                    <BootstrapForm.Control
-                                        type="text"
-                                        placeholder="Inserisci il nome"
-                                        required={row.isRequired}
-                                    />
-                                </BootstrapForm.Group>
-                            </Col>
+                                <Col md={3}>
+                                    <BootstrapForm.Group>
+                                        <BootstrapForm.Label></BootstrapForm.Label>
+                                        <BootstrapForm.Check
+                                            type="switch"
+                                            id="custom-switch"
+                                            name={`firme[${index}].obbligatoria`}
+                                            label={firma.obbligatoria?"obbligatoria":"non obbligatoria"}
+                                            onChange={() =>
+                                                setFieldValue(`firme[${index}].obbligatoria`, !firma.obbligatoria)
+                                            }
+                                            checked={firma.obbligatoria} // Check if switch is on or off
+                                            className='pt-3'
+                                        />
+                                        <ErrorMessage name={`firme[${index}].obbligatoria`}>
+                                            {(msg) => (
+                                                <div className="invalid-feedback d-block">
+                                                    <BsExclamationCircle /> {msg}
+                                                </div>
+                                            )}
+                                        </ErrorMessage>
+                                    </BootstrapForm.Group>
+                                </Col>
+                            </Row>
+                        ))}
 
-                            <Col md={2}>
-                                <BootstrapForm.Group controlId={`required_${row.id}`}>
-                                    <BootstrapForm.Label></BootstrapForm.Label>
-                                    <BootstrapForm.Check
-                                        type="switch"
-                                        id="custom-switch"
-                                        label={"obbligatoria"}
-                                        checked={isMandatory}
-                                        onChange={handleSwitchChange}
-                                        className='pt-3'
-                                    />
-                                </BootstrapForm.Group>
-                            </Col>
-                        </Row>
-                    ))}
+                        {/* Bottone per clonare la riga */}
+                        <Button variant="secondary" onClick={handleCloneRow}>
+                            Aggiungi una firma
+                        </Button>
 
-                    {/* Bottone per clonare la riga */}
-                    <Button variant="secondary" onClick={handleCloneRow}>
-                        Aggiungi una firma
-                    </Button>
+                    </div>
+                </Card>
 
-                </div>
-            </Card>
+                <Card className="mb-4 custom-card">
+                    <div className="card-body px-4 pb-4">
 
-        </>
+                        <div className="d-flex justify-content-between mt-2">
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                className="btn-lg"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? 'Caricamento...' : 'Avanti'}
+                            </Button>
+                        </div>
+
+                    </div>
+                </Card>
+
+                {/* Mostra l'errore e scrolla verso di esso */}
+                {Object.keys(errors).length > 0 && !isSubmitting && (
+                    <div className="alert alert-danger mt-4">
+                        <p>Si sono verificati degli errori nei seguenti campi:</p>
+                        <ul>
+                            {Object.keys(errors).map((key) => (
+                                <li key={key}>{errors[key]}</li>
+                            ))}
+                        </ul>
+                        Correggi prima di inviare.
+                    </div>
+                )}
+            </Col>
+            <Col xs={12} md={4}>
+                <FirmatarioCard />
+            </Col>
+        </Row>
     );
 };
 

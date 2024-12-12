@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentStep: "datiGenerali",
   documentDetails: {
-    tipologiaFirma: 'Singolo firmatario',  // Singolo o Multi
+    tipologiaFirma: 'SINGOLO_FIRMATARIO',  // Singolo o Multi
     dataScadenza: '',
     marcaTemporale: 'No',  // 'Sì' o 'No'
     titolo: '',
@@ -31,8 +31,8 @@ const caricaDocumentoSlice = createSlice({
     removeFirmatario: (state, action) => {
       state.firmatari = state.firmatari.filter(firmatario => firmatario.id !== action.payload);
     },
-    setFirme: (state, action) => {
-      state.firme = action.payload;
+    addFirma: (state, action) => {
+      state.firme.push(action.payload);
     },
     setPdfFile: (state, action) => {
       state.documentDetails.pdfFile = action.payload;
@@ -40,5 +40,5 @@ const caricaDocumentoSlice = createSlice({
   },
 });
 
-export const { setCurrentStep, setDocumentDetails, addFirmatario, removeFirmatario, setFirme, setPdfFile } = caricaDocumentoSlice.actions;
+export const { setCurrentStep, setDocumentDetails, addFirmatario, removeFirmatario, addFirma, setPdfFile } = caricaDocumentoSlice.actions;
 export default caricaDocumentoSlice.reducer;

@@ -34,7 +34,7 @@ const WizardBreadcrumb = () => {
             onClick={() => handleStepClick("datiGenerali")}
             active={currentStep == "datiGenerali"}
             style={{ cursor: 'pointer' }}
-            className={`step-carica-documento`}
+            className={`step-carica-documento ${steps.datiGenerali ? 'now-completed' : ''}`}
           >
             <div className='d-flex'>
               <div style={{ fontSize: "25px", marginTop: "-2px" }}>1</div>
@@ -50,7 +50,7 @@ const WizardBreadcrumb = () => {
             onClick={() => handleStepClick("ricercaFirmatari")}
             active={currentStep == "ricercaFirmatari"}
             style={{ cursor: 'pointer' }}
-            className={`step-carica-documento`}
+            className={`step-carica-documento ${steps.ricercaFirmatari ? 'now-completed' : ''}`}
           >
             <div className='d-flex'>
               <div style={{ fontSize: "25px", marginTop: "-2px" }}>2</div>
@@ -65,8 +65,8 @@ const WizardBreadcrumb = () => {
           <Breadcrumb.Item
             onClick={() => handleStepClick("firmeDocumento")}
             active={currentStep == "firmeDocumento"}
-            style={{ cursor: 'pointer' }}
-            className={`step-carica-documento`}
+            style={{ cursor: 'pointer', marginTop: "0" }}
+            className={`step-carica-documento ${steps.firmeDocumento ? 'now-completed' : ''}`}
           >
             <div className='d-flex'>
               <div style={{ fontSize: "25px", marginTop: "-2px" }}>3</div>
@@ -77,10 +77,10 @@ const WizardBreadcrumb = () => {
         ) : null}
 
       </Breadcrumb>
-      <Card className="mb-4 mt-4 custom-card step-content-carica-documento">
-        {currentStep == "datiGenerali" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci i dati generali del documento come titolo, descrizione e data di scadenza e carica il file PDF</span>}
-        {currentStep == "ricercaFirmatari" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Aggiungi firmatari che dovranno apporre le firme al documento</span>}
-        {currentStep == "firmeDocumento" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari</span>}
+      <Card className="mt-3 custom-card step-content-carica-documento">
+        {currentStep == "datiGenerali" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci i dati generali del documento come titolo, descrizione e data di scadenza. Effettua l'upload del file PDF che vuoi caricare.</span>}
+        {currentStep == "ricercaFirmatari" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Aggiungi i firmatari che dovranno apporre le firme al documento</span>}
+        {currentStep == "firmeDocumento" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari per poter firmare il documento</span>}
       </Card>
     </>
   );

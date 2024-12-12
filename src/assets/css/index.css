@@ -1262,19 +1262,19 @@ form label {
 }
 
 .step-navigation-carica-documento {
-  margin-top: 15px;
-  /* border-bottom: 1px solid #00264D; */
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .step-navigation-carica-documento ol {
-  margin:0;
+  margin: 0;
 }
 
 .step-carica-documento {
   border: 5px solid #cacaca;
   border-radius: 8px;
   background-color: #fff;
-  margin-top: 20px;
+  margin-top: 0;
   margin-right: 20px;
   z-index: 1;
   width: 300px;
@@ -1291,6 +1291,10 @@ form label {
   border: 5px solid #06c;
   color: #06c !important;
   background-color: #fff;
+}
+
+.step-carica-documento.now-completed {
+  animation: scintillio 1s ease-in-out 2;
 }
 
 .step-carica-documento.completed a {
@@ -1317,4 +1321,20 @@ form label {
 .step-content-carica-documento h5 {
   padding: 10px;
   margin: 0;
+}
+
+/* Definizione dell'animazione scintillio */
+@keyframes scintillio {
+  0% {
+    transform: scale(1); /* Inizialmente normale */
+    opacity: 1; /* Opacità normale */
+  }
+  50% {
+    transform: scale(1.05); /* Aumenta leggermente le dimensioni per un effetto di brillio */
+    opacity: 0.7; /* Riduci l'opacità per simulare il scintillio */
+  }
+  100% {
+    transform: scale(1); /* Torna alle dimensioni originali */
+    opacity: 1; /* Torna all'opacità normale */
+  }
 }

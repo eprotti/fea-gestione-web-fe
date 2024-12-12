@@ -1,16 +1,16 @@
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form as BootstrapForm, Button, Card } from 'react-bootstrap';
+import { Form as BootstrapForm, Button, Card, Col, Row } from 'react-bootstrap';
 import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { useDispatch, useSelector } from 'react-redux';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import Step3 from './Step3';
 import WizardBreadcrumb from './WizardBreadcrumb';
 import { setStepCompleted } from '../reducers/caricaDocumentoReducers';
 import { setCurrentStep } from '../slices/caricaDocumentoSlice';
 import Steps from '../enum/Steps';
-import Step3 from './Step3';
 
 const CaricaDocumento = () => {
 
@@ -27,7 +27,7 @@ const CaricaDocumento = () => {
         marcaTemporale: Yup.string().required('Marca temporale è obbligatoria'),
         titolo: Yup.string().required('Il titolo è obbligatorio'),
         descrizione: Yup.string().required('La descrizione è obbligatoria'),
-        tipologiaDocumento: Yup.string().required('Tipologia documento è obbligatoria'),
+        /* tipologiaDocumento: Yup.string().required('Tipologia documento è obbligatoria'), */
         pdfFile: Yup.mixed().required('Il file PDF è obbligatorio').test('fileType', 'Il file deve essere in formato PDF', value => value && value.type === 'application/pdf')
     });
 
@@ -37,7 +37,12 @@ const CaricaDocumento = () => {
 
     // Schema di validazione per Step 3 (Firme)
     const validationSchemaStep3 = Yup.object({
-        firme: Yup.array().min(2, 'Devi aggiungere almeno una firma').required('Firme obbligatorie'),
+        firme: Yup.array().of(
+            Yup.object({
+              titolo: Yup.string().required('Il titolo è obbligatorio'), // Validazione per il titolo
+              obbligatoria: Yup.boolean().required() // Cambiato per gestire un booleano
+            })
+          )
     });
 
     // Gestione del submit per lo Step 1
@@ -72,6 +77,7 @@ const CaricaDocumento = () => {
                     tipologiaDocumento: document.documentDetails.tipologiaDocumento,
                     pdfFile: document.documentDetails.pdfFile,
                     firmatari: document.firmatari,
+                    firme: document.firme,
                 }}
                 validationSchema={
                     currentStep == Steps.DATI_GENERALI ? validationSchemaStep1 :
@@ -79,48 +85,19 @@ const CaricaDocumento = () => {
                             validationSchemaStep3}
                 onSubmit={handleSubmitStep}
             >
-                {({ setFieldValue, errors, touched, isSubmitting, isValid }) => {
+                {({ values, setFieldValue, errors, touched, isSubmitting, isValid }) => {
                     return (
                         <Form>
                             {currentStep == Steps.DATI_GENERALI && (
-                                <Step1 touched={touched} errors={errors} setFieldValue={setFieldValue} />
+                                <Step1 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.RICERCA_FIRMATARI && (
-                                <Step2 touched={touched} errors={errors} setFieldValue={setFieldValue} />
+                                <Step2 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.FIRME_DOCUMENTO && (
-                                <Step3 touched={touched} errors={errors} setFieldValue={setFieldValue} />
+                                <Step3 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
-
-                            <Card className="mb-4 custom-card">
-                                <div className="card-body px-4 pb-4">
-
-                                    <div className="d-flex justify-content-between mt-2">
-                                        <Button
-                                            variant="primary"
-                                            type="submit"
-                                            className="btn-lg"
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? 'Caricamento...' : 'Avanti'}
-                                        </Button>
-                                    </div>
-
-                                </div>
-                            </Card>
-
-                            {/* Mostra l'errore e scrolla verso di esso */}
-                            {Object.keys(errors).length > 0 && !isSubmitting && (
-                                <div className="alert alert-danger mt-4">
-                                    <p>Si sono verificati degli errori nei seguenti campi:</p>
-                                    <ul>
-                                        {Object.keys(errors).map((key) => (
-                                            <li key={key}>{errors[key]}</li>
-                                        ))}
-                                    </ul>
-                                    Correggi prima di inviare.
-                                </div>
-                            )}
+                            
                         </Form >
                     );
                 }}
