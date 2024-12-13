@@ -11,7 +11,7 @@ const store = configureStore({
     user: userReducer,
     documents: documentsReducer,
     document: caricaDocumentoSlice,
-    steps: caricaDocumentoReducer
+    steps: caricaDocumentoReducer,
   },
 });
 

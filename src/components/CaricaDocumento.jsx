@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import Step4 from './Step4';
 import WizardBreadcrumb from './WizardBreadcrumb';
 import { setStepCompleted } from '../reducers/caricaDocumentoReducers';
 import { setCurrentStep } from '../slices/caricaDocumentoSlice';
 import Steps from '../enum/Steps';
+import { scrollToTop } from '../utils/CaricaDocumentoUtils';
 
 const CaricaDocumento = () => {
 
@@ -39,10 +41,10 @@ const CaricaDocumento = () => {
     const validationSchemaStep3 = Yup.object({
         firme: Yup.array().of(
             Yup.object({
-              titolo: Yup.string().required('Il titolo è obbligatorio'), // Validazione per il titolo
-              obbligatoria: Yup.boolean().required() // Cambiato per gestire un booleano
+                titolo: Yup.string().required('Il titolo è obbligatorio'), // Validazione per il titolo
+                obbligatoria: Yup.boolean().required() // Cambiato per gestire un booleano
             })
-          )
+        )
     });
 
     // Gestione del submit per lo Step 1
@@ -50,13 +52,20 @@ const CaricaDocumento = () => {
         setSubmitting(true);
         setTimeout(() => {
             setSubmitting(false);
+            scrollToTop();
             dispatch(setStepCompleted(currentStep)); // Quando l'utente completa lo step, lo segnamo come completato
             if (currentStep == Steps.DATI_GENERALI) {
                 dispatch(setCurrentStep(Steps.RICERCA_FIRMATARI));
             } else if (currentStep == Steps.RICERCA_FIRMATARI) {
                 dispatch(setCurrentStep(Steps.FIRME_DOCUMENTO));
-            } else {
-                dispatch(setCurrentStep(Steps.FIRME_DOCUMENTO));
+            } else if (currentStep == Steps.FIRME_DOCUMENTO) {
+                if (values.posizionamentoFirme === 'AUTOMATICO') {
+                    alert("Caricamento completato!");
+                } else {
+                    dispatch(setCurrentStep(Steps.POSIZIONAMENTO_FIRME));
+                }
+            } else if (currentStep == Steps.POSIZIONAMENTO_FIRME) {
+                alert("Caricamento completato!");
             }
 
         }, 2000);
@@ -78,6 +87,7 @@ const CaricaDocumento = () => {
                     pdfFile: document.documentDetails.pdfFile,
                     firmatari: document.firmatari,
                     firme: document.firme,
+                    posizionamentoFirme: document.posizionamentoFirme,
                 }}
                 validationSchema={
                     currentStep == Steps.DATI_GENERALI ? validationSchemaStep1 :
@@ -97,7 +107,46 @@ const CaricaDocumento = () => {
                             {currentStep == Steps.FIRME_DOCUMENTO && (
                                 <Step3 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
-                            
+                            {currentStep == Steps.POSIZIONAMENTO_FIRME && (
+                                <Step4 />
+                            )}
+
+                            <Row>
+                                <Col xs={12} md={8}>
+                                    <Card className="mb-4 custom-card mt-0">
+                                        <div className="card-body px-4 pb-4">
+
+                                            <div className="d-flex justify-content-between mt-2">
+                                                <Button
+                                                    variant="primary"
+                                                    type="submit"
+                                                    className="btn-lg"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? 'Caricamento...' : 'Avanti'}
+                                                </Button>
+                                            </div>
+
+                                        </div>
+                                    </Card>
+
+                                    {/* Mostra l'errore e scrolla verso di esso */}
+                                    {Object.keys(errors).length > 0 && !isSubmitting && (
+                                        <div className="alert alert-danger mt-4">
+                                            <p>Si sono verificati degli errori nei seguenti campi:</p>
+                                            <ul>
+                                                {Object.keys(errors).map((key) => (
+                                                    <li key={key}>{errors[key]}</li>
+                                                ))}
+                                            </ul>
+                                            Correggi prima di inviare.
+                                        </div>
+                                    )}
+                                </Col>
+                                <Col xs={12} md={4}>
+                                </Col>
+                            </Row>
+
                         </Form >
                     );
                 }}

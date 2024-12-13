@@ -11,6 +11,7 @@ const initialState = {
     tipologiaDocumento: '',
     pdfFile: null,  // File PDF
   },
+  posizionamentoFirme: 'AUTOMATICO',
   firmatari: [],
   firme: [],
 };

@@ -76,7 +76,7 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                                 </Button>
                             </div>
 
-                            <Card.Text className="mt-3">
+                            <Card.Text className="mt-3 py-2 px-2 card-text mb-0" style={{ background: "#efefef" }}>
                                 Tipologia di firma selezionata: <strong style={{ textTransform: "uppercase" }}>{tipologiaFirma}</strong>
                             </Card.Text>
                         </BootstrapForm.Group>
@@ -222,12 +222,15 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                             {/* Visualizza informazioni sul file caricato */}
                             {values.pdfFile && (
                                 <div className='d-flex px-1 py-1' style={{ fontSize: "large", background: "#efefef" }}>
-                                    <p className='pt-3'>
-                                        <span className='mx-2'>
-                                            <strong><FaFilePdf size={20} color='darkred' style={{ verticalAlign: "sub" }} /> {values.pdfFile.name}</strong> ({getFileSizeInKB(values.pdfFile)} KB)
+                                    <p className='pt-3 mx-2'>
+                                        <strong>
+                                            <FaFilePdf size={20} color='darkred' style={{ verticalAlign: "sub" }} /> {values.pdfFile.name}
+                                        </strong>
+                                        <span style={{whiteSpace: "nowrap"}}>
+                                            ({getFileSizeInKB(values.pdfFile)} KB)
                                         </span>
                                     </p>
-                                    <p className='pt-3' style={{marginLeft: "auto", marginRight: "0"}}>
+                                    <p className='pt-3' style={{ marginLeft: "auto", marginRight: "0" }}>
                                         <a onClick={handleResetFile} style={{ cursor: "pointer", padding: "16px" }}><FaTrash size={16} color='#06c' style={{ verticalAlign: "unset" }} /> Rimuovi</a>
                                     </p>
                                 </div>
@@ -244,35 +247,6 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                     </div>
                 </Card>
 
-                <Card className="mb-4 custom-card">
-                    <div className="card-body px-4 pb-4">
-
-                        <div className="d-flex justify-content-between mt-2">
-                            <Button
-                                variant="primary"
-                                type="submit"
-                                className="btn-lg"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Caricamento...' : 'Avanti'}
-                            </Button>
-                        </div>
-
-                    </div>
-                </Card>
-
-                {/* Mostra l'errore e scrolla verso di esso */}
-                {Object.keys(errors).length > 0 && !isSubmitting && (
-                    <div className="alert alert-danger mt-4">
-                        <p>Si sono verificati degli errori nei seguenti campi:</p>
-                        <ul>
-                            {Object.keys(errors).map((key) => (
-                                <li key={key}>{errors[key]}</li>
-                            ))}
-                        </ul>
-                        Correggi prima di inviare.
-                    </div>
-                )}
             </Col>
 
             <Col xs={12} md={4}>

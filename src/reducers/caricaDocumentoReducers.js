@@ -2,6 +2,7 @@ const initialState = {
     datiGenerali: false,
     ricercaFirmatari: false,
     firmeDocumento: false,
+    posizionamentoFirme: false,
   };
   
   // Azione per aggiornare lo stato dello step

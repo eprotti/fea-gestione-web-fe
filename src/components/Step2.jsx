@@ -92,35 +92,6 @@ const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
                     </div>
                 </Card>
 
-                <Card className="mb-4 custom-card">
-                    <div className="card-body px-4 pb-4">
-
-                        <div className="d-flex justify-content-between mt-2">
-                            <Button
-                                variant="primary"
-                                type="submit"
-                                className="btn-lg"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Caricamento...' : 'Avanti'}
-                            </Button>
-                        </div>
-
-                    </div>
-                </Card>
-
-                {/* Mostra l'errore e scrolla verso di esso */}
-                {Object.keys(errors).length > 0 && !isSubmitting && (
-                    <div className="alert alert-danger mt-4">
-                        <p>Si sono verificati degli errori nei seguenti campi:</p>
-                        <ul>
-                            {Object.keys(errors).map((key) => (
-                                <li key={key}>{errors[key]}</li>
-                            ))}
-                        </ul>
-                        Correggi prima di inviare.
-                    </div>
-                )}
             </Col>
 
             <Col xs={12} md={4}>

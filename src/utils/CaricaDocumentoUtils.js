@@ -5,3 +5,11 @@ export const getFileSizeInKB = (file) => {
     }
     return null;
   };
+
+export const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',  // Aggiungi il comportamento "smooth" per uno scroll fluido
+  });
+};
