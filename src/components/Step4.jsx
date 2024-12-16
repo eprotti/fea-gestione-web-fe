@@ -2,7 +2,6 @@ import React from 'react';
 import SignatureList from './SignatureList';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import PdfViewer from './PdfViewer';
 
 const Step4 = () => {
     const signatures = [
@@ -19,7 +18,6 @@ const Step4 = () => {
                         <SignatureList signatures={signatures} />
                     </div>
                     <div className="col-md-9">
-                        <PdfViewer fileUrl="http://localhost:5173/TEST_PAGE2.pdf" />
                     </div>
                 </div>
             </div>

@@ -5,4 +5,9 @@ export const handleViewDocument = (navigate, codiceDocumento) => {
 
 export const handleUploadDocument = (navigate) => {
     navigate("/gestione-documento/carica");
+
+}
+
+export const handleContactsList = (navigate) => {
+    navigate("/rubrica/lista-contatti");
 }

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFirmatario } from '../slices/caricaDocumentoSlice';
 import { FaTrash } from 'react-icons/fa';
 import TipologiaFirmaCard from './TipologiaFirmaCard';
+import RicercaFirmatariCard from './RicercaFirmatariCard';
 
 const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
 
@@ -19,7 +20,8 @@ const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
         <Row>
             <Col xs={12} md={8}>
 
-                <Card className="mb-4 custom-card">
+                <RicercaFirmatariCard />
+                {/* <Card className="mb-4 custom-card">
                     <div className="card-body px-4 pb-4">
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Ricerca firmatari</h5>
@@ -47,7 +49,7 @@ const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
                         </BootstrapForm.Group>
                     </div>
                 </Card>
-
+ */}
                 <Card className="mb-4 custom-card">
                     <div className="card-body px-4 pb-4">
                         <Card.Subtitle className="mb-2 text-muted py-1">

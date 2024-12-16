@@ -11,6 +11,7 @@ import DettaglioDocumentoPage from './pages/DettaglioDocumentoPage';
 import HomePage from './pages/HomePage';
 import NotifichePage from './pages/NotifichePage';
 import CaricaDocumentoPage from './pages/CaricaDocumentoPage';
+import ListaContattiPage from './pages/ListaContattiPage';
 
 const App = () => {
 
@@ -20,7 +21,8 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
 
         <Route path="/gestione-documento/carica" element={<CaricaDocumentoPage />} />
-
+        <Route path="/rubrica/lista-contatti" element={<ListaContattiPage />} />
+        
         <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
 
         <Route path="/notifiche" element={<NotifichePage />} />
