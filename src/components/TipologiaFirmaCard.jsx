@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { FaBuilding, FaCircle, FaEnvelope, FaFileSignature, FaPen, FaPenAlt, FaSchool, FaSign, FaSignature } from 'react-icons/fa';
+import { FaBuilding, FaCircle, FaEnvelope, FaFileSignature, FaInfoCircle, FaPen, FaPenAlt, FaSchool, FaSign, FaSignature } from 'react-icons/fa';
 import { separatorDocumento } from '../utils/DocumentoUtil';
 import { useSelector } from 'react-redux';
 import { FaPencil } from 'react-icons/fa6';
@@ -16,7 +16,7 @@ const TipologiaFirmaCard = () => {
       <div className="card-body px-4 pb-4">
 
         <Card.Subtitle className="mb-2 text-muted py-1 card-subtitle h6">
-          <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Tipologia firma</h5>
+          <h5 className="m-a-0 text-uppercase light mt-1 mb-0"><FaInfoCircle size={20} color="#06c" style={{verticalAlign: "unset", marginRight: "5px"}}/> Informazione</h5>
         </Card.Subtitle>
 
         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
@@ -24,7 +24,7 @@ const TipologiaFirmaCard = () => {
         <div className="row">
           <div className="col-xs-12">
             <div className="data-show">
-              <p className="data-text"><FaFileSignature size={24} style={{ color: "#06c", verticalAlign: "bottom", marginRight: "10px" }} /> Tipologia di firma selezionata:</p>
+              <p className="data-text">Tipologia di firma selezionata:</p>
               <p className="data-value pt-2" style={{whiteSpace: "nowrap"}}>{document.documentDetails.tipologiaFirma}</p>
             </div>
           </div>

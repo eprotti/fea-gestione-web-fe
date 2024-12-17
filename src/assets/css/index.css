@@ -1326,15 +1326,59 @@ form label {
 /* Definizione dell'animazione scintillio */
 @keyframes scintillio {
   0% {
-    transform: scale(1); /* Inizialmente normale */
-    opacity: 1; /* Opacità normale */
+    transform: scale(1);
+    /* Inizialmente normale */
+    opacity: 1;
+    /* Opacità normale */
   }
+
   50% {
-    transform: scale(1.05); /* Aumenta leggermente le dimensioni per un effetto di brillio */
-    opacity: 0.7; /* Riduci l'opacità per simulare il scintillio */
+    transform: scale(1.05);
+    /* Aumenta leggermente le dimensioni per un effetto di brillio */
+    opacity: 0.7;
+    /* Riduci l'opacità per simulare il scintillio */
   }
+
   100% {
-    transform: scale(1); /* Torna alle dimensioni originali */
-    opacity: 1; /* Torna all'opacità normale */
+    transform: scale(1);
+    /* Torna alle dimensioni originali */
+    opacity: 1;
+    /* Torna all'opacità normale */
   }
+}
+
+.btn-selected,
+.btn-selected:hover {
+  display: block;
+  width: 100%;
+  text-transform: capitalize !important;
+  font-size: medium !important;
+  border-color: #f9f9f9 !important;
+  background-color: green;
+  color: white;
+}
+
+.btn-unselected,
+.btn-unselected:hover {
+  display: block;
+  width: 100%;
+  text-transform: capitalize !important;
+  font-size: medium !important;
+  border-color: #f9f9f9 !important;
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Rimuove i bordi tra le celle della tabella */
+.table-no-inner-borders td,
+.table-no-inner-borders th {
+  border-right: none !important;
+  border-left: none !important;
+}
+
+/* Mantiene solo i bordi tra le righe */
+.table-no-inner-borders .border-top,
+.table-no-inner-borders .border-bottom {
+  border-left: 1px solid #dee2e6 !important;
+  border-right: 1px solid #dee2e6 !important;
 }

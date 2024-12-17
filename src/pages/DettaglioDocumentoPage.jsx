@@ -50,7 +50,10 @@ const DettaglioDocumentoPage = () => {
 
   return (
     <Container className="main-container pt-5 pb-5">
-      <h3 className='mb-0 pt-2'>Dettaglio documento</h3>
+      <h3 className='mb-0 py-2 h3'>Dettaglio documento</h3>
+
+      <hr />
+
       <Row>
         {/* Colonna principale per il contenuto */}
         <Col xs={12} md={8}>

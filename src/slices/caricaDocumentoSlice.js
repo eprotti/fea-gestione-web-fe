@@ -11,9 +11,13 @@ const initialState = {
     tipologiaDocumento: '',
     pdfFile: null,  // File PDF
   },
-  posizionamentoFirme: 'AUTOMATICO',
+  posizionamentoFirme: 'automatico',
   firmatari: [],
-  firme: [],
+  firme: [{
+    id: 1,
+    titolo: `Titolo Firma 1`,
+    obbligatoria: true,
+  }],
 };
 
 const caricaDocumentoSlice = createSlice({
@@ -38,8 +42,11 @@ const caricaDocumentoSlice = createSlice({
     setPdfFile: (state, action) => {
       state.documentDetails.pdfFile = action.payload;
     },
+    setPosizionamentoFirme: (state, action) => {
+      state.posizionamentoFirme = action.payload;
+    },
   },
 });
 
-export const { setCurrentStep, setDocumentDetails, addFirmatario, removeFirmatario, addFirma, setPdfFile } = caricaDocumentoSlice.actions;
+export const { setCurrentStep, setDocumentDetails, addFirmatario, removeFirmatario, addFirma, setPdfFile, setPosizionamentoFirme } = caricaDocumentoSlice.actions;
 export default caricaDocumentoSlice.reducer;

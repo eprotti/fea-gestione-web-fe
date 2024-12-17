@@ -20,36 +20,8 @@ const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
         <Row>
             <Col xs={12} md={8}>
 
-                <RicercaFirmatariCard />
-                {/* <Card className="mb-4 custom-card">
-                    <div className="card-body px-4 pb-4">
-                        <Card.Subtitle className="mb-2 text-muted py-1">
-                            <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Ricerca firmatari</h5>
-                        </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
-
-                        <BootstrapForm.Group>
-                            <input
-                                type="text"
-                                placeholder="Cerca un firmatario..."
-                                className="form-control mb-4"
-                                onChange={(e) => setFieldValue('search', e.target.value)}
-                            />
-                            <Button
-                                variant="secondary"
-                                onClick={() => {
-                                    // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-                                    const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-                                    dispatch(addFirmatario(newFirmatario));
-                                    setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
-                                }}
-                            >
-                                Aggiungi Firmatario
-                            </Button>
-                        </BootstrapForm.Group>
-                    </div>
-                </Card>
- */}
+                <RicercaFirmatariCard addFirmatario={addFirmatario} setFieldValue={setFieldValue}/>
+    
                 <Card className="mb-4 custom-card">
                     <div className="card-body px-4 pb-4">
                         <Card.Subtitle className="mb-2 text-muted py-1">

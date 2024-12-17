@@ -28,6 +28,15 @@ const NotificationListener = () => {
             pauseOnHover: true,
             draggable: false,
           });
+        } else if (notification.type === 'info') {
+          toast.info(truncateMessage(notification.message), {
+            position: 'bottom-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+          });
         } else if (notification.type === 'error') {
           toast.error(truncateMessage(notification.message), {
             position: 'bottom-right',

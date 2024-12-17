@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useDrop, useDrag } from 'react-dnd';
-import PdfViewer from './PdfViewer.jsx';
+import { useDrag, useDrop } from 'react-dnd';
 
-const PdfWithDrop = ({ fileUrl }) => {
+const PdfWithDrop = () => {
     const [signatures, setSignatures] = useState([]);
 
     // Funzione per aggiornare la posizione di una firma esistente
@@ -53,7 +52,6 @@ const PdfWithDrop = ({ fileUrl }) => {
 
     return (
         <div ref={drop} style={{ position: 'relative', height: '100%', width: '100%' }}>
-            <PdfViewer fileUrl={fileUrl}/>
             {signatures.map((sig, index) => (
                 <DraggableSignature
                     key={sig.id}

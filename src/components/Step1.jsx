@@ -61,16 +61,17 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                             <div className='d-flex'>
                                 {/* Pulsante Firma Singola */}
                                 <Button
-                                    variant={tipologiaFirma === 'SINGOLO_FIRMATARIO' ? 'primary' : 'secondary'}
+                                    variant={tipologiaFirma === 'SINGOLO_FIRMATARIO' ? 'selected' : 'unselected'}
                                     onClick={() => handleTipologiaFirmaButtonClick('SINGOLO_FIRMATARIO')}
-                                    style={{ marginRight: '10px' }}
+                                    style={{ marginRight: '10px'}}
                                 >
                                     Singolo firmatario {tipologiaFirma === 'SINGOLO_FIRMATARIO' && <FaCheck style={{ marginLeft: "10px" }} />}
                                 </Button>
 
                                 <Button
-                                    variant={tipologiaFirma === 'MULTI_FIRMATARIO' ? 'primary' : 'secondary'}
+                                    variant={tipologiaFirma === 'MULTI_FIRMATARIO' ? 'selected' : 'unselected'}
                                     onClick={() => handleTipologiaFirmaButtonClick('MULTI_FIRMATARIO')}
+                                    style={{ marginRight: '10px' }}
                                 >
                                     Multi firmatario {tipologiaFirma === 'MULTI_FIRMATARIO' && <FaCheck style={{ marginLeft: "10px" }} />}
                                 </Button>
@@ -85,7 +86,7 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
                         <BootstrapForm.Group className='mb-2'>
                             <BootstrapForm.Label><strong>Titolo</strong></BootstrapForm.Label>
-                            <Field type="text" name="titolo" className={`form-control input-group>${touched.titolo && errors.titolo ? 'is-invalid' : ''}`} placeholder="Inserisci il titolo" />
+                            <Field type="text" name="titolo" className={`form-control input-group ${touched.titolo && errors.titolo ? 'is-invalid' : ''}`} placeholder="Inserisci il titolo" />
                             <ErrorMessage name="titolo">
                                 {(msg) => (
                                     <div className="invalid-feedback d-block">
@@ -166,24 +167,32 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
                         <BootstrapForm.Group>
                             <div role="radiogroup" className={`d-flex radio-group ${touched.tipologiaDocumento && errors.tipologiaDocumento ? 'is-invalid' : ''}`}>
-                                <div className="form-check">
-                                    <Field type="radio" name="tipologiaDocumento" value="" id="tipologiaDocumento" className="form-check-input" />
-                                    <label className="form-check-label" htmlFor="tipologiaDocumento">
-                                        Non specificata
-                                    </label>
-                                </div>
-                                <div className="form-check ml-5">
-                                    <Field type="radio" name="tipologiaDocumento" value="tipo1" id="tipologiaDocumento" className="form-check-input" />
-                                    <label className="form-check-label" htmlFor="tipologiaDocumento">
-                                        Tipologia 1
-                                    </label>
-                                </div>
-                                <div className="form-check ml-5">
-                                    <Field type="radio" name="tipologiaDocumento" value="tipo2" id="tipologiaDocumento" className="form-check-input" />
-                                    <label className="form-check-label" htmlFor="tipologiaDocumento">
-                                        Tipologia 2
-                                    </label>
-                                </div>
+                                <Row className='mb-2'>
+                                    <Col md={4} className='mt-2'>
+                                        <div className="form-check" style={{ width: "150px" }}>
+                                            <Field type="radio" name="tipologiaDocumento" value="" id="tipologiaDocumento" className="form-check-input" />
+                                            <label className="form-check-label" htmlFor="tipologiaDocumento">
+                                                Non specificata
+                                            </label>
+                                        </div>
+                                    </Col>
+                                    <Col md={4} className='mt-2'>
+                                        <div className="form-check ml-5" style={{ width: "150px" }}>
+                                            <Field type="radio" name="tipologiaDocumento" value="tipo1" id="tipologiaDocumento" className="form-check-input" />
+                                            <label className="form-check-label" htmlFor="tipologiaDocumento">
+                                                Tipologia 1
+                                            </label>
+                                        </div>
+                                    </Col>
+                                    <Col md={4} className='mt-2'>
+                                        <div className="form-check ml-5" style={{ width: "150px" }}>
+                                            <Field type="radio" name="tipologiaDocumento" value="tipo2" id="tipologiaDocumento" className="form-check-input" />
+                                            <label className="form-check-label" htmlFor="tipologiaDocumento">
+                                                Tipologia 2
+                                            </label>
+                                        </div>
+                                    </Col>
+                                </Row>
                             </div>
                             <ErrorMessage name="tipologiaDocumento">
                                 {(msg) => (
@@ -226,7 +235,9 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                                         <strong>
                                             <FaFilePdf size={20} color='darkred' style={{ verticalAlign: "sub" }} /> {values.pdfFile.name}
                                         </strong>
-                                        <span style={{whiteSpace: "nowrap"}}>
+                                    </p>
+                                    <p className='pt-3 mx-2 d-none d-xl-block'>
+                                        <span style={{ whiteSpace: "nowrap" }}>
                                             ({getFileSizeInKB(values.pdfFile)} KB)
                                         </span>
                                     </p>

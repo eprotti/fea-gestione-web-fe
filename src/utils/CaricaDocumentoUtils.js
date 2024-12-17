@@ -9,7 +9,13 @@ export const getFileSizeInKB = (file) => {
 export const scrollToTop = () => {
   window.scrollTo({
     top: 0,
-    left: 0,
-    behavior: 'smooth',  // Aggiungi il comportamento "smooth" per uno scroll fluido
-  });
+/*     behavior: 'smooth',  // Aggiungi il comportamento "smooth" per uno scroll fluido
+ */  });
+};
+
+export const scrollToBottom = () => {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+/*     behavior: 'smooth',  // Aggiungi il comportamento "smooth" per uno scroll fluido
+ */  });
 };

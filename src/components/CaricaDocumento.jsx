@@ -1,8 +1,7 @@
-import React from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Form as BootstrapForm, Button, Card, Col, Row } from 'react-bootstrap';
-import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -13,10 +12,14 @@ import { setStepCompleted } from '../reducers/caricaDocumentoReducers';
 import { setCurrentStep } from '../slices/caricaDocumentoSlice';
 import Steps from '../enum/Steps';
 import { scrollToTop } from '../utils/CaricaDocumentoUtils';
+import { addNotification } from '../actions/NotificationActions';
+import { handleViewDocument } from '../utils/NavigationUtil';
+import { useNavigate } from 'react-router-dom';
 
 const CaricaDocumento = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     /* Documento da caricare */
     const document = useSelector((state) => state.document);
@@ -40,35 +43,36 @@ const CaricaDocumento = () => {
     // Schema di validazione per Step 3 (Firme)
     const validationSchemaStep3 = Yup.object({
         firme: Yup.array().of(
-            Yup.object({
-                titolo: Yup.string().required('Il titolo è obbligatorio'), // Validazione per il titolo
-                obbligatoria: Yup.boolean().required() // Cambiato per gestire un booleano
+            Yup.object().shape({
+                titolo: Yup.string().required('Il titolo è obbligatorio'),
+                obbligatoria: Yup.boolean(),
             })
-        )
+        ),
     });
 
     // Gestione del submit per lo Step 1
     const handleSubmitStep = (values, { setSubmitting }) => {
         setSubmitting(true);
-        setTimeout(() => {
-            setSubmitting(false);
-            scrollToTop();
-            dispatch(setStepCompleted(currentStep)); // Quando l'utente completa lo step, lo segnamo come completato
-            if (currentStep == Steps.DATI_GENERALI) {
-                dispatch(setCurrentStep(Steps.RICERCA_FIRMATARI));
-            } else if (currentStep == Steps.RICERCA_FIRMATARI) {
-                dispatch(setCurrentStep(Steps.FIRME_DOCUMENTO));
-            } else if (currentStep == Steps.FIRME_DOCUMENTO) {
-                if (values.posizionamentoFirme === 'AUTOMATICO') {
-                    alert("Caricamento completato!");
-                } else {
-                    dispatch(setCurrentStep(Steps.POSIZIONAMENTO_FIRME));
-                }
-            } else if (currentStep == Steps.POSIZIONAMENTO_FIRME) {
-                alert("Caricamento completato!");
+        setSubmitting(false);
+        scrollToTop();
+        dispatch(setStepCompleted(currentStep)); // Quando l'utente completa lo step, lo segnamo come completato
+        if (currentStep == Steps.DATI_GENERALI) {
+            dispatch(setCurrentStep(Steps.RICERCA_FIRMATARI));
+        } else if (currentStep == Steps.RICERCA_FIRMATARI) {
+            dispatch(setCurrentStep(Steps.FIRME_DOCUMENTO));
+        } else if (currentStep == Steps.FIRME_DOCUMENTO) {
+            if (values.posizionamentoFirme === 'automatico') {
+                console.log(values)
+                dispatch(addNotification("Documento caricato con successo", "success"));
+                handleViewDocument(navigate, "de0ad9e3-15d8-4895-badc-4a34e7bb5971");
+            } else {
+                dispatch(setCurrentStep(Steps.POSIZIONAMENTO_FIRME));
             }
+        } else if (currentStep == Steps.POSIZIONAMENTO_FIRME) {
+            dispatch(addNotification("Documento caricato con successo", "success"));
+            handleViewDocument(navigate, "de0ad9e3-15d8-4895-badc-4a34e7bb5971");
+        }
 
-        }, 2000);
     };
 
     return (
@@ -105,7 +109,7 @@ const CaricaDocumento = () => {
                                 <Step2 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.FIRME_DOCUMENTO && (
-                                <Step3 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
+                                <Step3 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.POSIZIONAMENTO_FIRME && (
                                 <Step4 />

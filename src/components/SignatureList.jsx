@@ -1,5 +1,7 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
 import { useDrag } from 'react-dnd';
+import { separatorDocumento } from '../utils/DocumentoUtil';
 
 const SignatureItem = ({ signature, onDragStart }) => {
     const [{ isDragging }, drag] = useDrag(() => ({
@@ -28,11 +30,20 @@ const SignatureItem = ({ signature, onDragStart }) => {
 
 const SignatureList = ({ signatures }) => {
     return (
-        <div style={{ padding: '10px', borderRight: '1px solid #ddd' }}>
-            {signatures.map((sig) => (
-                <SignatureItem key={sig.id} signature={sig} />
-            ))}
-        </div>
+        <Card className="mb-4 custom-card">
+
+            <div className="card-body px-4 pb-4">
+
+                <Card.Subtitle className="mb-2 text-muted py-1 card-subtitle h6">
+                    <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Firme</h5>
+                </Card.Subtitle>
+
+                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                {signatures.map((sig) => (
+                    <SignatureItem key={sig.id} signature={sig} />
+                ))}
+            </div>
+        </Card>
     );
 };
 

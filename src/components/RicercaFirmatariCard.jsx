@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Tab, Nav, Card, Form, Button, Row, Col, ListGroup } from 'react-bootstrap';
 import { separatorDocumento } from '../utils/DocumentoUtil';
-import { addFirmatario } from '../slices/caricaDocumentoSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaUser, FaUsers } from 'react-icons/fa';
+import { scrollToBottom } from '../utils/CaricaDocumentoUtils';
 
-const RicercaFirmatariCard = () => {
+const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
   const dispatch = useDispatch();
+
+  /* Documento da caricare */
+  const document = useSelector((state) => state.document);
 
   const [key, setKey] = useState('manual');  // Stato per la tab attiva
   const [showSearchContacts, setShowSearchContacts] = useState(false);  // Stato per mostrare la ricerca contatti
@@ -59,6 +62,15 @@ const RicercaFirmatariCard = () => {
     );
   };
 
+  const handleButtonClick = () => {
+    // Aggiungi logica per cercare e aggiungere i firmatari alla lista
+    const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
+    dispatch(addFirmatario(newFirmatario));
+    setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
+    scrollToBottom();
+  };
+
+
   return (
     <Card className="mb-4 custom-card">
       <div className="card-body px-4 pb-4">
@@ -70,13 +82,13 @@ const RicercaFirmatariCard = () => {
         {/* NavTabs per il cambio di tab */}
         <Tab.Container id="add-contact-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
           <Nav variant="tabs">
-            <Nav.Item>
+            <Nav.Item style={{ background: "#efefef" }}>
               <Nav.Link eventKey="manual">Manuale</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item style={{ background: "#efefef" }}>
               <Nav.Link eventKey="iam">IAM</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item style={{ background: "#efefef" }}>
               <Nav.Link eventKey="rubrica">Rubrica</Nav.Link>
             </Nav.Item>
           </Nav>
@@ -84,18 +96,17 @@ const RicercaFirmatariCard = () => {
           <Tab.Content className="mt-3">
             {/* Tab 1: Aggiungi Manualmente */}
             <Tab.Pane eventKey="manual">
-              <Form>
                 <Row className='mb-2'>
                   <Col md={6} className='mt-2'>
                     <Form.Group controlId="formName">
                       <Form.Label><strong>Nome</strong></Form.Label>
-                      <Form.Control type="text" placeholder="Inserisci il nome" />
+                      <Form.Control type="text" placeholder="Inserisci il nome" className='input-group' />
                     </Form.Group>
                   </Col>
                   <Col md={6} className='mt-2'>
                     <Form.Group controlId="formCognome">
                       <Form.Label><strong>Cognome</strong></Form.Label>
-                      <Form.Control type="text" placeholder="Inserisci il cognome" />
+                      <Form.Control type="text" placeholder="Inserisci il cognome" className='input-group' />
                     </Form.Group>
                   </Col>
                 </Row>
@@ -103,66 +114,53 @@ const RicercaFirmatariCard = () => {
                 <Row className='mb-2'>
                   <Form.Group controlId="formEmail">
                     <Form.Label><strong>Email</strong></Form.Label>
-                    <Form.Control type="email" placeholder="Inserisci l'email" />
+                    <Form.Control type="email" placeholder="Inserisci l'email" className='input-group' />
                   </Form.Group>
                 </Row>
 
                 <Row className='mb-2'>
                   <Form.Group controlId="formCodiceFiscale">
                     <Form.Label><strong>Codice fiscale</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" />
+                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
                   </Form.Group>
                 </Row>
 
                 <Button
                   variant="secondary"
                   className='mt-4'
-                  onClick={() => {
-                    // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-                    const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-                    dispatch(addFirmatario(newFirmatario));
-                    setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
-                  }}
+                  onClick={handleButtonClick}
                 >
                   Aggiungi Firmatario
                 </Button>
-              </Form>
             </Tab.Pane>
 
             {/* Tab 2: Aggiungi da IAM */}
             <Tab.Pane eventKey="iam">
-              <Form>
                 <Row className='mb-2'>
                   <Form.Group controlId="formCodiceFiscale">
                     <Form.Label><strong>Inserisci il codice fiscale</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" />
+                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
                   </Form.Group>
                 </Row>
 
                 <Button
                   variant="secondary"
                   className='mt-4'
-                  onClick={() => {
-                    // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-                    const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-                    dispatch(addFirmatario(newFirmatario));
-                    setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
-                  }}
+                  onClick={handleButtonClick}
                 >
                   Aggiungi Firmatario
                 </Button>
-              </Form>
             </Tab.Pane>
 
             {/* Tab 3: Aggiungi da Rubrica */}
             <Tab.Pane eventKey="rubrica">
               <div>
-                <div className='d-flex'>
+                <div className='d-flex mt-4'>
                   {/* Bottoni per selezionare "Cerca contatto" o "Cerca gruppo" */}
-                  <Button variant={showSearchContacts ? 'primary' : 'secondary'} onClick={() => { setShowSearchContacts(true); setShowSearchGroups(false); }}>
+                  <Button variant={showSearchContacts ? 'selected' : 'unselected'} onClick={() => { setShowSearchContacts(true); setShowSearchGroups(false); }}>
                     Cerca Contatto <FaUser style={{ marginLeft: "8px", verticalAlign: "unset" }} />
                   </Button>
-                  <Button variant={showSearchGroups ? 'primary' : 'secondary'} onClick={() => { setShowSearchGroups(true); setShowSearchContacts(false); }}>
+                  <Button variant={showSearchGroups ? 'selected' : 'unselected'} onClick={() => { setShowSearchGroups(true); setShowSearchContacts(false); }}>
                     Cerca Gruppo <FaUsers size={24} style={{ marginLeft: "8px", verticalAlign: "sub" }} />
                   </Button>
                 </div>
@@ -177,13 +175,14 @@ const RicercaFirmatariCard = () => {
                           placeholder="nome o cognome"
                           value={contactFilter}
                           onChange={(e) => setContactFilter(e.target.value)}
+                          className='input-group'
                         />
                       </Form.Group>
                     </Row>
 
 
                     <ListGroup>
-                    <Form.Label style={{
+                      <Form.Label style={{
                         background: "#efefef",
                         marginBottom: "0",
                         padding: "4px",
@@ -195,18 +194,16 @@ const RicercaFirmatariCard = () => {
                       }}><strong>Contatti</strong></Form.Label>
                       {filteredContacts.length > 0 ? (
                         filteredContacts.map(contact => (
-                          <>
-                            <ListGroup.Item
-                              key={contact.id}
-                              onClick={() => handleContactSelect(contact.id)}
-                              style={{
-                                cursor: 'pointer',
-                                backgroundColor: selectedContacts.includes(contact.id) ? '#cfe2f3' : 'transparent'
-                              }}
-                            >
-                              {contact.name} {contact.surname}
-                            </ListGroup.Item>
-                          </>
+                          <ListGroup.Item
+                            key={contact.id}
+                            onClick={() => handleContactSelect(contact.id)}
+                            style={{
+                              cursor: 'pointer',
+                              backgroundColor: selectedContacts.includes(contact.id) ? '#cfe2f3' : 'transparent'
+                            }}
+                          >
+                            {contact.name} {contact.surname}
+                          </ListGroup.Item>
                         ))
                       ) : (
                         <ListGroup.Item>Nessun contatto trovato</ListGroup.Item>
@@ -225,6 +222,7 @@ const RicercaFirmatariCard = () => {
                           placeholder="nome gruppo"
                           value={groupFilter}
                           onChange={(e) => setGroupFilter(e.target.value)}
+                          className='input-group'
                         />
                       </Form.Group>
                     </Row>
@@ -242,7 +240,6 @@ const RicercaFirmatariCard = () => {
                       }}><strong>Gruppi</strong></Form.Label>
                       {filteredGroups.length > 0 ? (
                         filteredGroups.map(group => (
-                          <>
                             <ListGroup.Item
                               key={group.id}
                               onClick={() => handleGroupSelect(group.id)}
@@ -253,7 +250,6 @@ const RicercaFirmatariCard = () => {
                             >
                               {group.name}
                             </ListGroup.Item>
-                          </>
                         ))
                       ) : (
                         <ListGroup.Item>No gruppi trovati</ListGroup.Item>
@@ -266,12 +262,7 @@ const RicercaFirmatariCard = () => {
               {showSearchContacts && selectedContacts.length > 0 ? (<Button
                 variant="secondary"
                 className='mt-4'
-                onClick={() => {
-                  // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-                  const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-                  dispatch(addFirmatario(newFirmatario));
-                  setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
-                }}
+                onClick={handleButtonClick}
               >
                 Aggiungi contatti selezionati
               </Button>) : ""}
@@ -279,12 +270,7 @@ const RicercaFirmatariCard = () => {
               {showSearchGroups && selectedGroups.length > 0 ? (<Button
                 variant="secondary"
                 className='mt-4'
-                onClick={() => {
-                  // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-                  const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-                  dispatch(addFirmatario(newFirmatario));
-                  setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
-                }}
+                onClick={handleButtonClick}
               >
                 Aggiungi gruppi selezionati
               </Button>) : ""}

@@ -13,8 +13,8 @@ const DettaglioContattoCard = ({ contact, onEdit }) => {
     <div className="contact-item">
       <h5>{contact.name} {contact.surname}</h5>
       <p>{contact.phone}</p>
-      <button className="btn btn-warning" onClick={() => onEdit(contact)}>Edit</button>
-      <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+      <button className="btn " onClick={() => onEdit(contact)}>Edit</button>
+      <button className="btn" onClick={handleDelete}>Delete</button>
     </div>
   );
 };

@@ -2,41 +2,37 @@ import React, { useState } from 'react';
 import { Form as BootstrapForm, Button, Card, Col, Row } from 'react-bootstrap';
 import { FaCheck } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFirma } from '../slices/caricaDocumentoSlice';
 import { separatorDocumento } from '../utils/DocumentoUtil';
 import FirmatarioCard from './FirmatarioCard';
-import { ErrorMessage, Field } from 'formik';
+import { ErrorMessage, Field, FieldArray } from 'formik';
+import { BsExclamationCircle } from 'react-icons/bs';
+import ListaFirmatariCard from './ListaFirmatariCard';
 
-const Step3 = ({ touched, errors, setFieldValue, isSubmitting }) => {
+const Step3 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
     const dispatch = useDispatch();
 
     /* Documento da caricare */
-    const document = useSelector((state) => state.document);
 
     // Stato per gestire quale pulsante è attivo
     const [positioning, setPositioning] = useState('automatico');
+    // Stato iniziale per la lista delle firme
+
+    // Funzione per clonare una firma
+    const cloneFirma = (push) => {
+        const newId = values.firme.length + 1;
+        const newFirma = {
+            id: newId,
+            titolo: `Firma ${newId}`,
+            obbligatoria: false, // Stato iniziale dell'obbligatoria è OFF
+        };
+        push(newFirma); // Aggiungiamo la nuova firma alla lista tramite Formik
+        setFieldValue('firme', ([...document.firme, newFirma]));
+    };
 
     const handleButtonClick = (type) => {
         setPositioning(type);
         setFieldValue('posizionamentoFirme', type);
-    };
-
-    // Stato per gestire le righe
-    const [firme, setFirme] = useState([
-        { id: 1, titolo: 'Titolo Firma 1', obbligatoria: true },
-    ]);
-
-    // Funzione per clonare la riga
-    const handleCloneRow = () => {
-        const newFirma = {
-            id: firme.length + 1,  // Incrementa l'ID per garantire unicità
-            titolo: `Titolo Firma ${firme.length + 1}`,
-            obbligatoria: true,
-        };
-        setFirme([...firme, newFirma]);  // Aggiungi la nuova riga all'array
-        dispatch(addFirma(newFirma));
-        setFieldValue('firme', ([...document.firme, newFirma]));
     };
 
     return (
@@ -53,7 +49,7 @@ const Step3 = ({ touched, errors, setFieldValue, isSubmitting }) => {
                         <div className='d-flex'>
                             {/* Pulsante Automatico */}
                             <Button
-                                variant={positioning === 'automatico' ? 'primary' : 'secondary'}
+                                variant={positioning === 'automatico' ? 'selected' : 'unselected'}
                                 onClick={() => handleButtonClick('automatico')}
                                 style={{ marginRight: '10px' }}
                             >
@@ -62,14 +58,14 @@ const Step3 = ({ touched, errors, setFieldValue, isSubmitting }) => {
 
                             {/* Pulsante Manuale */}
                             <Button
-                                variant={positioning === 'manuale' ? 'primary' : 'secondary'}
+                                variant={positioning === 'manuale' ? 'selected' : 'unselected'}
                                 onClick={() => handleButtonClick('manuale')}
                             >
                                 Manuale {positioning === 'manuale' && <FaCheck style={{ marginLeft: "10px" }} />}
                             </Button>
                         </div>
 
-                        <Card.Text className="mt-3 py-2 px-2 card-text mb-0" style={{background: "#efefef"}}>
+                        <Card.Text className="mt-3 py-2 px-2 card-text mb-0" style={{ background: "#efefef" }}>
                             Tipo di posizionamento selezionato: <strong style={{ textTransform: "uppercase" }}>{positioning}</strong>
                         </Card.Text>
                     </div>
@@ -81,60 +77,91 @@ const Step3 = ({ touched, errors, setFieldValue, isSubmitting }) => {
                         </Card.Subtitle>
                         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
 
-                        {/* Mappiamo le righe esistenti */}
-                        {firme.map((firma, index) => (
-                            <Row key={index} className="mb-3">
-                                <Col md={9}>
-                                    <BootstrapForm.Group className='mb-2'>
-                                        <BootstrapForm.Label><strong>Titolo</strong></BootstrapForm.Label>
-                                        <Field type="text" name={`firme[${index}].titolo`} className={`form-control input-group>${touched.titolo && errors.titolo ? 'is-invalid' : ''}`} placeholder="Inserisci il titolo" />
-                                        <ErrorMessage name={`firme[${index}].titolo`}>
-                                            {(msg) => (
-                                                <div className="invalid-feedback d-block">
-                                                    <BsExclamationCircle /> {msg}
-                                                </div>
-                                            )}
-                                        </ErrorMessage>
-                                    </BootstrapForm.Group>
-                                </Col>
+                        <FieldArray
+                            name="firme"
+                            render={(arrayHelpers) => (
+                                <div>
+                                    {values.firme.map((firma, index) => (
+                                        <div key={firma.id} className="mb-3">
+                                            <Row>
+                                                <Col md={8} className='mt-2'>
+                                                    <BootstrapForm.Group>
+                                                        <BootstrapForm.Label><strong>Titolo Firma</strong></BootstrapForm.Label>
+                                                        <Field
+                                                            type="text"
+                                                            className={`form-control input-group ${touched.titolo && errors.titolo ? 'is-invalid' : ''}`}
+                                                            placeholder="Inserisci il titolo della firma"
+                                                            name={`firme[${index}].titolo`}
+                                                            value={firma.titolo || ''} // Assicurati che sia una stringa vuota se non definito
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+                                                                arrayHelpers.replace(index, {
+                                                                    ...firma,
+                                                                    titolo: value || '', // Impostiamo il titolo come stringa vuota se non è definito
+                                                                });
+                                                            }}
 
-                                <Col md={3}>
-                                    <BootstrapForm.Group>
-                                        <BootstrapForm.Label></BootstrapForm.Label>
-                                        <BootstrapForm.Check
-                                            type="switch"
-                                            id="custom-switch"
-                                            name={`firme[${index}].obbligatoria`}
-                                            label={firma.obbligatoria?"obbligatoria":"non obbligatoria"}
-                                            onChange={() =>
-                                                setFieldValue(`firme[${index}].obbligatoria`, !firma.obbligatoria)
-                                            }
-                                            checked={firma.obbligatoria} // Check if switch is on or off
-                                            className='pt-3'
-                                        />
-                                        <ErrorMessage name={`firme[${index}].obbligatoria`}>
-                                            {(msg) => (
-                                                <div className="invalid-feedback d-block">
-                                                    <BsExclamationCircle /> {msg}
-                                                </div>
-                                            )}
-                                        </ErrorMessage>
-                                    </BootstrapForm.Group>
-                                </Col>
-                            </Row>
-                        ))}
-
-                        {/* Bottone per clonare la riga */}
-                        <Button variant="secondary" onClick={handleCloneRow}>
-                            Aggiungi una firma
-                        </Button>
+                                                        />
+                                                        <ErrorMessage name={`firme[${index}].titolo`} >
+                                                            {(msg) => (
+                                                                <div className="invalid-feedback d-block">
+                                                                    <BsExclamationCircle /> {msg}
+                                                                </div>
+                                                            )}
+                                                        </ErrorMessage>
+                                                    </BootstrapForm.Group>
+                                                </Col>
+                                                <Col md={4} className='mt-2'>
+                                                    <BootstrapForm.Group>
+                                                        <BootstrapForm.Label>&nbsp;</BootstrapForm.Label>
+                                                        <BootstrapForm.Check
+                                                            type="switch"
+                                                            name={`firme[${index}].obbligatoria`}
+                                                            id={`switch${firma.id}`}
+                                                            label={firma.obbligatoria ? "Obbligatoria" : "Non obbligatoria"}
+                                                            checked={firma.obbligatoria}
+                                                            onChange={() => {
+                                                                arrayHelpers.replace(index, {
+                                                                    ...firma,
+                                                                    obbligatoria: !firma.obbligatoria,
+                                                                });
+                                                            }}
+                                                            className='ml-5'
+                                                            style={{
+                                                                border: "1px solid #ddd", borderRadius: "8px", paddingLeft: "60px",
+                                                                paddingTop: "10px", paddingBottom: "9px", marginRight: "0"
+                                                            }}
+                                                        />
+                                                        <ErrorMessage name={`firme[${index}].obbligatoria`} >
+                                                            {(msg) => (
+                                                                <div className="invalid-feedback d-block">
+                                                                    <BsExclamationCircle /> {msg}
+                                                                </div>
+                                                            )}
+                                                        </ErrorMessage>
+                                                    </BootstrapForm.Group>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    ))}
+                                    <Button
+                                        type="button"
+                                        variant='secondary'
+                                        onClick={() => cloneFirma(arrayHelpers.push)} // Clona una firma
+                                    >
+                                        Aggiungi firma
+                                    </Button>
+                                </div>
+                            )}
+                        />
 
                     </div>
                 </Card>
 
             </Col>
             <Col xs={12} md={4}>
-                <FirmatarioCard />
+                {/* <FirmatarioCard /> */}
+                <ListaFirmatariCard />
             </Col>
         </Row>
     );
