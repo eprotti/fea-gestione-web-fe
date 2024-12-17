@@ -5,6 +5,8 @@ import { separatorDocumento } from '../utils/DocumentoUtil';
 import DettaglioContattoModale from './DettaglioContattoModale';
 import ModificaContattoModale from './ModificaContattoModale';
 import { truncateVeryShortNominativo } from '../utils/RubricaUtil';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact, updateContact } from '../actions/RubricaActions';
 
 // Componente per visualizzare l'icona circolare con le iniziali
 const InitialsIcon = ({ nome, cognome }) => {
@@ -30,7 +32,11 @@ const InitialsIcon = ({ nome, cognome }) => {
     );
 };
 
-const TabellaContattiCard = ({ contacts, onEdit, onDelete }) => {
+const TabellaContattiCard = () => {
+
+    const dispatch = useDispatch();
+
+    const contacts = useSelector((state) => state.contacts.contacts);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedContact, setSelectedContact] = useState(null); // Contatto selezionato
     const [showDetailsModal, setShowDetailsModal] = useState(false); // Modal per dettagli
@@ -74,8 +80,15 @@ const TabellaContattiCard = ({ contacts, onEdit, onDelete }) => {
 
     // Funzione per salvare le modifiche al contatto
     const handleSaveEdit = (editedContact) => {
-        onEdit(editedContact); // Passa il contatto modificato al componente genitore
+        dispatch(updateContact(editedContact));
         setShowEditModal(false); // Chiudi la modale
+        console.log('Contatto modificato:', editedContact);
+
+    };
+
+    // Funzione per gestire la cancellazione di un contatto
+    const handleDelete = (id) => {
+        dispatch(deleteContact(id));
     };
 
     // Funzione per chiudere il modal dei dettagli
@@ -133,7 +146,7 @@ const TabellaContattiCard = ({ contacts, onEdit, onDelete }) => {
                                             <Button variant="link" onClick={() => handleShowEdit(contact)} style={{ padding: "6px", verticalAlign: "sub" }}>
                                                 <FaEdit size={22} />
                                             </Button>
-                                            <Button variant="link" onClick={() => onDelete(contact)} style={{ padding: "6px", verticalAlign: "sub" }}>
+                                            <Button variant="link" onClick={() => handleDelete(contact.id)} style={{ padding: "6px", verticalAlign: "sub" }}>
                                                 <FaTrash size={22} />
                                             </Button>
                                         </td>

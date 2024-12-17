@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { updateContact } from '../actions/RubricaActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Schema di validazione con Yup
 const validationSchema = Yup.object({
@@ -11,17 +13,21 @@ const validationSchema = Yup.object({
     codiceFiscale: Yup.string().required('Codice Fiscale è obbligatorio'),
 });
 
-const ModificaContattoModale = ({ show, contact, onHide, onSave }) => {
-    const [editedContact, setEditedContact] = useState(contact || {});
+const ModificaContattoModale = ({ show, contact, onHide }) => {
+
+    const dispatch = useDispatch();
+    const contacts = useSelector((state) => state.contacts);
+
 
     // Aggiornare il form quando il contatto cambia
-    useEffect(() => {
-        setEditedContact(contact);
-    }, [contact]);
+    /*  useEffect(() => {
+        
+     }, [contact]); */
 
     // Funzione per gestire la sottomissione del modulo
     const handleSave = (values) => {
-        onSave(values); // Passa i dati aggiornati al componente genitore
+        const editedContact = { id: values.id, nome: values.nome, cognome: values.cognome, email: values.email, codiceFiscale: values.codiceFiscale };
+        dispatch(updateContact(editedContact));
         onHide(); // Chiudi la modale
     };
 
@@ -35,10 +41,11 @@ const ModificaContattoModale = ({ show, contact, onHide, onSave }) => {
             <Modal.Body>
                 <Formik
                     initialValues={{
-                        nome: editedContact.nome || '',
-                        cognome: editedContact.cognome || '',
-                        email: editedContact.email || '',
-                        codiceFiscale: editedContact.codiceFiscale || '',
+                        id: contact.id,
+                        nome: contact.nome || '',
+                        cognome: contact.cognome || '',
+                        email: contact.email || '',
+                        codiceFiscale: contact.codiceFiscale || '',
                     }}
                     validationSchema={validationSchema}
                     onSubmit={handleSave}

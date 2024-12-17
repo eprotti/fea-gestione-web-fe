@@ -1,68 +1,79 @@
 import { ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from '../actions/RubricaActions';
 
-const initialState = [
-    {
-        id: 1,
-        name: 'Mario',
-        surname: 'Rossi',
-        phone: '123-4567890',
-    },
-    {
-        id: 2,
-        name: 'Luca',
-        surname: 'Bianchi',
-        phone: '234-5678901',
-    },
-    {
-        id: 3,
-        name: 'Giulia',
-        surname: 'Verdi',
-        phone: '345-6789012',
-    },
-    {
-        id: 4,
-        name: 'Anna',
-        surname: 'Neri',
-        phone: '456-7890123',
-    },
-    {
-        id: 5,
-        name: 'Federico',
-        surname: 'Zappa',
-        phone: '567-8901234',
-    },
-    {
-        id: 6,
-        name: 'Maria',
-        surname: 'Bianchi',
-        phone: '678-9012345',
-    },
-    {
-        id: 7,
-        name: 'Carlo',
-        surname: 'Marini',
-        phone: '789-0123456',
-    },
-];
+const initialState = {
+    contacts: [
+        {
+            id: 1,
+            nome: 'Mario',
+            cognome: 'Rossi',
+            email: 'mrossi@gmail.com',
+            codiceFiscale: 'RSSMRA88C17H501R'
+        },
+        {
+            id: 2,
+            nome: 'Luca',
+            cognome: 'Bianchi',
+            email: 'lbianchi@gmail.com',
+            codiceFiscale: 'BNCLCA88C17H501F'
+        },
+        {
+            id: 3,
+            nome: 'Giulia',
+            cognome: 'Verdi',
+            email: 'gverdi@gmail.com',
+            codiceFiscale: 'VRDGLI88C17H501T'
+        },
+        {
+            id: 4,
+            nome: 'Anna',
+            cognome: 'Neri',
+            email: 'aneri@gmail.com',
+            codiceFiscale: 'NRENNA88C17H501V'
+        },
+        {
+            id: 5,
+            nome: 'Federico',
+            cognome: 'Zappa',
+            email: 'fzappa@gmail.com',
+            codiceFiscale: 'ZPPFDR88C17H501G'
+        },
+        {
+            id: 6,
+            nome: 'Maria',
+            cognome: 'Bianchi',
+            email: 'mbianchi@gmail.com',
+            codiceFiscale: 'BNCMRA88C17H501C'
+        },
+        {
+            id: 7,
+            nome: 'Carlo',
+            cognome: 'Marini',
+            email: 'cmarini@gmail.com',
+            codiceFiscale: 'MRNCRL88C17H501D'
+        },
+    ]
+};
 
 const RubricaReducers = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CONTACT:
             return {
                 ...state,
-                contacts: [...state, action.payload],
+                contacts: [...state.contacts, action.payload],
             };
         case UPDATE_CONTACT:
             return {
                 ...state,
-                contacts: state.map((contact) =>
-                    contact.id === action.payload.id ? action.payload : contact
+                contacts: state.contacts.map(contact =>
+                    contact.id === action.payload.id
+                        ? { ...contact, nome: action.payload.nome, cognome: action.payload.cognome, email: action.payload.email, codiceFiscale: action.payload.codiceFiscale }
+                        : contact
                 ),
             };
         case DELETE_CONTACT:
             return {
                 ...state,
-                contacts: state.filter((contact) => contact.id !== action.payload),
+                contacts: state.contacts.filter((contact) => contact.id !== action.payload),
             };
         default:
             return state;
