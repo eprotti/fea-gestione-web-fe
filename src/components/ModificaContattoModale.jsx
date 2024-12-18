@@ -4,6 +4,7 @@ import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { updateContact } from '../actions/RubricaActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { separatorDocumento } from '../utils/DocumentoUtil';
 
 // Schema di validazione con Yup
 const validationSchema = Yup.object({
@@ -35,10 +36,15 @@ const ModificaContattoModale = ({ show, contact, onHide }) => {
 
     return (
         <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>Modifica Contatto</Modal.Title>
+            <Modal.Header closeButton style={{ paddingBottom: "0", border: "none" }}>
+                <Modal.Title>
+                    <h5 className="m-a-0 text-uppercase light mt-0 mb-0">Modifica contatto</h5>
+                </Modal.Title>
+
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body style={{ paddingTop: "0" }}>
+                <hr className={`thin-color-separator mt-2 ${separatorDocumento()}`} />
+
                 <Formik
                     initialValues={{
                         id: contact.id,
@@ -52,47 +58,48 @@ const ModificaContattoModale = ({ show, contact, onHide }) => {
                 >
                     {({ touched, errors, isSubmitting }) => (
                         <FormikForm>
-                            <Form.Group controlId="formNome">
-                                <Form.Label>Nome</Form.Label>
-                                <Field
-                                    name="nome"
-                                    type="text"
-                                    className={`form-control ${touched.nome && errors.nome ? 'is-invalid' : ''}`}
-                                />
-                                <ErrorMessage name="nome" component="div" className="invalid-feedback" />
-                            </Form.Group>
+                            <div className='px-2'>
+                                <Form.Group controlId="formNome" className='pt-2'>
+                                    <Form.Label>Nome</Form.Label>
+                                    <Field
+                                        name="nome"
+                                        type="text"
+                                        className={`form-control input-group ${touched.nome && errors.nome ? 'is-invalid' : ''}`}
+                                    />
+                                    <ErrorMessage name="nome" component="div" className="invalid-feedback" />
+                                </Form.Group>
 
-                            <Form.Group controlId="formCognome">
-                                <Form.Label>Cognome</Form.Label>
-                                <Field
-                                    name="cognome"
-                                    type="text"
-                                    className={`form-control ${touched.cognome && errors.cognome ? 'is-invalid' : ''}`}
-                                />
-                                <ErrorMessage name="cognome" component="div" className="invalid-feedback" />
-                            </Form.Group>
+                                <Form.Group controlId="formCognome" className='pt-2'>
+                                    <Form.Label>Cognome</Form.Label>
+                                    <Field
+                                        name="cognome"
+                                        type="text"
+                                        className={`form-control input-group ${touched.cognome && errors.cognome ? 'is-invalid' : ''}`}
+                                    />
+                                    <ErrorMessage name="cognome" component="div" className="invalid-feedback" />
+                                </Form.Group>
 
-                            <Form.Group controlId="formEmail">
-                                <Form.Label>Email</Form.Label>
-                                <Field
-                                    name="email"
-                                    type="email"
-                                    className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
-                                />
-                                <ErrorMessage name="email" component="div" className="invalid-feedback" />
-                            </Form.Group>
+                                <Form.Group controlId="formEmail" className='pt-2'>
+                                    <Form.Label>Email</Form.Label>
+                                    <Field
+                                        name="email"
+                                        type="email"
+                                        className={`form-control input-group ${touched.email && errors.email ? 'is-invalid' : ''}`}
+                                    />
+                                    <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                                </Form.Group>
 
-                            <Form.Group controlId="formCodiceFiscale">
-                                <Form.Label>Codice Fiscale</Form.Label>
-                                <Field
-                                    name="codiceFiscale"
-                                    type="text"
-                                    className={`form-control ${touched.codiceFiscale && errors.codiceFiscale ? 'is-invalid' : ''}`}
-                                />
-                                <ErrorMessage name="codiceFiscale" component="div" className="invalid-feedback" />
-                            </Form.Group>
-
-                            <Modal.Footer>
+                                <Form.Group controlId="formCodiceFiscale" className='pt-2'>
+                                    <Form.Label>Codice Fiscale</Form.Label>
+                                    <Field
+                                        name="codiceFiscale"
+                                        type="text"
+                                        className={`form-control input-group ${touched.codiceFiscale && errors.codiceFiscale ? 'is-invalid' : ''}`}
+                                    />
+                                    <ErrorMessage name="codiceFiscale" component="div" className="invalid-feedback" />
+                                </Form.Group>
+                            </div>
+                            <Modal.Footer className='mt-2 pt-2' style={{ border: "none", padding: "0" }}>
                                 <Button variant="secondary" onClick={onHide}>
                                     Annulla
                                 </Button>

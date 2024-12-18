@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import NotifichePage from './pages/NotifichePage';
 import CaricaDocumentoPage from './pages/CaricaDocumentoPage';
 import ListaContattiPage from './pages/ListaContattiPage';
+import ListaDocumentiPage from './pages/ListaDocumentiPage';
 
 const App = () => {
 
@@ -22,7 +23,8 @@ const App = () => {
 
         <Route path="/gestione-documento/carica" element={<CaricaDocumentoPage />} />
         <Route path="/rubrica/lista-contatti" element={<ListaContattiPage />} />
-        
+        <Route path="/archivio-documenti/lista-documenti" element={<ListaDocumentiPage />} />
+
         <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
 
         <Route path="/notifiche" element={<NotifichePage />} />

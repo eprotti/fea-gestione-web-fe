@@ -11,3 +11,7 @@ export const handleUploadDocument = (navigate) => {
 export const handleContactsList = (navigate) => {
     navigate("/rubrica/lista-contatti");
 }
+
+export const handleArchiveDocument = (navigate) => {
+    navigate("/archivio-documenti/lista-documenti");
+}

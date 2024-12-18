@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaAddressBook, FaChevronRight, FaCogs, FaFolder, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
 import UltimiDocumentiCaricatiCard from "../components/UltimiDocumentiCaricatiCard";
-import { handleContactsList, handleUploadDocument } from '../utils/NavigationUtil';
+import { handleArchiveDocument, handleContactsList, handleUploadDocument } from '../utils/NavigationUtil';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
@@ -32,7 +32,7 @@ const HomePage = () => {
 
         <Col xs={12} md={4}>
 
-          <section id="archive" className="card archive-card">
+          <section id="archive" className="card archive-card" onClick={() => handleArchiveDocument(navigate)}>
             <FaFolder size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Archivio Documenti</h2>
             <p>Ricerca i documenti caricati per consultarli</p>

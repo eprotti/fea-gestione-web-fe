@@ -1382,3 +1382,8 @@ form label {
   border-left: 1px solid #dee2e6 !important;
   border-right: 1px solid #dee2e6 !important;
 }
+
+.pagination {
+  justify-content: center;
+  margin-top: 20px;
+}

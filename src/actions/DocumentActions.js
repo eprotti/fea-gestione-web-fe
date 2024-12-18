@@ -10,3 +10,9 @@ export const fetchDocuments = () => async (dispatch) => {
     dispatch({ type: 'DOCUMENTS_FETCH_ERROR', payload: error }); // In caso di errore, inviamo l'errore
   }
 };
+
+// Azione per applicare un filtro ai documenti
+export const filterDocuments = (filters) => ({
+  type: 'FILTER_DOCUMENTS',
+  payload: filters,
+});

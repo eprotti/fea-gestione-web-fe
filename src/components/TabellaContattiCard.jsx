@@ -18,7 +18,7 @@ const InitialsIcon = ({ nome, cognome }) => {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                backgroundColor: '#007bff',
+                backgroundColor: '#06c',
                 color: 'white',
                 display: 'flex',
                 alignItems: 'center',
@@ -119,12 +119,12 @@ const TabellaContattiCard = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <Table striped bordered hover responsive className="table-no-inner-borders mt-4">
+                <Table striped bordered responsive className="table-no-inner-borders mt-4">
                     <tbody>
                         {Object.keys(groupedContacts).map(initial => (
                             <React.Fragment key={initial}>
                                 <tr>
-                                    <td colSpan="6" style={{ backgroundColor: '#f8f9fa', fontWeight: 'bold' }}>
+                                    <td colSpan="6" style={{ backgroundColor: '#999', color: "white", fontWeight: 'bold', textAlign: "center", fontSize: "larger", padding: "0" }}>
                                         <strong>{initial}</strong>
                                     </td>
                                 </tr>
