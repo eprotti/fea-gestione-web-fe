@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { fetchDocuments } from '../actions/DocumentActions';
 import FiltroDocumentiCard from '../components/FiltroDocumentiCard';
 import { Container } from 'react-bootstrap';
-import ListaDocumentoItemCard from '../components/LIstaDocumentoItemCard';
+import ListaDocumentoItemCard from '../components/ListaDocumentoItemCard';
 
 const ListaDocumentiPage = () => {
     const dispatch = useDispatch();
