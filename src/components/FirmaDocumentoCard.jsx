@@ -29,7 +29,7 @@ const FirmaDocumentoCard = ({ documento }) => {
                         {documento.firme.map((firma) => (
                             <tr key={firma.id}>
                                 <td>{firma.titolo}</td>
-                                <td className='text-center'>{firma.pagina}</td>
+                                <td className='d-none d-md-table-cell text-center'>{firma.pagina}</td>
                                 <td className='text-center'>{firma.obbligatoria ? "Si" : "No"}</td>
                             </tr>
                         ))}

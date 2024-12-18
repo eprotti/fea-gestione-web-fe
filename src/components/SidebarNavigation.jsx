@@ -115,7 +115,7 @@ const SidebarNavigation = ({ children }) => {
           <li>
             <a href="#" className="menu-item">
               <FaChartLine size={26} className="menu-icon" />
-              {!collapsed && <span className="menu-text">Monitogaggio</span>}
+              {!collapsed && <span className="menu-text">Monitoraggio</span>}
             </a>
           </li>
         </ul>

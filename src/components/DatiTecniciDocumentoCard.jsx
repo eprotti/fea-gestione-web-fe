@@ -11,7 +11,7 @@ const DatiTecniciDocumentoCard = ({ documento }) => {
     const toggleCard = () => setIsOpen(!isOpen);
 
     return (
-        <Card className="mb-4 custom-card">
+        <Card className="mb-2 custom-card">
 
             <div className={`card-dati-tecnici-header ${isOpen ? 'opened' : ''}`} onClick={toggleCard}>
                 <h5 className="m-a-0 text-uppercase light mt-0 mb-0">Dati tecnici </h5>

@@ -3,8 +3,11 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FaChevronLeft } from 'react-icons/fa';
 import TabellaContattiCard from '../components/TabellaContattiCard.jsx';
 import InfoRubricaCard from '../components/InfoRubricaCard.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const ListaContattiPage = () => {
+
+  const navigate = useNavigate();
 
   return (
     <Container className="main-container pt-5 pb-5">
@@ -26,7 +29,7 @@ const ListaContattiPage = () => {
         <Col xs={12} md={8}>
           <div className="mt-3">
             <a onClick={() => navigate(-1)} rel="noopener noreferrer" style={{ cursor: "pointer", fontSize: "large" }} className="mt-3 text-primary">
-              <FaChevronLeft /> Torna alla homepage
+              <FaChevronLeft /> Torna indietro
             </a>
           </div>
         </Col>

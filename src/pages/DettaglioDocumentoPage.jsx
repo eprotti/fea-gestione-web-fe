@@ -62,17 +62,23 @@ const DettaglioDocumentoPage = () => {
           <FirmaDocumentoCard documento={documento} />
 
           <DatiTecniciDocumentoCard documento={documento} />
-
-          <div className="text-end mt-3">
-            <a onClick={() => navigate(-1)} rel="noopener noreferrer" style={{ cursor: "pointer", fontSize: "large" }} className="mt-3 text-primary">
-              <FaChevronLeft /> Torna alla lista
-            </a>
-          </div>
         </Col>
 
         {/* Colonna laterale (opzionale, visibile su schermi più grandi) */}
         <Col xs={12} md={4}>
           <ScaricaDocumentoCard documento={documento} />
+        </Col>
+      </Row>
+      <Row>
+        {/* Colonna principale per il contenuto */}
+        <Col xs={12} md={8}>
+          <div className="mt-3">
+            <a onClick={() => navigate(-1)} rel="noopener noreferrer" style={{ cursor: "pointer", fontSize: "large" }} className="mt-3 text-primary">
+              <FaChevronLeft /> Torna indietro
+            </a>
+          </div>
+        </Col>
+        <Col xs={12} md={4}>
         </Col>
       </Row>
     </Container>
