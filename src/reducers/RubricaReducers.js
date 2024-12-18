@@ -76,7 +76,7 @@ const initialState = {
     ]
 };
 
-const RubricaReducers = (state = initialState, action) => {
+const rubricaReducers = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CONTACT:
             return {
@@ -102,4 +102,4 @@ const RubricaReducers = (state = initialState, action) => {
     }
 };
 
-export default RubricaReducers;
+export default rubricaReducers;

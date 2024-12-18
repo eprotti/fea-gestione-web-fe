@@ -4,7 +4,7 @@ import { Form as BootstrapForm, Button, Card, Col, Row, Table } from 'react-boot
 import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { separatorDocumento, truncateEmail } from '../utils/DocumentoUtil';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFirmatario } from '../slices/caricaDocumentoSlice';
+import { addFirmatario } from '../slices/CaricaDocumentoSlice';
 import { FaTrash } from 'react-icons/fa';
 import TipologiaFirmaCard from './TipologiaFirmaCard';
 import RicercaFirmatariCard from './RicercaFirmatariCard';
