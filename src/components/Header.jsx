@@ -22,7 +22,7 @@ const Header = () => {
           <div>
             <div className="logo">
               <a href="/">
-                <img src="/logo-sigillo.svg" alt="Logo MIM" height="70" />
+                <img src="/logo-sigillo.svg" alt="Logo MIM" height="60" />
               </a>
             </div>
             <h1>

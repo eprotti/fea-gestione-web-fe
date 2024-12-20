@@ -39,7 +39,7 @@ const ConfermaAzioneModale = ({ show, payload, onHide, action, title, message })
                             <div className='px-2 py-2'>
                                 <h5><FaExclamationTriangle color='orange' size={24} style={{marginRight: "10px", verticalAlign: "sub"}}/> {message}</h5>
                             </div>
-                            <Modal.Footer className='mt-2 pt-2' style={{ border: "none", padding: "0" }}>
+                            <Modal.Footer className='mt-4 pt-2' style={{ border: "none", padding: "0" }}>
                                 <Button variant="secondary" onClick={onHide}>
                                     Annulla
                                 </Button>

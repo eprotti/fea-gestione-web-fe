@@ -14,21 +14,15 @@ const validationSchema = Yup.object({
     codiceFiscale: Yup.string().required('Codice Fiscale è obbligatorio'),
 });
 
-const ModificaContattoModale = ({ show, contact, onHide }) => {
+const ModificaContattoModale = ({ show, contact, onHide, onSave }) => {
 
     const dispatch = useDispatch();
-    const contacts = useSelector((state) => state.contacts);
 
-
-    // Aggiornare il form quando il contatto cambia
-    /*  useEffect(() => {
-        
-     }, [contact]); */
 
     // Funzione per gestire la sottomissione del modulo
     const handleSave = (values) => {
         const editedContact = { id: values.id, nome: values.nome, cognome: values.cognome, email: values.email, codiceFiscale: values.codiceFiscale };
-        dispatch(updateContact(editedContact));
+        dispatch(onSave(editedContact));
         onHide(); // Chiudi la modale
     };
 
@@ -99,7 +93,7 @@ const ModificaContattoModale = ({ show, contact, onHide }) => {
                                     <ErrorMessage name="codiceFiscale" component="div" className="invalid-feedback" />
                                 </Form.Group>
                             </div>
-                            <Modal.Footer className='mt-2 pt-2' style={{ border: "none", padding: "0" }}>
+                            <Modal.Footer className='mt-4 pt-2' style={{ border: "none", padding: "0" }}>
                                 <Button variant="secondary" onClick={onHide}>
                                     Annulla
                                 </Button>

@@ -20,15 +20,15 @@ const DettaglioContattoModale = ({ show, contact, onHide }) => {
 
           <div className="row" style={{paddingRight: "10px"}}>
             <div className="col-xs-12 col-md-7">
-              <div className="row">
+              <div className="row mb-2">
                 <div className="col-xs-12 col-md-12">
-                  <div className="data-show">
+                  <div className="data-show mt-3 mb-2">
                     <p className="data-text"><strong>Nome:</strong></p>
                     <p className="data-value" style={{ borderBottom: "1px solid #ccc" }}>{contact.nome}</p>
                   </div>
                 </div>
                 <div className="col-xs-12 col-md-12">
-                  <div className="data-show">
+                  <div className="data-show mb-2">
                     <p className="data-text"><strong>Cognome:</strong></p>
                     <p className="data-value" style={{ borderBottom: "1px solid #ccc" }}>{contact.cognome}</p>
                   </div>

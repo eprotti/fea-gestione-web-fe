@@ -8,6 +8,7 @@ import { truncateVeryShortNominativo } from '../utils/RubricaUtil';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, updateContact } from '../actions/RubricaActions';
 import ConfermaAzioneModale from './ConfermaAzioneModale';
+import { addNotification } from '../actions/NotificationActions';
 
 // Componente per visualizzare l'icona circolare con le iniziali
 const InitialsIcon = ({ nome, cognome }) => {
@@ -91,14 +92,14 @@ const TabellaContattiCard = () => {
     const handleSaveEdit = (editedContact) => {
         dispatch(updateContact(editedContact));
         setShowEditModal(false); // Chiudi la modale
-        console.log('Contatto modificato:', editedContact);
+        dispatch(addNotification("Contatto modificato correttamente", "info"));
     };
 
     // Funzione per salvare le modifiche al contatto
     const handleConfirmDelete = (contact) => {
         dispatch(deleteContact(contact.id));
         setShowConfirmModal(false); // Chiudi la modale
-        console.log('Contatto eliminato:', contact);
+        dispatch(addNotification("Contatto eliminato correttamente", "info"));
     };
 
     // Funzione per chiudere il modal dei dettagli
