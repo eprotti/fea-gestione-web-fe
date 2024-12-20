@@ -15,7 +15,7 @@ const initialState = {
   firmatari: [],
   firme: [{
     id: 1,
-    titolo: `Titolo Firma 1`,
+    titolo: `Titolo firma 1`,
     obbligatoria: true,
   }],
 };

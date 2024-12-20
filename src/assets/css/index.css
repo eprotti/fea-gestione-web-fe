@@ -1387,3 +1387,7 @@ form label {
   justify-content: center;
   margin-top: 20px;
 }
+
+form label, .data-show .data-text, .data-show .data-value {
+  font-size: inherit;
+}

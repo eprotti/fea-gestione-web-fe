@@ -10,20 +10,15 @@ import ListaFirmatariCard from './ListaFirmatariCard';
 
 const Step3 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
-    const dispatch = useDispatch();
-
-    /* Documento da caricare */
-
     // Stato per gestire quale pulsante è attivo
     const [positioning, setPositioning] = useState('automatico');
-    // Stato iniziale per la lista delle firme
 
     // Funzione per clonare una firma
     const cloneFirma = (push) => {
         const newId = values.firme.length + 1;
         const newFirma = {
             id: newId,
-            titolo: `Firma ${newId}`,
+            titolo: `Titolo firma ${newId}`,
             obbligatoria: false, // Stato iniziale dell'obbligatoria è OFF
         };
         push(newFirma); // Aggiungiamo la nuova firma alla lista tramite Formik
@@ -160,7 +155,7 @@ const Step3 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
             </Col>
             <Col xs={12} md={4}>
-                {/* <FirmatarioCard /> */}
+                <FirmatarioCard />
                 <ListaFirmatariCard />
             </Col>
         </Row>

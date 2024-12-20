@@ -9,7 +9,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import WizardBreadcrumb from './WizardBreadcrumb';
 import { setStepCompleted } from '../reducers/caricaDocumentoReducers';
-import { setCurrentStep } from '../slices/caricaDocumentoSlice';
+import { setCurrentStep } from '../slices/CaricaDocumentoSlice';
 import Steps from '../enum/Steps';
 import { scrollToTop } from '../utils/CaricaDocumentoUtils';
 import { addNotification } from '../actions/NotificationActions';
@@ -106,7 +106,7 @@ const CaricaDocumento = () => {
                                 <Step1 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.RICERCA_FIRMATARI && (
-                                <Step2 touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
+                                <Step2 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.FIRME_DOCUMENTO && (
                                 <Step3 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />

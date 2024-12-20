@@ -4,24 +4,28 @@ import { Form as BootstrapForm, Button, Card, Col, Row, Table } from 'react-boot
 import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { separatorDocumento, truncateEmail } from '../utils/DocumentoUtil';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFirmatario } from '../slices/CaricaDocumentoSlice';
+import { addFirmatario, removeFirmatario } from '../slices/CaricaDocumentoSlice';
 import { FaTrash } from 'react-icons/fa';
 import TipologiaFirmaCard from './TipologiaFirmaCard';
 import RicercaFirmatariCard from './RicercaFirmatariCard';
+import { addNotification } from '../actions/NotificationActions';
 
-const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
+const Step2 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 
     const dispatch = useDispatch();
 
-    /* Documento da caricare */
-    const document = useSelector((state) => state.document);
+    const handleRemoveFirmatario = (firmatarioToRemove) => {
+        const updatedFirmatari = values.firmatari.filter((f) => f.codiceFiscale !== firmatarioToRemove.codiceFiscale);
+        setFieldValue('firmatari', updatedFirmatari);
+        dispatch(addNotification("Firmatario rimosso", "info"));
+    };
 
     return (
         <Row>
             <Col xs={12} md={8}>
 
-                <RicercaFirmatariCard addFirmatario={addFirmatario} setFieldValue={setFieldValue}/>
-    
+                <RicercaFirmatariCard values={values} addFirmatario={addFirmatario} removeFirmatario={removeFirmatario} setFieldValue={setFieldValue} />
+
                 <Card className="mb-4 custom-card">
                     <div className="card-body px-4 pb-4">
                         <Card.Subtitle className="mb-2 text-muted py-1">
@@ -39,15 +43,15 @@ const Step2 = ({ touched, errors, setFieldValue, isSubmitting }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {document.firmatari.map((firmatario, index) => (
-                                        <tr key={index}>
+                                    {values.firmatari.map((firmatario) => (
+                                        <tr key={firmatario.codiceFiscale}>
                                             <td style={{ whiteSpace: "nowrap" }}>
                                                 {firmatario.nomeCompleto}
                                             </td>
                                             <td className='d-none d-sm-table-cell'>{firmatario.email}</td>
                                             <td className='text-center' style={{ whiteSpace: "nowrap" }}>
                                                 <a rel="noopener noreferrer" style={{ marginRight: "10px", cursor: "pointer" }}>
-                                                    <FaTrash size={20} />
+                                                    <FaTrash size={20} onClick={() => handleRemoveFirmatario(firmatario)} />
                                                 </a>
                                             </td>
                                         </tr>

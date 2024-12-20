@@ -7,8 +7,12 @@ import { getFileSizeInKB } from '../utils/CaricaDocumentoUtils';
 import { separatorDocumento } from '../utils/DocumentoUtil';
 import AutoreDocumentoCard from './AutoreDocumentoCard';
 import InfoDatiGeneraliCard from './InfoDatiGeneraliCard';
+import { addNotification } from '../actions/NotificationActions';
+import { useDispatch } from 'react-redux';
 
 const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
+
+    const dispatch = useDispatch();
 
     const fileInputRef = useRef(null); // Riferimento all'input di tipo file
 
@@ -29,6 +33,7 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
     const handleFileChange = (event) => {
         const file = event.currentTarget.files[0]; // Ottieni il file selezionato
         setFieldValue('pdfFile', file); // Imposta il valore del campo 'file' in Formik
+        dispatch(addNotification("File PDF caricato correttamente", "info"));
     };
 
     // Funzione per cancellare il contenuto del campo file
@@ -63,7 +68,7 @@ const Step1 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
                                 <Button
                                     variant={tipologiaFirma === 'SINGOLO_FIRMATARIO' ? 'selected' : 'unselected'}
                                     onClick={() => handleTipologiaFirmaButtonClick('SINGOLO_FIRMATARIO')}
-                                    style={{ marginRight: '10px'}}
+                                    style={{ marginRight: '10px' }}
                                 >
                                     Singolo firmatario {tipologiaFirma === 'SINGOLO_FIRMATARIO' && <FaCheck style={{ marginLeft: "10px" }} />}
                                 </Button>

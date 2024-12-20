@@ -4,12 +4,10 @@ import { separatorDocumento } from '../utils/DocumentoUtil';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaUser, FaUsers } from 'react-icons/fa';
 import { scrollToBottom } from '../utils/CaricaDocumentoUtils';
+import { addNotification } from '../actions/NotificationActions';
 
-const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
+const RicercaFirmatariCard = ({ values, setFieldValue }) => {
   const dispatch = useDispatch();
-
-  /* Documento da caricare */
-  const document = useSelector((state) => state.document);
 
   const [key, setKey] = useState('manual');  // Stato per la tab attiva
   const [showSearchContacts, setShowSearchContacts] = useState(false);  // Stato per mostrare la ricerca contatti
@@ -65,11 +63,10 @@ const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
   const handleButtonClick = () => {
     // Aggiungi logica per cercare e aggiungere i firmatari alla lista
     const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-    dispatch(addFirmatario(newFirmatario));
-    setFieldValue('firmatari', ([...document.firmatari, newFirmatario]));
+    setFieldValue('firmatari', ([...values.firmatari, newFirmatario]));
+    dispatch(addNotification("Nuovo firmatario aggiunto", "info"));
     scrollToBottom();
   };
-
 
   return (
     <Card className="mb-4 custom-card">
@@ -96,60 +93,60 @@ const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
           <Tab.Content className="mt-3">
             {/* Tab 1: Aggiungi Manualmente */}
             <Tab.Pane eventKey="manual">
-                <Row className='mb-2'>
-                  <Col md={6} className='mt-2'>
-                    <Form.Group controlId="formName">
-                      <Form.Label><strong>Nome</strong></Form.Label>
-                      <Form.Control type="text" placeholder="Inserisci il nome" className='input-group' />
-                    </Form.Group>
-                  </Col>
-                  <Col md={6} className='mt-2'>
-                    <Form.Group controlId="formCognome">
-                      <Form.Label><strong>Cognome</strong></Form.Label>
-                      <Form.Control type="text" placeholder="Inserisci il cognome" className='input-group' />
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Row className='mb-2'>
-                  <Form.Group controlId="formEmail">
-                    <Form.Label><strong>Email</strong></Form.Label>
-                    <Form.Control type="email" placeholder="Inserisci l'email" className='input-group' />
+              <Row className='mb-2'>
+                <Col md={6} className='mt-2'>
+                  <Form.Group controlId="formName">
+                    <Form.Label><strong>Nome</strong></Form.Label>
+                    <Form.Control type="text" placeholder="Inserisci il nome" className='input-group' />
                   </Form.Group>
-                </Row>
-
-                <Row className='mb-2'>
-                  <Form.Group controlId="formCodiceFiscale">
-                    <Form.Label><strong>Codice fiscale</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
+                </Col>
+                <Col md={6} className='mt-2'>
+                  <Form.Group controlId="formCognome">
+                    <Form.Label><strong>Cognome</strong></Form.Label>
+                    <Form.Control type="text" placeholder="Inserisci il cognome" className='input-group' />
                   </Form.Group>
-                </Row>
+                </Col>
+              </Row>
 
-                <Button
-                  variant="secondary"
-                  className='mt-4'
-                  onClick={handleButtonClick}
-                >
-                  Aggiungi Firmatario
-                </Button>
+              <Row className='mb-2'>
+                <Form.Group controlId="formEmail">
+                  <Form.Label><strong>Email</strong></Form.Label>
+                  <Form.Control type="email" placeholder="Inserisci l'email" className='input-group' />
+                </Form.Group>
+              </Row>
+
+              <Row className='mb-2'>
+                <Form.Group controlId="formCodiceFiscale">
+                  <Form.Label><strong>Codice fiscale</strong></Form.Label>
+                  <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
+                </Form.Group>
+              </Row>
+
+              <Button
+                variant="secondary"
+                className='mt-4'
+                onClick={handleButtonClick}
+              >
+                Aggiungi Firmatario
+              </Button>
             </Tab.Pane>
 
             {/* Tab 2: Aggiungi da IAM */}
             <Tab.Pane eventKey="iam">
-                <Row className='mb-2'>
-                  <Form.Group controlId="formCodiceFiscale">
-                    <Form.Label><strong>Inserisci il codice fiscale</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
-                  </Form.Group>
-                </Row>
+              <Row className='mb-2'>
+                <Form.Group controlId="formCodiceFiscale">
+                  <Form.Label><strong>Inserisci il codice fiscale</strong></Form.Label>
+                  <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
+                </Form.Group>
+              </Row>
 
-                <Button
-                  variant="secondary"
-                  className='mt-4'
-                  onClick={handleButtonClick}
-                >
-                  Aggiungi Firmatario
-                </Button>
+              <Button
+                variant="secondary"
+                className='mt-4'
+                onClick={handleButtonClick}
+              >
+                Aggiungi Firmatario
+              </Button>
             </Tab.Pane>
 
             {/* Tab 3: Aggiungi da Rubrica */}
@@ -186,7 +183,7 @@ const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
                         background: "#efefef",
                         marginBottom: "0",
                         padding: "4px",
-                        paddingLeft: "10px",
+                        paddingLeft: "16px",
                         color: "#444",
                         marginTop: "15px",
                         fontSize: "medium",
@@ -232,7 +229,7 @@ const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
                         background: "#efefef",
                         marginBottom: "0",
                         padding: "4px",
-                        paddingLeft: "10px",
+                        paddingLeft: "16px",
                         color: "#444",
                         marginTop: "15px",
                         fontSize: "medium",
@@ -240,16 +237,16 @@ const RicercaFirmatariCard = ({ addFirmatario, setFieldValue }) => {
                       }}><strong>Gruppi</strong></Form.Label>
                       {filteredGroups.length > 0 ? (
                         filteredGroups.map(group => (
-                            <ListGroup.Item
-                              key={group.id}
-                              onClick={() => handleGroupSelect(group.id)}
-                              style={{
-                                cursor: 'pointer',
-                                backgroundColor: selectedGroups.includes(group.id) ? '#cfe2f3' : 'transparent'
-                              }}
-                            >
-                              {group.name}
-                            </ListGroup.Item>
+                          <ListGroup.Item
+                            key={group.id}
+                            onClick={() => handleGroupSelect(group.id)}
+                            style={{
+                              cursor: 'pointer',
+                              backgroundColor: selectedGroups.includes(group.id) ? '#cfe2f3' : 'transparent'
+                            }}
+                          >
+                            {group.name}
+                          </ListGroup.Item>
                         ))
                       ) : (
                         <ListGroup.Item>No gruppi trovati</ListGroup.Item>

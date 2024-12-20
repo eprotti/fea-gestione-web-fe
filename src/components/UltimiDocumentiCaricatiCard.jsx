@@ -18,7 +18,7 @@ const UltimiDocumentiCaricatiCard = () => {
     const filteredDocuments = documents.slice(0, 3);
 
     const cardTitle = () => {
-        return <h3 className="mt-4">Ultimi documenti caricati</h3>
+        return <h3 style={{marginTop: "30px"}}>Ultimi documenti caricati</h3>
     };
 
     // Se i dati sono in caricamento, mostriamo lo spinner
