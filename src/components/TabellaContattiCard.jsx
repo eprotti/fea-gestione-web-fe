@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Button, Form, Card } from 'react-bootstrap';
+import { Table, Button, Form, Card, Modal } from 'react-bootstrap';
 import { FaEye, FaEdit, FaTrash, FaEnvelope, FaIdCard } from 'react-icons/fa';
 import { separatorDocumento } from '../utils/DocumentoUtil';
 import DettaglioContattoModale from './DettaglioContattoModale';
@@ -7,6 +7,7 @@ import ModificaContattoModale from './ModificaContattoModale';
 import { truncateVeryShortNominativo } from '../utils/RubricaUtil';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, updateContact } from '../actions/RubricaActions';
+import ConfermaAzioneModale from './ConfermaAzioneModale';
 
 // Componente per visualizzare l'icona circolare con le iniziali
 const InitialsIcon = ({ nome, cognome }) => {
@@ -41,6 +42,8 @@ const TabellaContattiCard = () => {
     const [selectedContact, setSelectedContact] = useState(null); // Contatto selezionato
     const [showDetailsModal, setShowDetailsModal] = useState(false); // Modal per dettagli
     const [showEditModal, setShowEditModal] = useState(false); // Modal per modifica
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
 
     // Funzione per filtrare i contatti in base alla ricerca
     const filterContacts = () => {
@@ -78,17 +81,24 @@ const TabellaContattiCard = () => {
         setShowEditModal(true);
     };
 
+    // Funzione per aprire la modale di conferma
+    const handleShowConfirm = (contact) => {
+        setSelectedContact(contact);
+        setShowConfirmModal(true);
+    };
+
     // Funzione per salvare le modifiche al contatto
     const handleSaveEdit = (editedContact) => {
         dispatch(updateContact(editedContact));
         setShowEditModal(false); // Chiudi la modale
         console.log('Contatto modificato:', editedContact);
-
     };
 
-    // Funzione per gestire la cancellazione di un contatto
-    const handleDelete = (id) => {
-        dispatch(deleteContact(id));
+    // Funzione per salvare le modifiche al contatto
+    const handleConfirmDelete = (contact) => {
+        dispatch(deleteContact(contact.id));
+        setShowConfirmModal(false); // Chiudi la modale
+        console.log('Contatto eliminato:', contact);
     };
 
     // Funzione per chiudere il modal dei dettagli
@@ -100,6 +110,12 @@ const TabellaContattiCard = () => {
     // Funzione per chiudere il modal della modifica
     const handleCloseEditModal = () => {
         setShowEditModal(false);
+        setSelectedContact(null);
+    };
+
+    // Funzione per chiudere il modal della modifica
+    const handleCloseConfirmModal = () => {
+        setShowConfirmModal(false);
         setSelectedContact(null);
     };
 
@@ -146,7 +162,7 @@ const TabellaContattiCard = () => {
                                             <Button variant="link" onClick={() => handleShowEdit(contact)} style={{ padding: "6px", verticalAlign: "sub" }}>
                                                 <FaEdit size={22} />
                                             </Button>
-                                            <Button variant="link" onClick={() => handleDelete(contact.id)} style={{ padding: "6px", verticalAlign: "sub" }}>
+                                            <Button variant="link" onClick={() => handleShowConfirm(contact)} style={{ padding: "6px", verticalAlign: "sub" }}>
                                                 <FaTrash size={22} />
                                             </Button>
                                         </td>
@@ -171,6 +187,14 @@ const TabellaContattiCard = () => {
                     onHide={handleCloseEditModal}
                     onSave={handleSaveEdit}
                 />
+
+                <ConfermaAzioneModale show={showConfirmModal}
+                    payload={selectedContact}
+                    onHide={handleCloseConfirmModal}
+                    action={handleConfirmDelete} 
+                    title="Elimina contatto"
+                    message="Sei sicuro di voler eliminare questo contatto?" />
+
             </div>
         </Card >
     );
