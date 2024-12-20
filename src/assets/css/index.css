@@ -194,7 +194,7 @@ header {
   padding: 0.22rem 0 0.22rem 0.8rem;
   position: relative;
   max-width: 100%;
-  margin-left: 80px;
+  margin-left: 70px;
 }
 
 #top-nav #top-nav-title a {
@@ -277,7 +277,7 @@ header {
   display: inline-block;
   text-indent: 0;
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .page-header h1 a,
