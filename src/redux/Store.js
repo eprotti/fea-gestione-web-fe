@@ -6,7 +6,7 @@ import stepsDocumentReducer from '../reducers/stepsDocumentReducer'
 import uploadDocumentSlice from '../slices/uploadDocumentSlice'
 import contactReducer from '../reducers/contactReducer';
 
-const store = configureStore({
+const Store = configureStore({
   reducer: {
     notifications: notificationReducer,
     user: userReducer,
@@ -17,4 +17,4 @@ const store = configureStore({
   },
 });
 
-export default store;
+export default Store;
