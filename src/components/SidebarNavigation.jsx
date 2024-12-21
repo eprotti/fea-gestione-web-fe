@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Badge, Collapse } from 'react-bootstrap';
-import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaCog, FaCogs, FaFileAlt, FaFolder, FaHome, FaUpload } from 'react-icons/fa';
+import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaCogs, FaFolder, FaHome, FaUpload } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 

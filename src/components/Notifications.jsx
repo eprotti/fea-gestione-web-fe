@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { markAsRead, removeNotification } from '../actions/NotificationActions';
-import { truncateVeryShortMessage } from '../utils/NotificationUtil';
-import { FaCheck, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { markAsRead, removeNotification } from '../actions/notificationAction';
+import { truncateVeryShortMessage } from '../utils/notificationUtil';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 const Notifications = () => {
   const dispatch = useDispatch();

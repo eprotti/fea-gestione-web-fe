@@ -1,9 +1,9 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { FaAddressBook, FaChevronRight, FaCogs, FaFolder, FaInfoCircle, FaQuestionCircle, FaUpload } from "react-icons/fa";
-import UltimiDocumentiCaricatiCard from "../components/UltimiDocumentiCaricatiCard";
-import { handleArchiveDocument, handleContactsList, handleUploadDocument } from '../utils/NavigationUtil';
 import { useNavigate } from 'react-router-dom';
+import LastDocumentUploadedCard from "../components/LastDocumentUploadedCard";
+import { handleArchiveDocument, handleContactsList, handleUploadDocument } from '../utils/navigationUtil';
 
 const HomePage = () => {
 
@@ -31,7 +31,7 @@ const HomePage = () => {
         </Col>
 
         <Col xs={12} md={4} className='pt-2'>
- 
+
           <section id="archive" className="card archive-card shadow" onClick={() => handleArchiveDocument(navigate)}>
             <FaFolder size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Archivio Documenti</h2>
@@ -47,7 +47,7 @@ const HomePage = () => {
 
         {/* Colonna laterale (opzionale, visibile su schermi più grandi) */}
         <Col xs={12} md={4}>
-          <UltimiDocumentiCaricatiCard />
+          <LastDocumentUploadedCard />
         </Col>
       </Row>
 

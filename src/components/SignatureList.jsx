@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { useDrag } from 'react-dnd';
-import { separatorDocumento } from '../utils/DocumentoUtil';
+import { separatorDocumento } from '../utils/documentUtil';
 
 const SignatureItem = ({ signature, onDragStart }) => {
     const [{ isDragging }, drag] = useDrag(() => ({

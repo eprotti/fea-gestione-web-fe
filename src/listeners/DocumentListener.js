@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify'; // Importa React-Toastify
 import 'react-toastify/dist/ReactToastify.css'; // Importa i CSS di React-Toastify
-import { fetchDocuments } from '../actions/DocumentActions.js';
+import { fetchDocuments } from '../actions/documentAction';
 
 const DocumentListener = () => {
     const dispatch = useDispatch();

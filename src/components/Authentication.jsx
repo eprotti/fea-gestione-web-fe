@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUser } from 'react-icons/fa';
-import { addNotification } from '../actions/NotificationActions';
+import { addNotification } from '../actions/notificationAction';
 
 // Funzione simulata per ottenere un JWT (può essere sostituita con una vera API)
 const fakeAuthAPI = () => {

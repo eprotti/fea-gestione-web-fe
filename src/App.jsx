@@ -7,12 +7,12 @@ import Footer from './components/Footer';
 import Header from './components/Header'; // Importa il componente Header
 import SidebarNavigation from './components/SidebarNavigation';
 import DocumentListener from './listeners/DocumentListener';
-import DettaglioDocumentoPage from './pages/DettaglioDocumentoPage';
+import ContactsListPage from './pages/ContactsListPage';
+import DetailDocumentPage from './pages/DetailDocumentPage';
+import DocumentsListPage from './pages/DocumentsListPage';
 import HomePage from './pages/HomePage';
-import NotifichePage from './pages/NotifichePage';
-import CaricaDocumentoPage from './pages/CaricaDocumentoPage';
-import ListaContattiPage from './pages/ListaContattiPage';
-import ListaDocumentiPage from './pages/ListaDocumentiPage';
+import NotificationPage from './pages/NotificationPage';
+import UploadDocumentPage from './pages/UploadDocumentPage';
 
 const App = () => {
 
@@ -21,13 +21,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        <Route path="/gestione-documento/carica" element={<CaricaDocumentoPage />} />
-        <Route path="/rubrica/lista-contatti" element={<ListaContattiPage />} />
-        <Route path="/archivio-documenti/lista-documenti" element={<ListaDocumentiPage />} />
+        <Route path="/gestione-documento/carica" element={<UploadDocumentPage />} />
+        <Route path="/rubrica/lista-contatti" element={<ContactsListPage />} />
+        <Route path="/archivio-documenti/lista-documenti" element={<DocumentsListPage />} />
 
-        <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DettaglioDocumentoPage />} />
+        <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DetailDocumentPage />} />
 
-        <Route path="/notifiche" element={<NotifichePage />} />
+        <Route path="/notifiche" element={<NotificationPage />} />
       </Routes>
 
     </div>
