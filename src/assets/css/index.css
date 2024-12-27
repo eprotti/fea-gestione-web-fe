@@ -1403,3 +1403,11 @@ form label,
       margin-top: 60px;
   }
 }
+
+.pdf-container {
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
