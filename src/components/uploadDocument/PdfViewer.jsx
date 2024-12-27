@@ -88,7 +88,7 @@ const PdfViewer = ({ file }) => {
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Documento PDF</h5>
         </Card.Subtitle>
         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
-        <div>
+        <div style={{textAlign: "center"}}>
           <button onClick={goToPreviousPage} disabled={pageNumber <= 1}>
             Precedente
           </button>

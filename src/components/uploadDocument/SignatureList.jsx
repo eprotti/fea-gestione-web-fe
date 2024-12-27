@@ -39,7 +39,7 @@ const SignatureList = ({ signatures }) => {
             ))
         ) : (
             <p style={{
-                border: "5px solid #cacaca",
+                border: "1px solid #cacaca",
                 borderRadius: "8px",
                 backgroundColor: "#fff",
                 marginTop: "20px",
