@@ -19,9 +19,8 @@ const SignatureList = ({ signatures }) => {
                     style={{
                         color: "#333",
                         fontWeight: "bold",
-                        padding: "10px",
-                        border: "4px solid #ccc",
-                        background: "#fff",
+                        padding: "20px",
+                        background: "#e6f2ff",
                         marginTop: "10px"
                     }}
                 >
@@ -39,7 +38,6 @@ const SignatureList = ({ signatures }) => {
             ))
         ) : (
             <p style={{
-                border: "1px solid #cacaca",
                 borderRadius: "8px",
                 backgroundColor: "#fff",
                 marginTop: "20px",

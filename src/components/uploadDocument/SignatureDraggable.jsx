@@ -3,6 +3,7 @@ import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 import { moveSignature, removeSignature } from '../../slices/signatureSlice';
 import { FaTrash } from 'react-icons/fa';
+import { FaArrowsSplitUpAndLeft } from 'react-icons/fa6';
 
 const SignatureDraggable = ({ signature, canvas }) => {
     const dispatch = useDispatch();
@@ -42,14 +43,14 @@ const SignatureDraggable = ({ signature, canvas }) => {
                         fontWeight: "bold",
                         cursor: "move",
                         padding: "10px",
-                        border: "4px solid #ccc",
+                        border: "1px solid #666",
                         textAlign: "center",
                         width: "200px",
                         height: "70px",
-                        background: "#fff"
+                        background: "#e6f2ff"
                     }}
                 >
-                    {signature.title}
+                    <strong>{signature.title}</strong>
                 </div>
                 <button
                     style={{
