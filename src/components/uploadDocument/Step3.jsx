@@ -6,6 +6,7 @@ import { BsExclamationCircle } from 'react-icons/bs';
 import { separatorDocumento } from '../../utils/documentUtil';
 import FirmatarioCard from './SignatoryCard';
 import ListaFirmatariCard from './SignatoryListCard';
+import { addNotification } from '../../actions/notificationAction';
 
 const Step3 = ({ values, touched, errors, setFieldValue }) => {
 
@@ -22,6 +23,8 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
         };
         push(newFirma); // Aggiungiamo la nuova firma alla lista tramite Formik
         setFieldValue('firme', ([...document.firme, newFirma]));
+        dispatch(addNotification("Firma aggiunta", "info"));
+        
     };
 
     const handleButtonClick = (type) => {

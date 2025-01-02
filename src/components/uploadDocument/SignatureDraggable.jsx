@@ -4,6 +4,10 @@ import { useDispatch } from 'react-redux';
 import { moveSignature, removeSignature } from '../../slices/signatureSlice';
 import { FaTrash } from 'react-icons/fa';
 import { FaArrowsSplitUpAndLeft } from 'react-icons/fa6';
+import { addNotification } from '../../actions/notificationAction';
+
+const WIDTH = 200;
+const HEIGHT = 70;
 
 const SignatureDraggable = ({ signature, canvas }) => {
     const dispatch = useDispatch();
@@ -11,9 +15,9 @@ const SignatureDraggable = ({ signature, canvas }) => {
     // Impostiamo i vincoli per impedire che la firma esca dalla pagina del PDF
     const bounds = {
         left: 0,
-        top: -1100,
-        right: 604,  // Limite destro (100px è la larghezza della firma)
-        bottom: -70,  // Limite inferiore (50px è l'altezza della firma)
+        top: 0,
+        right: 952 - WIDTH,  // Limite destro (100px è la larghezza della firma)
+        bottom: 1347 - HEIGHT,  // Limite inferiore (50px è l'altezza della firma)
     };
 
     // Gestiamo il termine del movimento
@@ -27,6 +31,7 @@ const SignatureDraggable = ({ signature, canvas }) => {
 
     const handleRemove = () => {
         dispatch(removeSignature(signature.id));  // Rimuovi la firma usando l'id
+        dispatch(addNotification("Firma rimossa dalla pagina", "info"));
     };
 
     return (
@@ -36,7 +41,7 @@ const SignatureDraggable = ({ signature, canvas }) => {
             bounds={bounds}
         // Impostiamo i limiti di movimento
         >
-            <div style={{ position: "absolute" }}>
+            <div style={{ position: "absolute", top: "0" }}>
                 <div className='shadow'
                     style={{
                         color: "#333",
@@ -45,8 +50,8 @@ const SignatureDraggable = ({ signature, canvas }) => {
                         padding: "10px",
                         border: "1px solid #666",
                         textAlign: "center",
-                        width: "200px",
-                        height: "70px",
+                        width: `${WIDTH}px`, // Usa il formato camelCase per 'width'
+                        height: `${HEIGHT}px`, // Usa il formato camelCase per 'height'
                         background: "#e6f2ff"
                     }}
                 >

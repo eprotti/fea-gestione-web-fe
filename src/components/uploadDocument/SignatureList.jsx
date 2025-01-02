@@ -2,12 +2,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addSignature } from '../../slices/signatureSlice';
 import { FaCheckCircle, FaInfoCircle, FaPlusCircle } from 'react-icons/fa';
+import { addNotification } from '../../actions/notificationAction';
 
 const SignatureList = ({ signatures }) => {
     const dispatch = useDispatch();
 
     const handleAddSignature = signature => {
-        dispatch(addSignature({ ...signature, x: 0, y: -1100 })); // Aggiungi la firma nella posizione iniziale
+        dispatch(addSignature({ ...signature, x: 0, y: 0 })); // Aggiungi la firma nella posizione iniziale
+        dispatch(addNotification("Firma aggiunta sulla pagina", "info"));
     };
 
     return (<>

@@ -116,7 +116,7 @@ const UploadDocument = () => {
                             )}
 
                             <Row>
-                                <Col xs={12} md={8}>
+                                <Col xs={12} md={currentStep == Steps.POSIZIONAMENTO_FIRME ? 12 : 8}>
                                     <Card className="mb-4 custom-card mt-0">
                                         <div className="card-body px-4 pb-4">
 

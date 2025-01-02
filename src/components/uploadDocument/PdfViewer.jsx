@@ -13,7 +13,8 @@ const PdfViewer = ({ file }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [numPages, setNumPages] = useState(0);
   const canvasRef = useRef(null);
-  const [scale, setScale] = useState(1.3);  // Scala per il PDF
+  const divRef = useRef(null);
+  const [scale, setScale] = useState(1.6);  // Scala per il PDF
 
   const placedSignatures = useSelector(state => state.signatures.placedSignatures);
   const currentPage = useSelector(state => state.signatures.currentPage);
@@ -56,6 +57,13 @@ const PdfViewer = ({ file }) => {
       canvas.width = viewport.width;
       canvas.height = viewport.height;
 
+      // Impostare le dimensioni del div
+      const div = divRef.current;
+      if (div) {
+        div.style.width = `${canvas.width}px`;
+        div.style.height = `${canvas.height}px`;
+      }
+
       // Rende la pagina PDF sul canvas
       page.render({
         canvasContext: context,
@@ -88,7 +96,7 @@ const PdfViewer = ({ file }) => {
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Documento PDF</h5>
         </Card.Subtitle>
         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
-        <div style={{textAlign: "center"}}>
+        <div style={{ textAlign: "center" }}>
           <button onClick={goToPreviousPage} disabled={pageNumber <= 1}>
             Precedente
           </button>
@@ -99,8 +107,8 @@ const PdfViewer = ({ file }) => {
             Successivo
           </button>
         </div>
-        <div className="pdf-container" style={{ position: 'relative' }}>
-          <canvas ref={canvasRef}></canvas>
+        <div className="mt-2" ref={divRef} style={{ position: 'relative', textAlign: "center", margin: "0 auto" }}>
+          <canvas ref={canvasRef} style={{ border: "1px solid #ccc" }}></canvas>
           {signaturesForCurrentPage.map(signature => (
             <SignatureDraggable key={signature.id} signature={signature} canvas={canvasRef.current} />
           ))}
