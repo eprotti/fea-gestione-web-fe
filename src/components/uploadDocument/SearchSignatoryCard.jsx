@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { ErrorMessage, Field, Formik } from 'formik';
+import React, { useRef, useState } from 'react';
 import { Button, Card, Col, Form, ListGroup, Nav, Row, Tab } from 'react-bootstrap';
+import { BsExclamationCircle } from 'react-icons/bs';
 import { FaUser, FaUsers } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 import { addNotification } from '../../actions/notificationAction';
 import { separatorDocumento } from '../../utils/documentUtil';
 import { scrollToBottom } from '../../utils/uploadDocumentUtil';
@@ -30,6 +33,23 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
     { id: 2, name: 'Marketing' },
     { id: 3, name: 'HR' },
   ];
+
+  const formikRef = useRef(null);  // Riferimento a Formik per accedere alle sue funzioni
+  const [formStatus, setFormStatus] = useState(null); // Stato per mostrare lo stato di validazione
+
+  // Schema di validazione per il form
+  const validationSchema = Yup.object({
+    nome: Yup.string()
+      .required('Il nome è obbligatorio'),
+    cognome: Yup.string()
+      .required('Il cognome è obbligatorio'),
+    email: Yup.string()
+      .email('Formato email non valido')
+      .required('L\'email è obbligatoria'),
+    codiceFiscale: Yup.string()
+      .matches(/^[A-Z0-9]{16}$/, 'Il codice fiscale deve essere composto da 16 caratteri alfanumerici')
+      .required('Il codice fiscale è obbligatorio'),
+  });
 
   // Funzione per filtrare contatti
   const filteredContacts = contacts.filter(contact =>
@@ -60,12 +80,32 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
     );
   };
 
-  const handleButtonClick = () => {
-    // Aggiungi logica per cercare e aggiungere i firmatari alla lista
-    const newFirmatario = { "codiceFiscale": "PRTMLN88C17H501D", "nomeCompleto": "Emiliano Protti", "email": "emiliano.protti@gmail.com" }; // Simulazione
-    setFieldValue('firmatari', ([...values.firmatari, newFirmatario]));
-    dispatch(addNotification("Nuovo firmatario aggiunto", "info"));
-    scrollToBottom();
+  const handleButtonClick = async () => {
+    if (key === "manual") {
+      if (formikRef.current) {
+        const errors = await formikRef.current.validateForm();  // Esegui la validazione
+        console.log('Errori di validazione:', errors);
+
+        // Impostiamo manualmente i campi come "toccati" per evidenziare gli errori
+        formikRef.current.setTouched({
+          nome: true,
+          cognome: true,
+          email: true,
+          codiceFiscale: true,
+        });
+
+        if (Object.keys(errors).length === 0) {
+          const formValues = formikRef.current.values;
+          const newFirmatario = { "codiceFiscale": formValues.codiceFiscale, "nomeCompleto": formValues.nome + ' ' + formValues.cognome, "email": formValues.email };
+          setFieldValue('firmatari', ([...values.firmatari, newFirmatario]));
+          dispatch(addNotification("Nuovo firmatario aggiunto", "info"));
+          formikRef.current.resetForm()
+          scrollToBottom();
+        } else {
+          setFormStatus('Form contiene errori.');
+        }
+      }
+    }
   };
 
   return (
@@ -93,34 +133,107 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
           <Tab.Content className="mt-3">
             {/* Tab 1: Aggiungi Manualmente */}
             <Tab.Pane eventKey="manual">
-              <Row className='mb-2'>
-                <Col md={6} className='mt-2'>
-                  <Form.Group controlId="formName">
-                    <Form.Label><strong>Nome</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il nome" className='input-group' />
-                  </Form.Group>
-                </Col>
-                <Col md={6} className='mt-2'>
-                  <Form.Group controlId="formCognome">
-                    <Form.Label><strong>Cognome</strong></Form.Label>
-                    <Form.Control type="text" placeholder="Inserisci il cognome" className='input-group' />
-                  </Form.Group>
-                </Col>
-              </Row>
 
-              <Row className='mb-2'>
-                <Form.Group controlId="formEmail">
-                  <Form.Label><strong>Email</strong></Form.Label>
-                  <Form.Control type="email" placeholder="Inserisci l'email" className='input-group' />
-                </Form.Group>
-              </Row>
+              <Formik
+                innerRef={formikRef}  // Assegna il riferimento a Formik
+                initialValues={{
+                  nome: '',
+                  cognome: '',
+                  email: '',
+                  codiceFiscale: '',
+                }}
+                validationSchema={validationSchema}
+                onSubmit={(values) => {
+                  console.log('Form inviato:', values);  // Questo viene chiamato solo al submit
+                }}
+              >
+                {({ values, handleSubmit, errors, touched, validateForm }) => (
+                  <Form noValidate onSubmit={handleSubmit}>
 
-              <Row className='mb-2'>
-                <Form.Group controlId="formCodiceFiscale">
-                  <Form.Label><strong>Codice fiscale</strong></Form.Label>
-                  <Form.Control type="text" placeholder="Inserisci il codice fiscale" className='input-group' />
-                </Form.Group>
-              </Row>
+                    <Row className='mb-2'>
+                      <Col md={6} className='mt-2'>
+                        <Form.Group controlId="formName">
+                          <Form.Label><strong>Nome</strong></Form.Label>
+                          <Field
+                            name="nome"
+                            as={Form.Control}
+                            type="text"
+                            value={values.nome}
+                          />
+                          <ErrorMessage name="nome">
+                            {(msg) => (
+                              <div className="invalid-feedback d-block">
+                                <BsExclamationCircle /> {msg}
+                              </div>
+                            )}
+                          </ErrorMessage>
+                          {/* <Form.Control type="text" ref={nomeRef} placeholder="Inserisci il nome" className='input-group' /> */}
+                        </Form.Group>
+                      </Col>
+                      <Col md={6} className='mt-2'>
+                        <Form.Group controlId="formCognome">
+                          <Form.Label><strong>Cognome</strong></Form.Label>
+                          <Field
+                            name="cognome"
+                            as={Form.Control}
+                            type="text"
+                            value={values.cognome}
+                          />
+                          <ErrorMessage name="cognome">
+                            {(msg) => (
+                              <div className="invalid-feedback d-block">
+                                <BsExclamationCircle /> {msg}
+                              </div>
+                            )}
+                          </ErrorMessage>
+                          {/* <Form.Control type="text" ref={cognomeRef} placeholder="Inserisci il cognome" className='input-group' /> */}
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
+                    <Row className='mb-2'>
+                      <Form.Group controlId="formEmail">
+                        <Form.Label><strong>Email</strong></Form.Label>
+                        <Field
+                          name="email"
+                          as={Form.Control}
+                          type="email"
+                          value={values.email}
+                        />
+                        <ErrorMessage name="email">
+                          {(msg) => (
+                            <div className="invalid-feedback d-block">
+                              <BsExclamationCircle /> {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                        {/* <Form.Control type="email" ref={emailRef} placeholder="Inserisci l'email" className='input-group' /> */}
+                      </Form.Group>
+                    </Row>
+
+                    <Row className='mb-2'>
+                      <Form.Group controlId="formCodiceFiscale">
+                        <Form.Label><strong>Codice fiscale</strong></Form.Label>
+                        <Field
+                          name="codiceFiscale"
+                          as={Form.Control}
+                          type="codiceFiscale"
+                          value={values.codiceFiscale}
+                        />
+                        <ErrorMessage name="codiceFiscale">
+                          {(msg) => (
+                            <div className="invalid-feedback d-block">
+                              <BsExclamationCircle /> {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                        {/* <Form.Control type="text" ref={codiceFiscaleRef} placeholder="Inserisci il codice fiscale" className='input-group' /> */}
+                      </Form.Group>
+                    </Row>
+
+                  </Form>
+                )}
+              </Formik>
 
               <Button
                 variant="secondary"
