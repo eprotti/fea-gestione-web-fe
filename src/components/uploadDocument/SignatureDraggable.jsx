@@ -3,7 +3,6 @@ import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
 import { moveSignature, removeSignature } from '../../slices/signatureSlice';
 import { FaTrash } from 'react-icons/fa';
-import { FaArrowsSplitUpAndLeft } from 'react-icons/fa6';
 import { addNotification } from '../../actions/notificationAction';
 
 const WIDTH = 200;
@@ -16,8 +15,8 @@ const SignatureDraggable = ({ signature, canvas }) => {
     const bounds = {
         left: 0,
         top: 0,
-        right: 952 - WIDTH,  // Limite destro (100px è la larghezza della firma)
-        bottom: 1347 - HEIGHT,  // Limite inferiore (50px è l'altezza della firma)
+        right: canvas.width - WIDTH,  // Limite destro (100px è la larghezza della firma)
+        bottom: canvas.height - HEIGHT,  // Limite inferiore (50px è l'altezza della firma)
     };
 
     // Gestiamo il termine del movimento

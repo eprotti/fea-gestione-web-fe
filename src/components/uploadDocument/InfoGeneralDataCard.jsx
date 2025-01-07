@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
-import { separatorDocumento } from '../utils/documentUtil';
+import { separatorDocumento } from '../../utils/documentUtil';
 
 const InfoGeneralDataCard = () => {
 

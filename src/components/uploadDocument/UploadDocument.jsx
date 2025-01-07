@@ -42,12 +42,9 @@ const UploadDocument = () => {
 
     // Schema di validazione per Step 3 (Firme)
     const validationSchemaStep3 = Yup.object({
-        firme: Yup.array().of(
-            Yup.object().shape({
-                titolo: Yup.string().required('Il titolo è obbligatorio'),
-                obbligatoria: Yup.boolean(),
-            })
-        ),
+        checkFirme: Yup.boolean()
+            .oneOf([true], 'Una o più firme non sono valide. Almeno una firma deve essere obbligatoria')  // checkFirme può essere solo true
+            .required('Una o più firme non sono valide'),  // Assicurati che checkFirme venga valorizzato
     });
 
     // Gestione del submit per lo Step 1
@@ -90,7 +87,8 @@ const UploadDocument = () => {
                     tipologiaDocumento: document.documentDetails.tipologiaDocumento,
                     pdfFile: document.documentDetails.pdfFile,
                     firmatari: document.firmatari,
-                    firme: document.firme,
+                    firme: [],
+                    checkFirme: true,
                     posizionamentoFirme: document.posizionamentoFirme,
                 }}
                 validationSchema={
@@ -112,7 +110,7 @@ const UploadDocument = () => {
                                 <Step3 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
                             )}
                             {currentStep == Steps.POSIZIONAMENTO_FIRME && (
-                                <Step4 />
+                                <Step4 values={values} />
                             )}
 
                             <Row>

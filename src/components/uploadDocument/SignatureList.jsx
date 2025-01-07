@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addSignature } from '../../slices/signatureSlice';
-import { FaCheckCircle, FaInfoCircle, FaPlusCircle } from 'react-icons/fa';
+import { FaInfoCircle, FaPlusCircle } from 'react-icons/fa';
 import { addNotification } from '../../actions/notificationAction';
 
 const SignatureList = ({ signatures }) => {

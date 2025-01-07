@@ -5,10 +5,10 @@ import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { FaCheck, FaFilePdf, FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../actions/notificationAction';
-import { getFileSizeInKB } from '../../utils/uploadDocumentUtil';
 import { separatorDocumento } from '../../utils/documentUtil';
-import AutoreDocumentoCard from './AuthorDocumentCard';
-import InfoDatiGeneraliCard from '../InfoGeneralDataCard';
+import { getFileSizeInKB } from '../../utils/uploadDocumentUtil';
+import AuthorDocumentCard from './AuthorDocumentCard';
+import InfoGeneralDataCard from './InfoGeneralDataCard';
 
 const Step1 = ({ values, touched, errors, setFieldValue }) => {
 
@@ -266,9 +266,9 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
             </Col>
 
             <Col xs={12} md={4}>
-                <AutoreDocumentoCard />
+                <AuthorDocumentCard />
 
-                <InfoDatiGeneraliCard />
+                <InfoGeneralDataCard />
             </Col>
         </Row>
     );

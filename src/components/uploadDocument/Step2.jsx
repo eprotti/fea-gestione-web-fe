@@ -8,7 +8,7 @@ import { addNotification } from '../../actions/notificationAction';
 import { addFirmatario, removeFirmatario } from '../../slices/uploadDocumentSlice';
 import { separatorDocumento } from '../../utils/documentUtil';
 import RicercaFirmatariCard from './SearchSignatoryCard';
-import TipologiaFirmaCard from './SignatureTypeCard';
+import TipologiaFirmaCard from './InfoSignatureTypeCard';
 
 const Step2 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
 

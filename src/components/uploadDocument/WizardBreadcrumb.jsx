@@ -97,7 +97,7 @@ const WizardBreadcrumb = () => {
       <Card className="mt-3 custom-card step-content-carica-documento">
         {currentStep == "datiGenerali" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci i dati generali del documento come titolo, descrizione e data di scadenza. Effettua l'upload del file PDF che vuoi caricare.</span>}
         {currentStep == "ricercaFirmatari" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Aggiungi i firmatari che dovranno apporre le firme al documento</span>}
-        {currentStep == "firmeDocumento" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari per poter firmare il documento</span>}
+        {currentStep == "firmeDocumento" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari per poter firmare il documento. Almeno una firma deve essere obbligatoria.</span>}
         {currentStep == "posizionamentoFirme" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Posiziona le firme che trovi sulla colonna destra all'interno delle pagine del file PDF.</span>}
 
       </Card>

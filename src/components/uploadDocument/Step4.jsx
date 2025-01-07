@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { separatorDocumento } from '../../utils/documentUtil';
 import PdfViewer from './PdfViewer';
 import SignatureList from './SignatureList';
-import { FaChevronCircleLeft, FaChevronCircleRight, FaCross, FaSignature } from 'react-icons/fa';
+import { FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa';
 
 const Step4 = () => {
     const availableSignatures = useSelector(state => state.signatures.availableSignatures);
@@ -74,7 +74,7 @@ const Step4 = () => {
                     <FaChevronCircleLeft size={32} className='text-white' style={{ marginTop: "8px" }} />
                 </a>
                 <div
-                    className={`signature-area col-3 p-0 ${isSidebarVisible ? '' : 'd-none'}`}
+                    className={`signature-area col-2 p-0 ${isSidebarVisible ? '' : 'd-none'}`}
                     style={{
                         position: 'fixed',
                         top: "200px",

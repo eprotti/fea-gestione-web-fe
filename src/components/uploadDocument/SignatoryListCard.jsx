@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
 import { separatorDocumento } from '../../utils/documentUtil';
 
-const SignatoryListCard = () => {
+const SignatoryListCard = ({ signatories }) => {
 
   return (
     <Card className="mb-4 custom-card">
@@ -16,62 +16,28 @@ const SignatoryListCard = () => {
 
         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
 
-        <div className="d-flex mb-3" style={{ background: "#efefef", padding: "8px" }}>
+        {Array.isArray(signatories) && signatories.length > 0 &&
+          signatories.map(signatory => (
+            <div key={signatory.id} className="d-flex mb-3" style={{ background: "#efefef", padding: "8px" }}>
 
-          <FaUser style={{
-            fontSize: "48px",
-            border: "1px solid",
-            borderRadius: "54px",
-            padding: "8px",
-            marginTop: "4px",
-            background: "#06c",
-            color: "white"
-          }} />
+              <FaUser style={{
+                fontSize: "48px",
+                border: "1px solid",
+                borderRadius: "54px",
+                padding: "8px",
+                marginTop: "4px",
+                background: "#06c",
+                color: "white"
+              }} />
 
-          <div className="">
-            <h5 className="px-3 pt-1" style={{ margin: "0", fontSize: "large" }}>Emiliano Protti</h5>
-            <span style={{ paddingLeft: "15px" }}>emiliano.protti@gmail.com</span>
-          </div>
+              <div className="">
+                <h5 className="px-3 pt-1" style={{ margin: "0", fontSize: "large" }}>{signatory.nomeCompleto}</h5>
+                <span style={{ paddingLeft: "15px" }}>{signatory.email}</span>
+              </div>
 
-        </div>
-
-        <div className="d-flex mb-3" style={{ background: "#efefef", padding: "8px" }}>
-
-          <FaUser style={{
-            fontSize: "48px",
-            border: "1px solid",
-            borderRadius: "54px",
-            padding: "8px",
-            marginTop: "4px",
-            background: "#06c",
-            color: "white"
-          }} />
-
-          <div className="">
-            <h5 className="px-3 pt-1" style={{ margin: "0", fontSize: "large" }}>Emiliano Protti</h5>
-            <span style={{ paddingLeft: "15px" }}>emiliano.protti@gmail.com</span>
-          </div>
-
-        </div>
-
-        <div className="d-flex mb-3" style={{ background: "#efefef", padding: "8px" }}>
-
-          <FaUser style={{
-            fontSize: "48px",
-            border: "1px solid",
-            borderRadius: "54px",
-            padding: "8px",
-            marginTop: "4px",
-            background: "#06c",
-            color: "white"
-          }} />
-
-          <div className="">
-            <h5 className="px-3 pt-1" style={{ margin: "0", fontSize: "large" }}>Emiliano Protti</h5>
-            <span style={{ paddingLeft: "15px" }}>emiliano.protti@gmail.com</span>
-          </div>
-
-        </div>
+            </div>
+          ))
+        }
 
       </div>
 

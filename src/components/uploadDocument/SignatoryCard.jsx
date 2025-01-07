@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import { FaEnvelope, FaIdCard, FaUser } from 'react-icons/fa';
 import { separatorDocumento } from '../../utils/documentUtil';
 
-const SignatoryCard = () => {
+const SignatoryCard = ({ signatory }) => {
 
   return (
     <Card className="mb-4 custom-card">
@@ -16,7 +16,7 @@ const SignatoryCard = () => {
 
         <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
 
-        <div className="d-flex mb-3" style={{background: "#efefef", padding: "8px"}}>
+        <div className="d-flex mb-3" style={{ background: "#efefef", padding: "8px" }}>
 
           <FaUser style={{
             fontSize: "48px",
@@ -29,7 +29,7 @@ const SignatoryCard = () => {
           }} />
 
           <div className="">
-            <h5 className="px-3 py-3" style={{margin: "0", fontSize: "large"}}>Emiliano Protti</h5>
+            <h5 className="px-3 py-3" style={{ margin: "0", fontSize: "large" }}>{signatory.nomeCompleto}</h5>
           </div>
 
         </div>
@@ -38,7 +38,7 @@ const SignatoryCard = () => {
           <div className="col-xs-12">
             <div className="data-show">
               <p className="data-text"><FaIdCard size={24} style={{ color: "#06c", verticalAlign: "sub", marginRight: "6px" }} /> Codice fiscale</p>
-              <p className="data-value">PRTMLN88C17H501D</p>
+              <p className="data-value">{signatory.codiceFiscale}</p>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@ const SignatoryCard = () => {
           <div className="col-xs-12">
             <div className="data-show">
               <p className="data-text"><FaEnvelope size={24} style={{ color: "#06c", verticalAlign: "sub", marginRight: "6px" }} /> Indirizzo email:</p>
-              <p className="data-value">emiliano.protti@gmail.com</p>
+              <p className="data-value">{signatory.email}</p>
             </div>
           </div>
         </div>
