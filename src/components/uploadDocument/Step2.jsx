@@ -5,12 +5,11 @@ import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../actions/notificationAction';
-import { addFirmatario, removeFirmatario } from '../../slices/uploadDocumentSlice';
 import { separatorDocumento } from '../../utils/documentUtil';
-import RicercaFirmatariCard from './SearchSignatoryCard';
-import TipologiaFirmaCard from './InfoSignatureTypeCard';
+import InfoSignatureTypeCard from './InfoSignatureTypeCard';
+import SearchSignatoryCard from './SearchSignatoryCard';
 
-const Step2 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
+const Step2 = ({ values, setFieldValue }) => {
 
     const dispatch = useDispatch();
 
@@ -24,7 +23,7 @@ const Step2 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
         <Row>
             <Col xs={12} md={8}>
 
-                <RicercaFirmatariCard values={values} addFirmatario={addFirmatario} removeFirmatario={removeFirmatario} setFieldValue={setFieldValue} />
+                <SearchSignatoryCard values={values} setFieldValue={setFieldValue} />
 
                 <Card className="mb-4 custom-card">
                     <div className="card-body px-4 pb-4">
@@ -73,7 +72,7 @@ const Step2 = ({ values, touched, errors, setFieldValue, isSubmitting }) => {
             </Col>
 
             <Col xs={12} md={4}>
-                <TipologiaFirmaCard />
+                <InfoSignatureTypeCard values={values} />
             </Col>
 
         </Row>

@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { separatorDocumento } from '../../utils/documentUtil';
+import { setAvailableSignatures } from '../../reducers/signatureReducer';
+import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import PdfViewer from './PdfViewer';
 import SignatureList from './SignatureList';
-import { FaChevronCircleLeft, FaChevronCircleRight} from 'react-icons/fa';
 
-const Step4 = () => {
+const Step4 = ({ values, setFieldValue }) => {
+
+    const dispatch = useDispatch();
+
     const availableSignatures = useSelector(state => state.signatures.availableSignatures);
     // Filtra le firme per la pagina corrente
     const availableSignaturesNotPlaced = availableSignatures.filter(
         signature => signature.placed == false
     );
 
-    // Stato per gestire la visibilità della colonna destra
-    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    useEffect(() => {
+        // Impostiamo la lista delle firme disponibili all'inizio
+        dispatch(setAvailableSignatures(convertiFirmeInFirmeGrafiche(values.firme)));
+    }, [dispatch]);
 
-    // Funzione per togglare la visibilità della colonna destra
+    function convertiFirmeInFirmeGrafiche(firme) {
+        return firme.map((firma, index) => ({
+            id: index + 1,            // Aggiungi 1 all'indice per avere un id univoco
+            title: firma.titolo,      // Imposta il titolo della firma
+            mandatory: firma.obbligatoria, // Imposta l'obbligatorietà della firma
+            placed: false,            // Inizialmente, la firma non è posizionata
+            page: undefined           // La pagina è inizialmente indefinita
+        }));
+    }
+
+    // Stato per gestire la visibilità della colonna destra
+    const [isSidebarVisible, setIsSidebarVisible] = useState(true);
     const toggleSidebar = () => {
         setIsSidebarVisible(!isSidebarVisible);
     };
 
     // Stato per monitorare la larghezza della finestra
     const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-    // Funzione per aggiornare lo stato in base alla larghezza della finestra
     const handleResize = () => {
         if (window.innerWidth < 1300) {
             setIsSmallScreen(true);  // Mostra il div se la larghezza è inferiore a 1300px
@@ -36,10 +51,8 @@ const Step4 = () => {
     // Aggiungi un listener per l'evento di resize
     useEffect(() => {
         window.addEventListener('resize', handleResize);
-
         // Chiamata iniziale per settare il valore all'avvio
         handleResize();
-
         // Pulizia del listener al termine del ciclo di vita del componente
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -54,15 +67,16 @@ const Step4 = () => {
                         <h3>La funzionalità non è supportata su dispositivi con larghezza inferiore a 1300px.</h3>
                     </div>
                 ) : (
-                    <PdfViewer file="/TEST_PAGE2.pdf" />
+                    <PdfViewer file={URL.createObjectURL(values.pdfFile)} />
                 )}
             </Col>
-            
-            
+
+
             {/* Colonna destra fissa che si sovrappone */}
-            <div style={{ position: "relative",
+            <div style={{
+                position: "relative",
                 display: isSmallScreen ? 'none' : '',
-             }}>
+            }}>
                 <a className={`btn btn-primary mb-4 ${isSidebarVisible ? 'd-none' : ''}`}
                     style={{
                         position: "fixed",

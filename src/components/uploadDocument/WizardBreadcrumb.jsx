@@ -2,26 +2,26 @@ import React from 'react';
 import { Breadcrumb, Card } from 'react-bootstrap';
 import { FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentStep } from '../../slices/uploadDocumentSlice';
+import { setCurrentStep } from '../../reducers/currentStepReducer';
+import Steps from '../../enum/Steps';
 
 // Componente breadcrumb
 const WizardBreadcrumb = () => {
 
   const dispatch = useDispatch();
 
-  /* Documento da caricare */
-  const document = useSelector((state) => state.uploadDocument);
-  const currentStep = document.currentStep;
+  /* Step corrente */
+  const currentStep = useSelector((state) => state.currentStep.currentStep);
 
-  /* Step */
+  /* Tutti gli stati degli Step */
   const steps = useSelector((state) => state.steps);
 
   // Funzione per navigare direttamente a uno step specifico
   const handleStepClick = (step) => {
-    if ((step === "datiGenerali" && steps.datiGenerali) ||
-      (step === "ricercaFirmatari" && steps.ricercaFirmatari) ||
-      (step === "firmeDocumento" && steps.firmeDocumento) ||
-      (step === "posizionamentoFirme" && steps.posizionamentoFirme) ||
+    if ((step === Steps.DATI_GENERALI && steps.datiGenerali) ||
+      (step === Steps.RICERCA_FIRMATARI && steps.ricercaFirmatari) ||
+      (step === Steps.FIRME_DOCUMENTO && steps.firmeDocumento) ||
+      (step === Steps.POSIZIONAMENTO_FIRME && steps.posizionamentoFirme) ||
       step === currentStep) {
       dispatch(setCurrentStep(step));
     }
@@ -30,10 +30,10 @@ const WizardBreadcrumb = () => {
   return (
     <>
       <Breadcrumb className='step-navigation-carica-documento'>
-        {steps.datiGenerali || currentStep == "datiGenerali" ? (
+        {steps.datiGenerali || currentStep === Steps.DATI_GENERALI ? (
           <Breadcrumb.Item
-            onClick={() => handleStepClick("datiGenerali")}
-            active={currentStep == "datiGenerali"}
+            onClick={() => handleStepClick(Steps.DATI_GENERALI)}
+            active={currentStep === Steps.DATI_GENERALI}
             style={{ cursor: 'pointer' }}
             className={`step-carica-documento ${steps.datiGenerali ? 'now-completed' : ''}`}
           >
@@ -46,10 +46,10 @@ const WizardBreadcrumb = () => {
         ) : null}
 
         {/* Mostra il secondo step solo se è stato completato o se è lo step attivo */}
-        {steps.ricercaFirmatari || currentStep == "ricercaFirmatari" ? (
+        {steps.ricercaFirmatari || currentStep === Steps.RICERCA_FIRMATARI ? (
           <Breadcrumb.Item
-            onClick={() => handleStepClick("ricercaFirmatari")}
-            active={currentStep == "ricercaFirmatari"}
+            onClick={() => handleStepClick(Steps.RICERCA_FIRMATARI)}
+            active={currentStep === Steps.RICERCA_FIRMATARI}
             style={{ cursor: 'pointer' }}
             className={`step-carica-documento ${steps.ricercaFirmatari ? 'now-completed' : ''}`}
           >
@@ -62,10 +62,10 @@ const WizardBreadcrumb = () => {
         ) : null}
 
         {/* Mostra il terzo step solo se è stato completato o se è lo step attivo */}
-        {steps.firmeDocumento || currentStep == "firmeDocumento" ? (
+        {steps.firmeDocumento || currentStep === Steps.FIRME_DOCUMENTO ? (
           <Breadcrumb.Item
-            onClick={() => handleStepClick("firmeDocumento")}
-            active={currentStep == "firmeDocumento"}
+            onClick={() => handleStepClick(Steps.FIRME_DOCUMENTO)}
+            active={currentStep === Steps.FIRME_DOCUMENTO}
             style={{ cursor: 'pointer', marginTop: "0" }}
             className={`step-carica-documento ${steps.firmeDocumento ? 'now-completed' : ''}`}
           >
@@ -77,11 +77,11 @@ const WizardBreadcrumb = () => {
           </Breadcrumb.Item>
         ) : null}
 
-        {/* Mostra il terzo step solo se è stato completato o se è lo step attivo */}
-        {steps.posizionamentoFirme || currentStep == "posizionamentoFirme" ? (
+        {/* Mostra il quarto step solo se è stato completato o se è lo step attivo */}
+        {steps.posizionamentoFirme || currentStep === Steps.POSIZIONAMENTO_FIRME ? (
           <Breadcrumb.Item
-            onClick={() => handleStepClick("posizionamentoFirme")}
-            active={currentStep == "posizionamentoFirme"}
+            onClick={() => handleStepClick(Steps.POSIZIONAMENTO_FIRME)}
+            active={currentStep === Steps.POSIZIONAMENTO_FIRME}
             style={{ cursor: 'pointer', marginTop: "0" }}
             className={`step-carica-documento ${steps.posizionamentoFirme ? 'now-completed' : ''}`}
           >
@@ -95,11 +95,10 @@ const WizardBreadcrumb = () => {
 
       </Breadcrumb>
       <Card className="mt-3 custom-card step-content-carica-documento">
-        {currentStep == "datiGenerali" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci i dati generali del documento come titolo, descrizione e data di scadenza. Effettua l'upload del file PDF che vuoi caricare.</span>}
-        {currentStep == "ricercaFirmatari" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Aggiungi i firmatari che dovranno apporre le firme al documento</span>}
-        {currentStep == "firmeDocumento" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari per poter firmare il documento. Almeno una firma deve essere obbligatoria.</span>}
-        {currentStep == "posizionamentoFirme" && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Posiziona le firme che trovi sulla colonna destra all'interno delle pagine del file PDF.</span>}
-
+        {currentStep === Steps.DATI_GENERALI && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci i dati generali del documento come titolo, descrizione e data di scadenza. Effettua l'upload del file PDF che vuoi caricare.</span>}
+        {currentStep === Steps.RICERCA_FIRMATARI && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Aggiungi i firmatari che dovranno apporre le firme al documento</span>}
+        {currentStep === Steps.FIRME_DOCUMENTO && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Inserisci le firme che verranno richieste ai firmatari per poter firmare il documento. Almeno una firma deve essere obbligatoria.</span>}
+        {currentStep === Steps.POSIZIONAMENTO_FIRME && <span style={{ fontSize: "large" }}><FaInfoCircle size={24} color='#06c' style={{ marginRight: "10px" }} /> Posiziona le firme che trovi sulla colonna destra all'interno delle pagine del file PDF.</span>}
       </Card>
     </>
   );

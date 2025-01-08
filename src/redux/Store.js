@@ -3,16 +3,16 @@ import userReducer from '../reducers/userReducer';
 import documentsReducer from '../reducers/documentReducer';
 import notificationReducer from '../reducers/notificationReducer';
 import stepsDocumentReducer from '../reducers/stepsDocumentReducer';
-import uploadDocumentSlice from '../slices/uploadDocumentSlice';
+import currentStepReducer from '../reducers/currentStepReducer';
 import contactReducer from '../reducers/contactReducer';
-import signatureReducer from '../slices/signatureSlice';
+import signatureReducer from '../reducers/signatureReducer';
 
 const Store = configureStore({
   reducer: {
     notifications: notificationReducer,
     user: userReducer,
     documents: documentsReducer,
-    uploadDocument: uploadDocumentSlice,
+    currentStep: currentStepReducer,
     steps: stepsDocumentReducer,
     contacts: contactReducer,
     signatures: signatureReducer,

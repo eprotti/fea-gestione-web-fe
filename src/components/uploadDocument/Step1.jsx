@@ -1,7 +1,7 @@
-import { ErrorMessage, Field } from 'formik';
 import React, { useRef, useState } from 'react';
+import { ErrorMessage, Field } from 'formik';
 import { Form as BootstrapForm, Button, Card, Col, Row } from 'react-bootstrap';
-import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
+import { BsExclamationCircle } from 'react-icons/bs';
 import { FaCheck, FaFilePdf, FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../actions/notificationAction';
@@ -9,6 +9,7 @@ import { separatorDocumento } from '../../utils/documentUtil';
 import { getFileSizeInKB } from '../../utils/uploadDocumentUtil';
 import AuthorDocumentCard from './AuthorDocumentCard';
 import InfoGeneralDataCard from './InfoGeneralDataCard';
+import SignType from '../../enum/SignType';
 
 const Step1 = ({ values, touched, errors, setFieldValue }) => {
 
@@ -16,8 +17,8 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
 
     const fileInputRef = useRef(null); // Riferimento all'input di tipo file
 
-    const [tipologiaFirma, setTipologiaFirma] = useState('SINGOLO_FIRMATARIO');
-    const [isMarcaTemporale, setMarcaTemporale] = useState('y');
+    const [tipologiaFirma, setTipologiaFirma] = useState(values.tipologiaFirma);
+    const [isMarcaTemporale, setMarcaTemporale] = useState(values.marcaTemporale);
 
     const handleTipologiaFirmaButtonClick = (type) => {
         setFieldValue('tipologiaFirma', type);
@@ -66,19 +67,19 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                             <div className='d-flex'>
                                 {/* Pulsante Firma Singola */}
                                 <Button
-                                    variant={tipologiaFirma === 'SINGOLO_FIRMATARIO' ? 'selected' : 'unselected'}
-                                    onClick={() => handleTipologiaFirmaButtonClick('SINGOLO_FIRMATARIO')}
+                                    variant={tipologiaFirma === SignType.SINGOLO_FIRMATARIO ? 'selected' : 'unselected'}
+                                    onClick={() => handleTipologiaFirmaButtonClick(SignType.SINGOLO_FIRMATARIO)}
                                     style={{ marginRight: '10px' }}
                                 >
-                                    Singolo firmatario {tipologiaFirma === 'SINGOLO_FIRMATARIO' && <FaCheck style={{ marginLeft: "10px" }} />}
+                                    Singolo firmatario {tipologiaFirma === SignType.SINGOLO_FIRMATARIO && <FaCheck style={{ marginLeft: "10px" }} />}
                                 </Button>
 
                                 <Button
-                                    variant={tipologiaFirma === 'MULTI_FIRMATARIO' ? 'selected' : 'unselected'}
-                                    onClick={() => handleTipologiaFirmaButtonClick('MULTI_FIRMATARIO')}
+                                    variant={tipologiaFirma === SignType.MULTI_FIRMATARIO ? 'selected' : 'unselected'}
+                                    onClick={() => handleTipologiaFirmaButtonClick(SignType.MULTI_FIRMATARIO)}
                                     style={{ marginRight: '10px' }}
                                 >
-                                    Multi firmatario {tipologiaFirma === 'MULTI_FIRMATARIO' && <FaCheck style={{ marginLeft: "10px" }} />}
+                                    Multi firmatario {tipologiaFirma === SignType.MULTI_FIRMATARIO && <FaCheck style={{ marginLeft: "10px" }} />}
                                 </Button>
                             </div>
 
@@ -108,7 +109,7 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                                 name="descrizione"
                                 className={`form-control input-group ${touched.descrizione && errors.descrizione ? 'is-invalid' : ''}`}
                                 placeholder="Inserisci una breve descrizione"
-                                rows="4" // Definisce l'altezza della textarea (puoi modificarla se necessario)
+                                rows="4" 
                             />
                             <ErrorMessage name="descrizione">
                                 {(msg) => (
@@ -262,7 +263,6 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                         </BootstrapForm.Group>
                     </div>
                 </Card>
-
             </Col>
 
             <Col xs={12} md={4}>

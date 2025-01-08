@@ -1,43 +1,48 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addNotification } from '../../actions/notificationAction';
+import { setStepCompleted } from '../../reducers/stepsDocumentReducer';
+import { setCurrentStep } from '../../reducers/currentStepReducer';
+import { handleViewDocument } from '../../utils/navigationUtil';
+import { scrollToTop } from '../../utils/uploadDocumentUtil';
+import * as Yup from 'yup';
+import SignPosition from '../../enum/SignPosition';
+import SignType from '../../enum/SignType';
 import Steps from '../../enum/Steps';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import WizardBreadcrumb from './WizardBreadcrumb';
-import { setStepCompleted } from '../../reducers/stepsDocumentReducer';
-import { setCurrentStep } from '../../slices/uploadDocumentSlice';
-import { scrollToTop } from '../../utils/uploadDocumentUtil';
-import { addNotification } from '../../actions/notificationAction';
-import { handleViewDocument } from '../../utils/navigationUtil';
 
 const UploadDocument = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    /* Documento da caricare */
-    const document = useSelector((state) => state.uploadDocument);
-    const currentStep = document.currentStep;
+    /* Step attuale */
+    const currentStep = useSelector((state) => state.currentStep.currentStep);
 
-    // Schema di validazione con Yup
+    // Schema di validazione per Step 1 (Dati generali)
     const validationSchemaStep1 = Yup.object({
-        tipologiaFirma: Yup.string().required('Tipologia di firma è obbligatoria'),
-        dataScadenza: Yup.date().required('La data di scadenza è obbligatoria').min(new Date(), 'La data di scadenza non può essere nel passato'),
-        marcaTemporale: Yup.string().required('Marca temporale è obbligatoria'),
+        dataScadenza: Yup.date()
+            .required('La data di scadenza è obbligatoria')
+            .min(new Date(), 'La data di scadenza non può essere nel passato'),
         titolo: Yup.string().required('Il titolo è obbligatorio'),
         descrizione: Yup.string().required('La descrizione è obbligatoria'),
-        /* tipologiaDocumento: Yup.string().required('Tipologia documento è obbligatoria'), */
-        pdfFile: Yup.mixed().required('Il file PDF è obbligatorio').test('fileType', 'Il file deve essere in formato PDF', value => value && value.type === 'application/pdf')
+        pdfFile: Yup.mixed()
+            .required('Il file PDF è obbligatorio')
+            .test('fileType', 'Il file deve essere in formato PDF', value => value && value.type === 'application/pdf')
     });
 
+    // Schema di validazione per Step 2 (Ricerca Firmatari)
     const validationSchemaStep2 = Yup.object({
-        firmatari: Yup.array().min(1, 'Devi aggiungere almeno un firmatario').required('Firmatari obbligatori')
+        firmatari: Yup.array()
+            .min(1, 'Devi aggiungere almeno un firmatario')
+            .required('Firmatari obbligatori')
     });
 
     // Schema di validazione per Step 3 (Firme)
@@ -47,29 +52,37 @@ const UploadDocument = () => {
             .required('Una o più firme non sono valide'),  // Assicurati che checkFirme venga valorizzato
     });
 
-    // Gestione del submit per lo Step 1
+    // Schema di validazione per Step 4 (Firme)
+    const validationSchemaStep4 = Yup.object({
+        checkPosizionamentoFirme: Yup.boolean()
+            .oneOf([true], 'Una o più firme non sono state ancora posizionate')  // checkFirme può essere solo true
+            .required('Una o più firme non sono state ancora posizionate'),  // Assicurati che checkFirme venga valorizzato
+    });
+
+    // Gestione del submit
     const handleSubmitStep = (values, { setSubmitting }) => {
         setSubmitting(true);
+        /*
+        *   Salvataggio servizi backend
+        */
         setSubmitting(false);
         scrollToTop();
         dispatch(setStepCompleted(currentStep)); // Quando l'utente completa lo step, lo segnamo come completato
-        if (currentStep == Steps.DATI_GENERALI) {
+        if (currentStep === Steps.DATI_GENERALI) {
             dispatch(setCurrentStep(Steps.RICERCA_FIRMATARI));
-        } else if (currentStep == Steps.RICERCA_FIRMATARI) {
+        } else if (currentStep === Steps.RICERCA_FIRMATARI) {
             dispatch(setCurrentStep(Steps.FIRME_DOCUMENTO));
-        } else if (currentStep == Steps.FIRME_DOCUMENTO) {
-            if (values.posizionamentoFirme === 'automatico') {
-                console.log(values)
+        } else if (currentStep === Steps.FIRME_DOCUMENTO) {
+            if (values.posizionamentoFirme === SignPosition.AUTOMATICO) {
                 dispatch(addNotification("Documento caricato con successo", "success"));
                 handleViewDocument(navigate, "de0ad9e3-15d8-4895-badc-4a34e7bb5971");
             } else {
                 dispatch(setCurrentStep(Steps.POSIZIONAMENTO_FIRME));
             }
-        } else if (currentStep == Steps.POSIZIONAMENTO_FIRME) {
+        } else if (currentStep === Steps.POSIZIONAMENTO_FIRME) {
             dispatch(addNotification("Documento caricato con successo", "success"));
             handleViewDocument(navigate, "de0ad9e3-15d8-4895-badc-4a34e7bb5971");
         }
-
     };
 
     return (
@@ -77,44 +90,47 @@ const UploadDocument = () => {
             {/* Barra di Navigazione tra gli Step */}
             <WizardBreadcrumb />
 
+            {/* Form globale per tutti gli step*/}
             <Formik
                 initialValues={{
-                    tipologiaFirma: document.documentDetails.tipologiaFirma,
-                    dataScadenza: document.documentDetails.dataScadenza,
-                    marcaTemporale: document.documentDetails.marcaTemporale,
-                    titolo: document.documentDetails.titolo,
-                    descrizione: document.documentDetails.descrizione,
-                    tipologiaDocumento: document.documentDetails.tipologiaDocumento,
-                    pdfFile: document.documentDetails.pdfFile,
-                    firmatari: document.firmatari,
+                    tipologiaFirma: SignType.SINGOLO_FIRMATARIO,
+                    dataScadenza: "",
+                    marcaTemporale: true,
+                    titolo: "",
+                    descrizione: "",
+                    tipologiaDocumento: "",
+                    pdfFile: undefined,
+                    firmatari: [],
                     firme: [],
                     checkFirme: true,
-                    posizionamentoFirme: document.posizionamentoFirme,
+                    checkPosizionamentoFirme: false,
+                    posizionamentoFirme: SignPosition.AUTOMATICO,
                 }}
                 validationSchema={
-                    currentStep == Steps.DATI_GENERALI ? validationSchemaStep1 :
-                        currentStep == Steps.RICERCA_FIRMATARI ? validationSchemaStep2 :
-                            validationSchemaStep3}
+                    currentStep === Steps.DATI_GENERALI ? validationSchemaStep1 :
+                        currentStep === Steps.RICERCA_FIRMATARI ? validationSchemaStep2 :
+                            currentStep === Steps.FIRME_DOCUMENTO ? validationSchemaStep3 :
+                                currentStep === Steps.POSIZIONAMENTO_FIRME ? validationSchemaStep4 : null}
                 onSubmit={handleSubmitStep}
             >
-                {({ values, setFieldValue, errors, touched, isSubmitting, isValid }) => {
+                {({ values, setFieldValue, errors, touched, isSubmitting }) => {
                     return (
                         <Form>
-                            {currentStep == Steps.DATI_GENERALI && (
-                                <Step1 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
+                            {currentStep === Steps.DATI_GENERALI && (
+                                <Step1 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} />
                             )}
-                            {currentStep == Steps.RICERCA_FIRMATARI && (
-                                <Step2 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
+                            {currentStep === Steps.RICERCA_FIRMATARI && (
+                                <Step2 values={values} setFieldValue={setFieldValue} />
                             )}
-                            {currentStep == Steps.FIRME_DOCUMENTO && (
-                                <Step3 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} isSubmitting={isSubmitting} />
+                            {currentStep === Steps.FIRME_DOCUMENTO && (
+                                <Step3 values={values} touched={touched} errors={errors} setFieldValue={setFieldValue} />
                             )}
-                            {currentStep == Steps.POSIZIONAMENTO_FIRME && (
-                                <Step4 values={values} />
+                            {currentStep === Steps.POSIZIONAMENTO_FIRME && (
+                                <Step4 values={values} setFieldValue={setFieldValue}/>
                             )}
 
                             <Row>
-                                <Col xs={12} md={currentStep == Steps.POSIZIONAMENTO_FIRME ? 12 : 8}>
+                                <Col xs={12} md={currentStep === Steps.POSIZIONAMENTO_FIRME ? 12 : 8}>
                                     <Card className="mb-4 custom-card mt-0">
                                         <div className="card-body px-4 pb-4">
 

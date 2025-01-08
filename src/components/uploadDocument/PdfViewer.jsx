@@ -1,12 +1,13 @@
-import * as pdfjsLib from 'pdfjs-dist';
 import React, { useEffect, useRef, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { separatorDocumento } from '../../utils/documentUtil';
-import SignatureDraggable from './SignatureDraggable';
-import { changePage } from '../../slices/signatureSlice';
+import { changePage } from '../../reducers/signatureReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import * as pdfjsLib from 'pdfjs-dist';
+import SignatureDraggable from './SignatureDraggable';
 
 const PdfViewer = ({ file }) => {
+
   const dispatch = useDispatch();
 
   const [pdf, setPdf] = useState(null);
@@ -15,6 +16,19 @@ const PdfViewer = ({ file }) => {
   const canvasRef = useRef(null);
   const divRef = useRef(null);
   const [scale, setScale] = useState(1.6);  // Scala per il PDF
+  const [isFirstRender, setIsFirstRender] = useState(true); // Stato per tracciare il primo render
+
+  const loadPdf = async () => {
+    const loadingTask = pdfjsLib.getDocument(file);
+    try {
+      const pdfDoc = await loadingTask.promise;
+      setPdf(pdfDoc);
+      setNumPages(pdfDoc.numPages);
+      renderPage(1, pdfDoc);  // Renderizza la prima pagina
+    } catch (error) {
+      console.error('Errore nel caricamento del PDF:', error);
+    }
+  };
 
   const placedSignatures = useSelector(state => state.signatures.placedSignatures);
   const currentPage = useSelector(state => state.signatures.currentPage);
@@ -24,26 +38,14 @@ const PdfViewer = ({ file }) => {
     signature => signature.page === currentPage
   );
 
-  // Imposta pdf.js worker
-  useEffect(() => {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
-  }, []);
-
   // Carica il PDF
   useEffect(() => {
-    const loadPdf = async () => {
-      const loadingTask = pdfjsLib.getDocument(file);
-      try {
-        const pdfDoc = await loadingTask.promise;
-        setPdf(pdfDoc);
-        setNumPages(pdfDoc.numPages);
-        renderPage(1, pdfDoc);  // Renderizza la prima pagina
-      } catch (error) {
-        console.error('Errore nel caricamento del PDF:', error);
-      }
-    };
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
 
-    loadPdf();
+    if(isFirstRender) {
+      loadPdf();
+      setIsFirstRender(false);
+    }
   }, [file]);
 
   // Funzione per renderizzare la pagina PDF

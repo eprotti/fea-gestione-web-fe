@@ -1,22 +1,23 @@
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
-import { FaCheck, FaCross, FaTrash } from 'react-icons/fa';
-import * as Yup from 'yup';
+import { FaCheck, FaTrash } from 'react-icons/fa';
 import { BsExclamationCircle } from 'react-icons/bs';
 import { separatorDocumento } from '../../utils/documentUtil';
 import { addNotification } from '../../actions/notificationAction';
+import * as Yup from 'yup';
 import SignatoryListCard from './SignatoryListCard';
 import SignatoryCard from './SignatoryCard';
 import InfoSingsPositionCard from './InfoSingsPositionCard';
-import { useDispatch } from 'react-redux';
+import SignPosition from '../../enum/SignPosition';
 
-const Step3 = ({ values, touched, errors, setFieldValue }) => {
+const Step3 = ({ values, setFieldValue }) => {
 
     const dispatch = useDispatch();
 
     // Stato per gestire quale pulsante è attivo
-    const [positioning, setPositioning] = useState('automatico');
+    const [positioning, setPositioning] = useState(values.posizionamentoFirme);
 
     const formikRef = useRef(null);  // Riferimento a Formik per accedere alle sue funzioni
 
@@ -45,7 +46,7 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
         setFieldValue('posizionamentoFirme', type);
     };
 
-    const manualValidateForm = async () => {
+    const manualValidationForm = async () => {
         if (formikRef.current) {
             const errors = await formikRef.current.validateForm();  // Esegui la validazione
 
@@ -91,19 +92,19 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                         <div className='d-flex'>
                             {/* Pulsante Automatico */}
                             <Button
-                                variant={positioning === 'automatico' ? 'selected' : 'unselected'}
-                                onClick={() => handleButtonClick('automatico')}
+                                variant={positioning === SignPosition.AUTOMATICO ? 'selected' : 'unselected'}
+                                onClick={() => handleButtonClick(SignPosition.AUTOMATICO)}
                                 style={{ marginRight: '10px' }}
                             >
-                                Automatico {positioning === 'automatico' && <FaCheck style={{ marginLeft: "10px" }} />}
+                                Automatico {positioning === SignPosition.AUTOMATICO && <FaCheck style={{ marginLeft: "10px" }} />}
                             </Button>
 
                             {/* Pulsante Manuale */}
                             <Button
-                                variant={positioning === 'manuale' ? 'selected' : 'unselected'}
-                                onClick={() => handleButtonClick('manuale')}
+                                variant={positioning === SignPosition.MANUALE ? 'selected' : 'unselected'}
+                                onClick={() => handleButtonClick(SignPosition.MANUALE)}
                             >
-                                Manuale {positioning === 'manuale' && <FaCheck style={{ marginLeft: "10px" }} />}
+                                Manuale {positioning === SignPosition.MANUALE && <FaCheck style={{ marginLeft: "10px" }} />}
                             </Button>
                         </div>
 
@@ -122,25 +123,23 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                         <Formik
                             innerRef={formikRef}  // Assegna il riferimento a Formik
                             initialValues={{
-                                firme: values.firmatari.map((firmatario) => ({
+                                firme: values.firme && values.firme.length === 0 ? values.firmatari.map((firmatario) => ({
                                     titolo: "Firma di " + firmatario.nomeCompleto,  // Titolo della firma (ad esempio il nome del firmatario)
-                                    obbligatoria: true,       // Imposta come 'si' di default, oppure 'no'
-                                })),
+                                    obbligatoria: true,  // Imposta come 'si' di default, oppure 'no'
+                                })) : values.firme,
                             }}
                             validationSchema={validationSchema}
-                            onSubmit={(values) => {
-                                console.log('Form inviato:', values);  // Questo viene chiamato solo al submit
-                            }}
+                            onSubmit={(values) => { }}
                         >
-                            {({ values, handleSubmit, errors, touched, validateForm }) => (
+                            {({ values, handleSubmit, errors, touched }) => (
                                 <Form noValidate onSubmit={handleSubmit}>
 
                                     <FieldArray
                                         name="firme"
-                                        render={(arrayHelpers) => (
-                                            <div>
+                                        render={(arrayHelpers, index) => (
+                                            <div key={index}>
                                                 {values.firme.map((firma, index) => (
-                                                    <div key={firma.id} className="mb-3">
+                                                    <div key={index} className="mb-3">
                                                         <Row>
                                                             <Col md={8} className='mt-2'>
                                                                 <Form.Group>
@@ -157,7 +156,7 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                                                                                 ...firma,
                                                                                 titolo: value || '', // Impostiamo il titolo come stringa vuota se non è definito
                                                                             });
-                                                                            manualValidateForm();
+                                                                            manualValidationForm();
                                                                         }}
 
                                                                     />
@@ -185,11 +184,11 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                                                                         }}
                                                                         onClick={async () => {
                                                                             await removeFirma(index, arrayHelpers.remove, setFieldValue);
-                                                                            manualValidateForm();
+                                                                            manualValidationForm();
                                                                         }}
                                                                     >
                                                                         <FaTrash /> Rimuovi
-                                                                    </div> // Condizione per non mostrare il pulsante per la prima firma
+                                                                    </div>
                                                                 )}
                                                                 <Form.Group>
                                                                     <Form.Label>&nbsp;</Form.Label>
@@ -204,7 +203,7 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                                                                                 ...firma,
                                                                                 obbligatoria: !firma.obbligatoria,
                                                                             });
-                                                                            manualValidateForm();
+                                                                            manualValidationForm();
                                                                         }}
                                                                         className='ml-5'
                                                                         style={{
@@ -230,8 +229,8 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
                                                     variant='secondary'
                                                     onClick={async () => {
                                                         await cloneFirma(arrayHelpers.push);
-                                                        manualValidateForm();
-                                                    }} // Clona una firma
+                                                        manualValidationForm();
+                                                    }}
                                                 >
                                                     Aggiungi firma
                                                 </Button>
@@ -249,6 +248,7 @@ const Step3 = ({ values, touched, errors, setFieldValue }) => {
             <Col xs={12} md={4}>
                 {values.firmatari.length == 1 && <SignatoryCard signatory={values.firmatari[0]} />}
                 {values.firmatari.length > 1 && <SignatoryListCard signatories={values.firmatari} />}
+
                 <InfoSingsPositionCard />
             </Col>
         </Row>

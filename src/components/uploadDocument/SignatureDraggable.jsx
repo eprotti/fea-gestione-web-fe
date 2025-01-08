@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useDispatch } from 'react-redux';
-import { moveSignature, removeSignature } from '../../slices/signatureSlice';
+import { moveSignature, removeSignature } from '../../reducers/signatureReducer';
 import { FaTrash } from 'react-icons/fa';
 import { addNotification } from '../../actions/notificationAction';
 
@@ -11,13 +11,20 @@ const HEIGHT = 70;
 const SignatureDraggable = ({ signature, canvas }) => {
     const dispatch = useDispatch();
 
-    // Impostiamo i vincoli per impedire che la firma esca dalla pagina del PDF
-    const bounds = {
-        left: 0,
-        top: 0,
-        right: canvas.width - WIDTH,  // Limite destro (100px è la larghezza della firma)
-        bottom: canvas.height - HEIGHT,  // Limite inferiore (50px è l'altezza della firma)
-    };
+    const [bounds, setBounds] = useState(null);
+
+    useEffect(() => {
+        // Verifica se canvas è disponibile e se lo è, aggiorna i vincoli
+        if (canvas) {
+          const newBounds = {
+            left: 0,
+            top: 0,
+            right: canvas.width - WIDTH,  // Limite destro (100px è la larghezza della firma)
+            bottom: canvas.height - HEIGHT,  // Limite inferiore (50px è l'altezza della firma)
+          };
+          setBounds(newBounds);
+        }
+      }, [canvas]);  // Dipende da canvas, esegue quando canvas cambia
 
     // Gestiamo il termine del movimento
     const handleStop = (e, data) => {

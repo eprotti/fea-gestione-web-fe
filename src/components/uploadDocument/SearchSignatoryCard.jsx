@@ -6,13 +6,15 @@ import { FaUser, FaUsers } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { addNotification } from '../../actions/notificationAction';
+import TabsStep2 from '../../enum/TabsStep2';
 import { separatorDocumento } from '../../utils/documentUtil';
 import { scrollToBottom } from '../../utils/uploadDocumentUtil';
 
 const SearchSignatoryCard = ({ values, setFieldValue }) => {
   const dispatch = useDispatch();
 
-  const [key, setKey] = useState('manual');  // Stato per la tab attiva
+  const [key, setKey] = useState(TabsStep2.MANUALE);  // Stato per la tab attiva
+
   const [showSearchContacts, setShowSearchContacts] = useState(false);  // Stato per mostrare la ricerca contatti
   const [showSearchGroups, setShowSearchGroups] = useState(false);  // Stato per mostrare la ricerca gruppi
   const [contactFilter, setContactFilter] = useState('');  // Filtro per contatti
@@ -35,7 +37,6 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
   ];
 
   const formikRef = useRef(null);  // Riferimento a Formik per accedere alle sue funzioni
-  const [formStatus, setFormStatus] = useState(null); // Stato per mostrare lo stato di validazione
 
   // Schema di validazione per il form
   const validationSchema = Yup.object({
@@ -81,7 +82,7 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
   };
 
   const handleButtonClick = async () => {
-    if (key === "manual") {
+    if (key === TabsStep2.MANUALE) {
       if (formikRef.current) {
         const errors = await formikRef.current.validateForm();  // Esegui la validazione
         console.log('Errori di validazione:', errors);
@@ -96,13 +97,17 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
 
         if (Object.keys(errors).length === 0) {
           const formValues = formikRef.current.values;
-          const newFirmatario = { "codiceFiscale": formValues.codiceFiscale, "nomeCompleto": formValues.nome + ' ' + formValues.cognome, "email": formValues.email };
+          const newFirmatario = {
+            "codiceFiscale": formValues.codiceFiscale,
+            "nomeCompleto": formValues.nome + ' ' + formValues.cognome,
+            "email": formValues.email
+          };
           setFieldValue('firmatari', ([...values.firmatari, newFirmatario]));
           dispatch(addNotification("Nuovo firmatario aggiunto", "info"));
           formikRef.current.resetForm()
           scrollToBottom();
         } else {
-          setFormStatus('Form contiene errori.');
+          console.log('Form contiene errori.');
         }
       }
     }
@@ -120,19 +125,19 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
         <Tab.Container id="add-contact-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
           <Nav variant="tabs">
             <Nav.Item style={{ background: "#efefef" }}>
-              <Nav.Link eventKey="manual">Manuale</Nav.Link>
+              <Nav.Link eventKey={TabsStep2.MANUALE}>{TabsStep2.MANUALE}</Nav.Link>
             </Nav.Item>
             <Nav.Item style={{ background: "#efefef" }}>
-              <Nav.Link eventKey="iam">IAM</Nav.Link>
+              <Nav.Link eventKey={TabsStep2.IAM}>{TabsStep2.IAM}</Nav.Link>
             </Nav.Item>
             <Nav.Item style={{ background: "#efefef" }}>
-              <Nav.Link eventKey="rubrica">Rubrica</Nav.Link>
+              <Nav.Link eventKey={TabsStep2.RUBRICA}>{TabsStep2.RUBRICA}</Nav.Link>
             </Nav.Item>
           </Nav>
 
           <Tab.Content className="mt-3">
             {/* Tab 1: Aggiungi Manualmente */}
-            <Tab.Pane eventKey="manual">
+            <Tab.Pane eventKey={TabsStep2.MANUALE}>
 
               <Formik
                 innerRef={formikRef}  // Assegna il riferimento a Formik
@@ -167,7 +172,6 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
                               </div>
                             )}
                           </ErrorMessage>
-                          {/* <Form.Control type="text" ref={nomeRef} placeholder="Inserisci il nome" className='input-group' /> */}
                         </Form.Group>
                       </Col>
                       <Col md={6} className='mt-2'>
@@ -186,7 +190,6 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
                               </div>
                             )}
                           </ErrorMessage>
-                          {/* <Form.Control type="text" ref={cognomeRef} placeholder="Inserisci il cognome" className='input-group' /> */}
                         </Form.Group>
                       </Col>
                     </Row>
@@ -207,7 +210,6 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
                             </div>
                           )}
                         </ErrorMessage>
-                        {/* <Form.Control type="email" ref={emailRef} placeholder="Inserisci l'email" className='input-group' /> */}
                       </Form.Group>
                     </Row>
 
@@ -227,7 +229,6 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
                             </div>
                           )}
                         </ErrorMessage>
-                        {/* <Form.Control type="text" ref={codiceFiscaleRef} placeholder="Inserisci il codice fiscale" className='input-group' /> */}
                       </Form.Group>
                     </Row>
 
@@ -245,7 +246,7 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
             </Tab.Pane>
 
             {/* Tab 2: Aggiungi da IAM */}
-            <Tab.Pane eventKey="iam">
+            <Tab.Pane eventKey={TabsStep2.IAM}>
               <Row className='mb-2'>
                 <Form.Group controlId="formCodiceFiscale">
                   <Form.Label><strong>Inserisci il codice fiscale</strong></Form.Label>
@@ -263,7 +264,7 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
             </Tab.Pane>
 
             {/* Tab 3: Aggiungi da Rubrica */}
-            <Tab.Pane eventKey="rubrica">
+            <Tab.Pane eventKey={TabsStep2.RUBRICA}>
               <div>
                 <div className='d-flex mt-4'>
                   {/* Bottoni per selezionare "Cerca contatto" o "Cerca gruppo" */}

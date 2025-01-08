@@ -1,13 +1,9 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import { separatorDocumento } from '../../utils/documentUtil';
 
-const SignatureTypeCard = () => {
-
-  /* Documento da caricare */
-  const document = useSelector((state) => state.uploadDocument);
+const SignatureTypeCard = ({values}) => {
 
   return (
     <Card className="mb-4 custom-card">
@@ -24,7 +20,7 @@ const SignatureTypeCard = () => {
           <div className="col-xs-12">
             <div className="data-show">
               <p className="data-text">Tipologia di firma selezionata:</p>
-              <p className="data-value pt-2" style={{ whiteSpace: "nowrap" }}>{document.documentDetails.tipologiaFirma}</p>
+              <p className="data-value pt-2" style={{ whiteSpace: "nowrap" }}>{values.tipologiaFirma}</p>
             </div>
           </div>
         </div>
