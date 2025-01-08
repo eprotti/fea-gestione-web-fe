@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 
 // Schema di validazione con Yup
 const validationSchema = Yup.object({
@@ -36,7 +36,7 @@ const EditContactModal = ({ show, contact, onHide, onSave }) => {
 
             </Modal.Header>
             <Modal.Body style={{ paddingTop: "0" }}>
-                <hr className={`thin-color-separator mt-2 ${separatorDocumento()}`} />
+                <hr className={`thin-color-separator mt-2 ${separatorDocument()}`} />
 
                 <Formik
                     initialValues={{

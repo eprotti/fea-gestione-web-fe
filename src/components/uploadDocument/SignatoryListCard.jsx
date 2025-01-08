@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 
 const SignatoryListCard = ({ signatories }) => {
 
@@ -14,7 +14,7 @@ const SignatoryListCard = ({ signatories }) => {
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Firmatari</h5>
         </Card.Subtitle>
 
-        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
         {Array.isArray(signatories) && signatories.length > 0 &&
           signatories.map(signatory => (

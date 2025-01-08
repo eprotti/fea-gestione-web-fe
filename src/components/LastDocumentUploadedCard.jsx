@@ -4,7 +4,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../actions/notificationAction';
-import { isExpiring, separatorDocumento, truncateTitle } from '../utils/documentUtil';
+import { isExpiring, separatorDocument, truncateTitle } from '../utils/documentUtil';
 import { handleViewDocument } from '../utils/navigationUtil';
 
 const LastDocumentUploadedCard = () => {
@@ -56,7 +56,7 @@ const LastDocumentUploadedCard = () => {
                                     )}
                                 </div>
                             </Card.Title>
-                            <hr className={`thin-color-separator pb-1 mt-2 ${separatorDocumento(documento.stato)}`} />
+                            <hr className={`thin-color-separator pb-1 mt-2 ${separatorDocument(documento.stato)}`} />
                             <Row>
                                 <Col xs={12} lg={7}>
                                     <strong>Data Inserimento:</strong> {new Date(documento.dataInserimento).toLocaleDateString()}<br />

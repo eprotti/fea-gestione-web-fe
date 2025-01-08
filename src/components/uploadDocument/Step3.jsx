@@ -4,7 +4,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import { FaCheck, FaTrash } from 'react-icons/fa';
 import { BsExclamationCircle } from 'react-icons/bs';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import { addNotification } from '../../actions/notificationAction';
 import * as Yup from 'yup';
 import SignatoryListCard from './SignatoryListCard';
@@ -87,7 +87,7 @@ const Step3 = ({ values, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Posizionamento firme grafiche</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                         <div className='d-flex'>
                             {/* Pulsante Automatico */}
@@ -118,7 +118,7 @@ const Step3 = ({ values, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Lista firme</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                         <Formik
                             innerRef={formikRef}  // Assegna il riferimento a Formik

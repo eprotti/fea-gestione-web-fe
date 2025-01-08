@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { FaDownload } from 'react-icons/fa';
-import { scaricaDocumento } from '../utils/documentUtil';
+import { downloadDocument } from '../utils/documentUtil';
 
 const DownloadDocumentCard = ({ documento }) => {
 
@@ -16,7 +16,7 @@ const DownloadDocumentCard = ({ documento }) => {
 
         <a href="#" className="external" title="il documento verrà aperto in una nuova finestra">
 
-          <img src={`/img/${scaricaDocumento(documento.stato)}.svg`} className="my-1 mb-4" alt="consulta il documento" />
+          <img src={`/img/${downloadDocument(documento.stato)}.svg`} className="my-1 mb-4" alt="consulta il documento" />
 
           <Button variant="primary" className="btn-secondary">
             <span style={{ marginRight: "10px" }}>Scarica</span> <FaDownload />

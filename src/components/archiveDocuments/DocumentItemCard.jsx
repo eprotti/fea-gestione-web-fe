@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { isExpiring, separatorDocumento, truncateTitle } from '../../utils/documentUtil';
+import { isExpiring, separatorDocument, truncateTitle } from '../../utils/documentUtil';
 import { handleViewDocument } from '../../utils/navigationUtil';
 
 const DocumentItemCard = ({ document }) => {
@@ -20,7 +20,7 @@ const DocumentItemCard = ({ document }) => {
                         )}
                     </div>
                 </Card.Title>
-                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento(stato)}`} />
+                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument(stato)}`} />
                 <Card.Text>
                     <strong>Data Inserimento:</strong> {new Date(dataInserimento).toLocaleDateString()}<br />
                     <strong>Data Scadenza:</strong> {new Date(dataScadenza).toLocaleDateString()}<br />

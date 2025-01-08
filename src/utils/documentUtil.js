@@ -31,7 +31,7 @@ export const truncateEmail = (email, maxLength = 20) => {
     return email.length > maxLength ? email.slice(0, maxLength) + '...' : email;
 };
 
-export const separatorDocumento = (stato) => {
+export const separatorDocument = (stato) => {
     switch (stato) {
         case DocumentState.DA_COMPILARE:
             return 'border-cc-06';
@@ -50,7 +50,7 @@ export const separatorDocumento = (stato) => {
     }
 }
 
-export const scaricaDocumento = (stato) => {
+export const downloadDocument = (stato) => {
     switch (stato) {
         case DocumentState.DA_COMPILARE:
             return 'document-icon-11';

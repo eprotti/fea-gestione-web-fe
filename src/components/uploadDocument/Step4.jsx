@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import { setAvailableSignatures } from '../../reducers/signatureReducer';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import PdfViewer from './PdfViewer';
@@ -106,7 +106,7 @@ const Step4 = ({ values, setFieldValue }) => {
                                     <FaChevronCircleRight size={24} />
                                 </a>
                             </Card.Subtitle>
-                            <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                            <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                             <SignatureList signatures={availableSignaturesNotPlaced} />
                         </div>

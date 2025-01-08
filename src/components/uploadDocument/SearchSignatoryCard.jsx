@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { addNotification } from '../../actions/notificationAction';
 import TabsStep2 from '../../enum/TabsStep2';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import { scrollToBottom } from '../../utils/uploadDocumentUtil';
 
 const SearchSignatoryCard = ({ values, setFieldValue }) => {
@@ -110,6 +110,15 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
           console.log('Form contiene errori.');
         }
       }
+    } else if (key === TabsStep2.IAM) {
+      const newFirmatario = {
+        "codiceFiscale": "PRTMLN88C17H501D",
+        "nomeCompleto": "Emiliano Protti",
+        "email": "emiliano.protti@leonardo.com"
+      };
+      setFieldValue('firmatari', ([...values.firmatari, newFirmatario]));
+      dispatch(addNotification("Nuovo firmatario aggiunto", "info"));
+      scrollToBottom();
     }
   };
 
@@ -119,7 +128,7 @@ const SearchSignatoryCard = ({ values, setFieldValue }) => {
         <Card.Subtitle className="mb-2 text-muted py-1">
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Ricerca firmatari</h5>
         </Card.Subtitle>
-        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
         {/* NavTabs per il cambio di tab */}
         <Tab.Container id="add-contact-tabs" activeKey={key} onSelect={(k) => setKey(k)}>

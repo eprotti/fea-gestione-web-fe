@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Table } from 'react-bootstrap';
-import { separatorDocumento } from '../utils/documentUtil';
+import { separatorDocument } from '../utils/documentUtil';
 
 const SignsDocumentCard = ({ documento }) => {
 
@@ -15,7 +15,7 @@ const SignsDocumentCard = ({ documento }) => {
                     </h5>
                 </Card.Subtitle>
 
-                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento(documento.stato)}`} />
+                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument(documento.stato)}`} />
 
                 <Table borderless>
                     <thead >

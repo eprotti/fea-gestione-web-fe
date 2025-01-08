@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 
 const SignatureTypeCard = ({values}) => {
 
@@ -14,7 +14,7 @@ const SignatureTypeCard = ({values}) => {
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0"><FaInfoCircle size={20} color="#06c" style={{ verticalAlign: "unset", marginRight: "5px" }} /> Informazione</h5>
         </Card.Subtitle>
 
-        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
         <div className="row">
           <div className="col-xs-12">

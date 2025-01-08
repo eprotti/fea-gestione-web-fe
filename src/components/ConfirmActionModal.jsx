@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { separatorDocumento } from '../utils/documentUtil';
+import { separatorDocument } from '../utils/documentUtil';
 
 const ConfirmActionModal = ({ show, payload, onHide, action, title, message }) => {
 
@@ -26,7 +26,7 @@ const ConfirmActionModal = ({ show, payload, onHide, action, title, message }) =
 
             </Modal.Header>
             <Modal.Body style={{ paddingTop: "0" }}>
-                <hr className={`thin-color-separator mt-2 ${separatorDocumento()}`} />
+                <hr className={`thin-color-separator mt-2 ${separatorDocument()}`} />
 
                 <Formik
                     initialValues={{

@@ -5,7 +5,7 @@ import { BsExclamationCircle } from 'react-icons/bs';
 import { FaCheck, FaFilePdf, FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../actions/notificationAction';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import { getFileSizeInKB } from '../../utils/uploadDocumentUtil';
 import AuthorDocumentCard from './AuthorDocumentCard';
 import InfoGeneralDataCard from './InfoGeneralDataCard';
@@ -60,7 +60,7 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Scheda documento</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                         <BootstrapForm.Group className='mb-2'>
                             <BootstrapForm.Label><strong>Tipologia Firma</strong></BootstrapForm.Label>
@@ -169,7 +169,7 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Tipologia documento</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                         <BootstrapForm.Group>
                             <div role="radiogroup" className={`d-flex radio-group ${touched.tipologiaDocumento && errors.tipologiaDocumento ? 'is-invalid' : ''}`}>
@@ -216,7 +216,7 @@ const Step1 = ({ values, touched, errors, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Carica documento</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
                         <BootstrapForm.Group>
                             {!values.pdfFile && (<BootstrapForm.Label>

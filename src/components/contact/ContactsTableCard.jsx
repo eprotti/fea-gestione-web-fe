@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact, updateContact } from '../../actions/contactAction';
 import { addNotification } from '../../actions/notificationAction';
 import { truncateVeryShortNominativo } from '../../utils/contactUtil';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import ConfermaAzioneModale from '../ConfirmActionModal';
 import DettaglioContattoModale from './DetailContactModal';
 import ModificaContattoModale from './EditContactModal';
@@ -129,7 +129,7 @@ const ContactsTableCard = () => {
                     <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Contatti</h5>
                 </Card.Subtitle>
 
-                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
                 <Form.Control
                     type="text"
                     placeholder="Cerca contatti..."

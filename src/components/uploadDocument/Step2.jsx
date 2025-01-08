@@ -5,7 +5,7 @@ import { BsExclamationCircle } from 'react-icons/bs'; // Icona di errore
 import { FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '../../actions/notificationAction';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 import InfoSignatureTypeCard from './InfoSignatureTypeCard';
 import SearchSignatoryCard from './SearchSignatoryCard';
 
@@ -30,7 +30,7 @@ const Step2 = ({ values, setFieldValue }) => {
                         <Card.Subtitle className="mb-2 text-muted py-1">
                             <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Firmatari Aggiunti</h5>
                         </Card.Subtitle>
-                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+                        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
                         <BootstrapForm.Group>
 
                             <Table borderless>

@@ -3,7 +3,7 @@ import { Button, Card } from 'react-bootstrap';
 import { FaCalendar, FaChevronRight, FaEye, FaFileAlt, FaFileSignature } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import StatoDocumento from '../enum/DocumentState';
-import { isExpiring, separatorDocumento } from '../utils/documentUtil';
+import { isExpiring, separatorDocument } from '../utils/documentUtil';
 import { handleCompileDocument, handleSignDocument, handleViewDocument } from '../utils/navigationUtil';
 
 const DocumentCard = ({ codiceDocumento, titolo, descrizione, dataInserimento, dataScadenza, stato }) => {
@@ -22,7 +22,7 @@ const DocumentCard = ({ codiceDocumento, titolo, descrizione, dataInserimento, d
                     <span style={{ whiteSpace: "nowrap", marginRight: '10px' }}><FaCalendar /> Inserito il: {new Date(dataInserimento).toLocaleDateString()}</span> <span style={{ whiteSpace: "nowrap" }}><FaCalendar /> Scadenza: {new Date(dataScadenza).toLocaleDateString()}</span>
                 </Card.Subtitle>
 
-                <hr className={`thin-color-separator pb-2 mt-3 ${separatorDocumento(stato)}`} />
+                <hr className={`thin-color-separator pb-2 mt-3 ${separatorDocument(stato)}`} />
                 
                 <Card.Title>{titolo}</Card.Title>
                 <Card.Text>{descrizione}</Card.Text>

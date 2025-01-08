@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { isExpiring, separatorDocumento } from '../utils/documentUtil';
+import { isExpiring, separatorDocument } from '../utils/documentUtil';
 
 const DetailDocumentCard = ({ documento }) => {
 
@@ -17,7 +17,7 @@ const DetailDocumentCard = ({ documento }) => {
                     <h5 className="m-a-0 text-uppercase light mt-0 mb-0">Scheda documento</h5>
                 </Card.Subtitle>
 
-                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento(documento.stato)}`} />
+                <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument(documento.stato)}`} />
 
                 <div className="row">
                     <div className="col-xs-12 col-md-4">

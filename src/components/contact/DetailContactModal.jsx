@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaEnvelope, FaIdCard, FaUser } from 'react-icons/fa';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 
 const DetailContactModal = ({ show, contact, onHide }) => {
   if (!contact) return null;
@@ -15,7 +15,7 @@ const DetailContactModal = ({ show, contact, onHide }) => {
 
       </Modal.Header>
       <Modal.Body style={{ paddingTop: "0" }}>
-        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
         <div className='px-2'>
 
           <div className="row" style={{ paddingRight: "10px" }}>

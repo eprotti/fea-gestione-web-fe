@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { separatorDocumento } from '../utils/documentUtil';
+import { separatorDocument } from '../utils/documentUtil';
 
 const TechnicalDataDocumentCard = ({ documento }) => {
     // Stato per gestire l'apertura/chiusura
@@ -21,7 +21,7 @@ const TechnicalDataDocumentCard = ({ documento }) => {
 
             <div className={`card-body card-dati-tecnici-body ${isOpen ? 'open' : 'hidden'}`} style={{ paddingTop: "5px", paddingLeft: "20px", paddingRight: "20px" }}>
 
-                <hr className={`thin-color-separator pb-2 ${separatorDocumento(documento.stato)}`} />
+                <hr className={`thin-color-separator pb-2 ${separatorDocument(documento.stato)}`} />
 
                 <div className="row">
                     <div className="col-xs-12">

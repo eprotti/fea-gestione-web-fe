@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { FaBuilding, FaEnvelope } from 'react-icons/fa';
-import { separatorDocumento } from '../../utils/documentUtil';
+import { separatorDocument } from '../../utils/documentUtil';
 
 const AuthorDocumentCard = () => {
 
@@ -14,7 +14,7 @@ const AuthorDocumentCard = () => {
           <h5 className="m-a-0 text-uppercase light mt-1 mb-0">Autore documento</h5>
         </Card.Subtitle>
 
-        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocumento()}`} />
+        <hr className={`thin-color-separator pb-2 mt-2 ${separatorDocument()}`} />
 
         <div className="row">
           <div className="col-xs-12">
