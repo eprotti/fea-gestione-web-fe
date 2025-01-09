@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Badge, Collapse } from 'react-bootstrap';
-import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaCogs, FaFolder, FaHome, FaUpload } from 'react-icons/fa';
+import { FaAddressBook, FaBars, FaBell, FaChartLine, FaChevronDown, FaChevronUp, FaFileInvoice, FaFolder, FaHome, FaUpload } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -66,7 +66,7 @@ const SidebarNavigation = ({ children }) => {
 
           <li>
             <a href="#" onClick={() => toggleSubmenu(2)} className="menu-item">
-              <FaCogs size={26} className="menu-icon" />
+              <FaFileInvoice size={26} className="menu-icon" />
               {!collapsed && <span className="menu-text">Gestione templates</span>}
               {!collapsed && <span style={{ float: "right" }}>{openSubmenu === 2 ? <FaChevronUp /> : <FaChevronDown />}</span>}
             </a>

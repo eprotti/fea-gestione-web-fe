@@ -30,10 +30,9 @@ const Notifications = () => {
     <>
       {
         notifications.map((notification, index) => (
-          <Card className='mb-1 mt-1 py-1 shadow' key={notification.id}>
-            <Card.Body className='px-5 pt-1 pb-1'>
-              {notification.isRead && <FaEnvelopeOpen size={20} style={{ position: "absolute", top: "16px", left: "15px", color: '#999' }} />}
-              {!notification.isRead && <FaEnvelope size={20} style={{ position: "absolute", top: "16px", left: "15px", color: '#06c' }} />}
+          <Card className='mb-1 mt-1 py-1 shadow' key={notification.id} style={{ background: notification.isRead ? '#fff' : '#ffd' }}>
+            <Card.Body className=' pt-1 pb-1'>
+
               <div
                 style={{
                   margin: '5px 0',
@@ -43,15 +42,17 @@ const Notifications = () => {
               >
                 <div className='header-notify'>
                   <h5 style={{ margin: "0px", marginRight: "5px", whiteSpace: "nowrap" }}>
+                    {notification.isRead && <FaEnvelopeOpen size={20} style={{ color: '#999', marginRight: '5px' }} />}
+                    {!notification.isRead && <FaEnvelope size={20} style={{ color: '#06c', marginRight: '5px' }} />}
                     {notification.type === "success" && <FaCheckCircle size={18} style={{ marginRight: "5px", verticalAlign: "middle", color: "#0a5" }} />}
                     {notification.type === "info" && <FaInfo size={18} style={{ marginRight: "5px", verticalAlign: "middle", color: "#06c" }} />}
                     {notification.type === "error" && <FaTimesCircle size={18} style={{ marginRight: "5px", verticalAlign: "middle", color: "#cc0000" }} />}
-                    <strong style={{ fontSize: "medium", textTransform: "uppercase", color: notification.type === "success" ? '#0a5' : notification.type === "info" ? '#06c' : "#cc0000" }}>
+                    <strong className='d-none' style={{ fontSize: "medium", textTransform: "uppercase", color: notification.type === "success" ? '#0a5' : notification.type === "info" ? '#06c' : "#cc0000" }}>
                       {notification.type}
                     </strong>
                   </h5>
                   <span style={{ paddingRight: "5px" }} className={`${openNotificationIndex === index ? 'hidden' : ''}`}>
-                    <span style={{ color: "#333" }}>{notification.isRead ? truncateVeryShortMessage(notification.message) : <strong>truncateVeryShortMessage(notification.message)</strong>}</span>
+                    <span style={{ color: "#333" }}>{notification.isRead ? truncateVeryShortMessage(notification.message) : <strong>{truncateVeryShortMessage(notification.message)}</strong>}</span>
                   </span>
                   <span><small style={{ whiteSpace: "nowrap" }}>{new Date(notification.timestamp).toLocaleString()}</small></span>
                 </div>

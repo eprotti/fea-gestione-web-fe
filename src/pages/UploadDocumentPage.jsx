@@ -18,7 +18,7 @@ const UploadDocumentPage = () => {
 
       <div className="mt-2">
         <a onClick={() => navigate(-1)} rel="noopener noreferrer" style={{ cursor: "pointer", fontSize: "large" }} className="mt-3 text-primary">
-          <FaChevronLeft /> Torna indietro
+          <FaChevronLeft /> Torna alla home
         </a>
       </div>
     </Container>

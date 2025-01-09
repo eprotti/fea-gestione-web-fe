@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { separatorDocument } from '../../utils/documentUtil';
-import { FaEnvelope } from 'react-icons/fa';
+import { FaCheckCircle, FaEnvelope, FaInfo, FaTimesCircle } from 'react-icons/fa';
 
 const InfoNotificationCard = () => {
 
@@ -23,7 +23,11 @@ const InfoNotificationCard = () => {
                 background: "#efe",
                 padding: "10px",
                 fontSize: "medium"
-              }}>In questa sezione potrai consultare tutte le notifiche che hai generato durante l'utilizzo dell'applicazione. <br/>Le notifica sono di tipo <strong style={{ color: "#0a5" }}>SUCCESS</strong>, <strong style={{ color: "#06c" }}>INFO</strong> o <strong style={{ color: "#c00" }}>ERROR</strong>
+              }}>In questa sezione potrai consultare tutte le notifiche che hai generato durante l'utilizzo dell'applicazione. <br/>
+              Le notifiche sono di tipo:<br/>
+              <button style={{ color: "#0a5", fontSize: "large", padding: "5px", margin: "5px", marginLeft: "0"}}><FaCheckCircle size={20} style={{ marginRight: "", verticalAlign: "sub", color: "#0a5" }} /> SUCCESS</button>
+              <button style={{ color: "#06c", fontSize: "large", padding: "5px", margin: "5px"}}><FaInfo size={16} style={{ marginRight: "", verticalAlign: "middle", color: "#06c" }} /> INFO</button>
+              <button style={{ color: "#c00", fontSize: "large", padding: "5px", margin: "5px"}}><FaTimesCircle size={20} style={{ marginRight: "", verticalAlign: "sub", color: "#cc0000" }} /> ERROR</button>
               </p>
             </div>
           </div>
@@ -35,7 +39,7 @@ const InfoNotificationCard = () => {
                 background: "#eff",
                 padding: "10px",
                 fontSize: "medium"
-              }}>Dopo averle consultate puoi <strong>marcarle come lette</strong> o <strong>eliminarle</strong> dalla lista</p>
+              }}>Dopo averle consultate puoi <strong>marcarle come lette</strong> o <strong>eliminarle</strong> dalla lista.</p>
             </div>
           </div>
         </div>
