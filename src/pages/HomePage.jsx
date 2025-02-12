@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { FaAddressBook, FaCheck, FaChevronRight, FaCogs, FaFileInvoice, FaFolder, FaInfoCircle, FaPenAlt, FaQuestionCircle, FaSign, FaUpload } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import LastDocumentUploadedCard from "../components/LastDocumentUploadedCard";
-import { handleArchiveDocument, handleContactsList, handleUploadDocument } from '../utils/navigationUtil';
+import { handleArchiveDocument, handleContactsList, handleManageTemplate, handleUploadDocument } from '../utils/navigationUtil';
 import { FaCartShopping } from 'react-icons/fa6';
 
 const HomePage = () => {
@@ -39,7 +39,7 @@ const HomePage = () => {
             <p>Ricerca i documenti caricati per consultarli</p>
           </section>
 
-          <section id="templates" className="card templates-card shadow">
+          <section id="templates" className="card templates-card shadow" onClick={() => handleManageTemplate(navigate)}>
             <FaFileInvoice size={45} color="#ffffff" style={{ margin: "0" }} />
             <h2>Gestione Template</h2>
             <p>Vai alla gestione dei template</p>

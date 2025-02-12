@@ -13,6 +13,7 @@ import DocumentsListPage from './pages/DocumentsListPage';
 import HomePage from './pages/HomePage';
 import NotificationPage from './pages/NotificationPage';
 import UploadDocumentPage from './pages/UploadDocumentPage';
+import TemplatePage from './pages/TemplatePage';
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/gestione-documento/carica" element={<UploadDocumentPage />} />
         <Route path="/rubrica/lista-contatti" element={<ContactsListPage />} />
         <Route path="/archivio-documenti/lista-documenti" element={<DocumentsListPage />} />
+        <Route path="/gestione-template/crea" element={<TemplatePage />} />
 
         <Route path="/archivio/dettaglio-documento/:codiceDocumento" element={<DetailDocumentPage />} />
 

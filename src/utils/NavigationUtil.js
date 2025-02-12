@@ -15,3 +15,9 @@ export const handleContactsList = (navigate) => {
 export const handleArchiveDocument = (navigate) => {
     navigate("/archivio-documenti/lista-documenti");
 }
+
+export const handleManageTemplate = (navigate) => {
+    navigate("/gestione-template/crea");
+}
+
+

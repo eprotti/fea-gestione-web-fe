@@ -9,6 +9,7 @@ import notificationReducer from '../reducers/notificationReducer';
 import signatureReducer from '../reducers/signatureReducer';
 import stepsDocumentReducer from '../reducers/stepsDocumentReducer';
 import userReducer from '../reducers/userReducer';
+import templateReducer from '../reducers/templateReducer';
 
 // Configura la persistenza
 const persistConfig = {
@@ -27,6 +28,7 @@ const rootReducer = {
   steps: stepsDocumentReducer,
   contacts: contactReducer,
   signatures: signatureReducer,
+  template: templateReducer,
 };
 
 const persistedReducer = persistReducer(persistConfig, combineReducers(rootReducer));
