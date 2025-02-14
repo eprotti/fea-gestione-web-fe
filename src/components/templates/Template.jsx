@@ -36,7 +36,7 @@ const Template = ({ template, setTemplate, addNewRow, addNewColumn }) => {
         </div>
       ))}
     </div>
-    <button onClick={addNewRow} className="add-row-button">Aggiungi riga</button>
+    <button onClick={addNewRow} className="add-row-button"><FaPlusCircle /> Aggiungi riga</button>
     </>
   );
 };
@@ -95,9 +95,9 @@ const DraggableObject = ({ object, index, sourceRowIndex, sourceColumnIndex, mov
   return (
     <div ref={drag} className="template-object">
       <label>{object.label}</label>
-      {/* {object.key === 'text' && <p>{object.value}</p>}
-      {object.key === 'input' && <input type="text" value={object.value} />}
-      {object.key === 'textarea' && <textarea value={object.value} />} */}
+      {object.key === 'text' && <p>{object.value}</p>}
+      {object.key === 'input' && <p><input type="text" value={object.value} /></p>}
+      {object.key === 'textarea' && <p><textarea value={object.value} /></p>}
     </div>
   );
 };

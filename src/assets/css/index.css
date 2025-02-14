@@ -1414,6 +1414,7 @@ form label,
 .object-item, .template-object {
   padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 10px;
   background-color: #fff;
   cursor: move;
 }
@@ -1430,9 +1431,11 @@ form label,
 .column {
   padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: 5px;
   min-width: 120px;
   min-height: 100px;
-  background-color: #fafafa;
+  background-color: #ecf5f9;
 }
 
 .add-row-button {
@@ -1448,7 +1451,6 @@ form label,
   background-color: #45a049;
 }
 
-
 .row-container {
   display: flex;
   align-items: center;  /* Allinea verticalmente */
@@ -1457,7 +1459,6 @@ form label,
 }
 
 .row-content {
-  /* display: flex; */
   flex-grow: 1; /* Occupa tutto lo spazio disponibile */
 }
 
@@ -1466,7 +1467,7 @@ form label,
 }
 
 .add-column-button {
-  margin-left: 10px;
+  margin-left: 25px;
   padding: 4px;
   background-color: #007bff;
   color: white;
@@ -1479,4 +1480,3 @@ form label,
   background-color: #ccc;
   cursor: not-allowed;
 }
-/* Stile per l'area di drop */

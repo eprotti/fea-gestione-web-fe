@@ -7,7 +7,7 @@ import Template from './Template.jsx';
 
 const TemplateEditor = () => {
 
-  const [template, setTemplate] = useState([[[],[],[]]]); // Un array con una riga iniziale
+  const [template, setTemplate] = useState([[[]]]); // Un array con una riga iniziale
 
   const objects = [
     { key: 'input', label: 'Input Field', value: '' },
@@ -40,10 +40,10 @@ const TemplateEditor = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <Row>
-        <Col md={8}>
+        <Col md={10}>
           <Template template={template} setTemplate={setTemplate} addNewRow={addNewRow} addNewColumn={addNewColumn} />
         </Col>
-        <Col md={4}>
+        <Col md={2}>
           <ObjectList objects={objects} onSelectObject={handleSelectObject} />
         </Col>
       </Row>
