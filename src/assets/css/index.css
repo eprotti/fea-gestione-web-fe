@@ -1457,8 +1457,8 @@ form label,
 }
 
 .row-content {
-  display: flex;
-  /* flex-grow: 1; */ /* Occupa tutto lo spazio disponibile */
+  /* display: flex; */
+  flex-grow: 1; /* Occupa tutto lo spazio disponibile */
 }
 
 .row-content .row {
